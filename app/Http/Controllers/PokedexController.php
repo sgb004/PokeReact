@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Http;
 
 class PokedexController extends Controller
 {
-    public function downloadFromApi(){
-		$isOk = $this->storeDataFromApi('https://pokeapi.co/api/v2/pokemon/?limit=100&offset=0');
+    public function storePokedex(){
+		$isOk = $this->storePokedexFromApi('https://pokeapi.co/api/v2/pokemon/?limit=100&offset=0');
 
 		$result = ['store_pokedex' => $isOk];
 
@@ -34,7 +34,7 @@ class PokedexController extends Controller
 		}
 	}
 
-	protected function storeDataFromApi($url){
+	protected function storePokedexFromApi($url){
 		$response = Http::get($url);
 
 		if($response->successful()){
@@ -45,7 +45,7 @@ class PokedexController extends Controller
 			}
 
 			if($data['next']){
-				$this->storeDataFromApi($data['next']);
+				$this->storePokedexFromApi($data['next']);
 			}else{
 				return true;
 			}

@@ -7,4 +7,4 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/pokedex/download-from-api', [PokedexController::class, 'downloadFromApi']);
+Route::get('/pokedex/store-pokedex', [PokedexController::class, 'storePokedex']);
