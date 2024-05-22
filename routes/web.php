@@ -8,3 +8,4 @@ Route::get('/', function () {
 });
 
 Route::get('/pokedex/store-pokedex', [PokedexController::class, 'storePokedex']);
+
