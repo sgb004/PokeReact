@@ -4,12 +4,14 @@ namespace App\Jobs;
 
 use Exception;
 use App\Models\Pokedex;
+use App\Models\PokedexStatus;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class StorePokedex implements ShouldQueue
 {
@@ -30,7 +32,9 @@ class StorePokedex implements ShouldQueue
     {
 		$isOk = $this->storePokedexFromApi('https://pokeapi.co/api/v2/pokemon/?limit=100&offset=0');
 
-		if($isOk){
+		if(!$isOk){
+			PokedexStatus::updateStatus("error", 0);
+
 			throw new Exception('Error on store pokedex');
 		}
 	}
@@ -59,6 +63,8 @@ class StorePokedex implements ShouldQueue
 		if($response->successful()){
 			$data = $response->json();
 
+			PokedexStatus::updateStatus("running", $data['count']);
+
 			foreach($data['results'] as $pokemon){
 				$this->storePokemon($pokemon);
 			}
@@ -66,9 +72,12 @@ class StorePokedex implements ShouldQueue
 			if($data['next']){
 				return $this->storePokedexFromApi($data['next']);
 			}else{
+				PokedexStatus::updateStatus("finished", $data['count']);
 				return true;
 			}
 		}else{
+			print_r("NO SE PUDO CONECTAR A LA API");
+
 			return false;
 		}
 	}

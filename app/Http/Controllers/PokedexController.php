@@ -4,38 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Jobs\StorePokedex;
 use App\Models\Pokedex;
+use App\Models\PokedexStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class PokedexController extends Controller
 {
     public function storePokedex(){
-
-		/*
-		$response = Http::get('https://pokeapi.co/api/v2/pokemon/?limit=1&offset=0');
-
-		$result = ['percentage_completed' => -1];
-
-		if($response->successful()){
-			$data = $response->json();
-
-			$count = DB::table('pokedex')->count();
-			
-			$percentageCompleted = ($count / $data['count']) * 100;
-
-			$result['percentage_completed'] = $percentageCompleted;
-		}
-		*/
-
-		//StorePokedex::dispatch();
-
-		$POKEDEX_COUNT = 1302;
-
+		$pokedexStatus = PokedexStatus::getStatus();
+		$status = $pokedexStatus['status'];
 		$count = DB::table('pokedex')->count();
-			
-		$percentageCompleted = ($count / $POKEDEX_COUNT) * 100;
+		$percentageCompleted = 0;
 
-		$result['percentage_completed'] = $percentageCompleted;
+		if($status != 'running' && ($count < $pokedexStatus['count'] || $pokedexStatus['count'] == 0 )){
+			$status = "running";
+			$pokedexStatus = PokedexStatus::updateStatus($status, $pokedexStatus['count']);
+			StorePokedex::dispatch();
+		}else if($pokedexStatus['count'] > 0){
+			$percentageCompleted = ($count / $pokedexStatus['count']) * 100;
+		}
+
+		$result = [
+			'status' => $status,
+			'percentage_completed' => $percentageCompleted
+		];
 
 		return response()->json($result, 200);
 	}
