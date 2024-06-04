@@ -12,7 +12,7 @@
 </head>
 
 <body>
-	<div id="app"></div>
+	<div id="app" class="h-[100dvh] flex"></div>
 </body>
 
 </html>

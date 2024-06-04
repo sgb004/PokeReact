@@ -1,11 +1,8 @@
 import React from "react";
+import Pokedex from "./Pokedex";
 
 const App = () => {
-    return (
-        <div>
-            <h1 className="text-3xl font-bold underline">Api Pokemon</h1>
-        </div>
-    );
+    return <Pokedex />;
 };
 
 export default App;

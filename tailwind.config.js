@@ -6,7 +6,20 @@ export default {
         "./resources/**/*.vue",
     ],
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                pokedex: "#ff486d",
+                "pokedex-shadow": "#b51d40",
+                camera: "#086a9b",
+                "camera-light": "#00acf8",
+                "indicator-red": "#c6002b",
+                "indicator-red-light": "#fc2b5a",
+                "indicator-yellow": "#dec548",
+                "indicator-yellow-light": "#f7d466",
+                "indicator-green": "#4d905e",
+                "indicator-green-light": "#7ca880",
+            },
+        },
     },
     plugins: [],
 };
