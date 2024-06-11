@@ -8,8 +8,7 @@ export default {
     theme: {
         extend: {
             colors: {
-                pokedex: "#ff486d",
-                "pokedex-shadow": "#b51d40",
+                pokedex: "#b51d40",
                 camera: "#086a9b",
                 "camera-light": "#00acf8",
                 "indicator-red": "#c6002b",
