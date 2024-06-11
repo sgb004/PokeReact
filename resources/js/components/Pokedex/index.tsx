@@ -13,7 +13,7 @@ const Pokedex = () => {
                 </div>
             </header>
 
-            <div className="front-cover absolute w-full h-full top-0 left-0 rounded-bl-[10px] flex items-center flex-wrap bg-pokedex p-[20px] after:contents-[''] after:block after:w-[30%] after:h-[15px] after:border after:border-black after:rounded-full after:absolute after:bottom-[20px] after:left-0 after:right-0 after:ml-auto after:mx-auto">
+            <div className="front-cover absolute w-full h-full top-0 left-0 rounded-bl-[10px] flex items-center flex-wrap bg-pokedex p-[20px] border-r border-r-black after:contents-[''] after:block after:w-[30%] after:h-[15px] after:border after:border-black after:rounded-full after:absolute after:bottom-[20px] after:left-0 after:right-0 after:ml-auto after:mx-auto">
                 <svg
                     className="triangule cursor-pointer"
                     width="30"
