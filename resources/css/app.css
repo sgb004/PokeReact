@@ -7,8 +7,3 @@
         @apply w-[15px] h-[15px] rounded-full border-[1px] border-[#6d6d6d] pt-[1px] pl-[0.5px] after:content-[''] after:block after:w-[6px] after:h-[6px] after:rounded-full;
     }
 }
-
-.camera:before {
-    width: calc(100% - 8px);
-    height: calc(100% - 8px);
-}

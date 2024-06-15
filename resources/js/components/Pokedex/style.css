@@ -1,4 +1,9 @@
 .pokedex {
+    .camera:before {
+        width: calc(100% - 8px);
+        height: calc(100% - 8px);
+    }
+
     .front-cover {
         width: calc(100% - 10px);
         mask-image: linear-gradient(
