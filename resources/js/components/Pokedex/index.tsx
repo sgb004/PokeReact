@@ -1,7 +1,38 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./style.css";
 
 const Pokedex = () => {
+    useEffect(() => {
+        let touchX = 0;
+
+        const moveScroll = (direction: number) => {
+            const [left, top] =
+                direction > 0 ? [document.body.scrollWidth, 0] : [0, 0];
+
+            window.scrollTo({ left, top, behavior: "smooth" });
+        };
+
+        const handleWheel = (event: WheelEvent) => moveScroll(event.deltaY);
+        const handleTouchStart = (event: TouchEvent) => {
+            touchX = event.touches[0].pageX;
+        };
+        const handleTouchMove = (event: TouchEvent) => {
+            touchX = touchX - event.touches[0].pageX;
+            moveScroll(touchX);
+            touchX = event.touches[0].pageX;
+        };
+
+        window.addEventListener("wheel", handleWheel);
+        window.addEventListener("touchstart", handleTouchStart);
+        window.addEventListener("touchmove", handleTouchMove);
+
+        return () => {
+            window.removeEventListener("wheel", handleWheel);
+            window.removeEventListener("touchstart", handleTouchStart);
+            window.removeEventListener("touchmove", handleTouchMove);
+        };
+    }, []);
+
     return (
         <div className="pokedex block w-[100%] h-[90%] max-w-[500px] m-auto bg-pokedex bg-img-header bg-no-repeat rounded-[10px] relative">
             <header className="flex p-[20px] gap-[20px]">
@@ -26,9 +57,9 @@ const Pokedex = () => {
                             className="fill-bg-pokedex"
                             transform="matrix(0 .7723 -.76815 0 7.81 .129)"
                             stroke="#000"
-                            stroke-width=".333"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeWidth=".333"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                             d="M0 10L6 0l6 10z"
                         />
                     </svg>
