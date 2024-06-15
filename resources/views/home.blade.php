@@ -11,7 +11,7 @@
 	@vite(['resources/css/app.css', 'resources/js/app.tsx'])
 </head>
 
-<body>
+<body class="overflow-hidden">
 	<div id="app" class="h-[100dvh] flex"></div>
 </body>
 
