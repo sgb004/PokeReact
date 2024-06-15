@@ -34,8 +34,8 @@ const Pokedex = () => {
     }, []);
 
     return (
-        <div className="pokedex block w-[100%] h-[90%] max-w-[500px] m-auto bg-pokedex bg-img-header bg-no-repeat rounded-[10px] relative">
-            <header className="flex p-[20px] gap-[20px]">
+        <div className="pokedex block w-[100%] h-[90%] max-w-[500px] m-auto bg-pokedex bg-img-header bg-no-repeat bg-position rounded-[10px] relative before:content-[''] before:block before:absolute before-t-0 before:w-full before:h-[95px] before:bg-img-header before:bg-left-bottom before:bg-no-repeat ">
+            <header className="flex p-[20px] gap-[20px] rounded-t-[10px] relative">
                 <div className="camera relative w-[50px] h-[50px] bg-[#fff] rounded-full flex before:content-[''] before:block before:bg-camera before:rounded-full before:m-auto after:content-[''] after:absolute after:block after:bg-camera-light after:w-[18px] after:h-[18px] after:rounded-full after:top-[8px] after:left-[8px]"></div>
                 <div className="indicators flex gap-[10px]">
                     <div className="indicator bg-indicator-red after:bg-indicator-red-light"></div>
