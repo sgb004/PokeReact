@@ -7,6 +7,9 @@ export default {
     ],
     theme: {
         extend: {
+            fontFamily: {
+                "work-sans": ["Work Sans", "sans-serif"],
+            },
             colors: {
                 pokedex: "#b51d40",
                 camera: "#086a9b",
@@ -17,6 +20,8 @@ export default {
                 "indicator-yellow-light": "#f7d466",
                 "indicator-green": "#4d905e",
                 "indicator-green-light": "#7ca880",
+                "button-yellow": "#f7d466",
+                "bg-border-gray": "#6d6d6d",
             },
             backgroundImage: {
                 "img-header":

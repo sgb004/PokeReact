@@ -12,7 +12,7 @@
 </head>
 
 <body class="overflow-hidden">
-	<div id="app" class="h-[100dvh] flex"></div>
+	<div id="app" class="font-work-sans h-[100dvh] flex font-normal"></div>
 </body>
 
 </html>

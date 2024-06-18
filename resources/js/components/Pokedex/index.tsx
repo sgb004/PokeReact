@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import "./style.css";
+import Navigation from "../Navigation";
+import Screens from "../Screens";
 
 const Pokedex = () => {
     useEffect(() => {
@@ -34,7 +36,7 @@ const Pokedex = () => {
     }, []);
 
     return (
-        <div className="pokedex block w-[100%] h-[90%] max-w-[500px] m-auto bg-pokedex bg-img-header bg-no-repeat bg-position rounded-[10px] relative before:content-[''] before:block before:absolute before-t-0 before:w-full before:h-[95px] before:bg-img-header before:bg-left-bottom before:bg-no-repeat ">
+        <div className="pokedex grid grid-cols-[175px_1fr_20px] grid-rows-[94px_1fr] w-[100%] h-[90%] max-w-[500px] m-auto bg-pokedex bg-img-header bg-no-repeat bg-position rounded-[10px] relative border border-black before:content-[''] before:block before:absolute before-t-0 before:w-full before:h-[95px] before:bg-img-header before:bg-left-bottom before:bg-no-repeat">
             <header className="flex p-[20px] gap-[20px] rounded-t-[10px] relative">
                 <div className="camera relative w-[50px] h-[50px] bg-[#fff] rounded-full flex before:content-[''] before:block before:bg-camera before:rounded-full before:m-auto after:content-[''] after:absolute after:block after:bg-camera-light after:w-[18px] after:h-[18px] after:rounded-full after:top-[8px] after:left-[8px]"></div>
                 <div className="indicators flex gap-[10px]">
@@ -43,6 +45,11 @@ const Pokedex = () => {
                     <div className="indicator bg-indicator-green after:bg-indicator-green-light"></div>
                 </div>
             </header>
+
+            <Navigation />
+            <Screens />
+
+            <div className="hinge relative w-[20px] bg-pokedex border-l border-black row-start-1 row-end-3 col-start-3 mt-auto rounded-br-[10px] before:top-6 after:bottom-6"></div>
 
             <div className="front-cover absolute w-full h-full top-0 left-0 rounded-[10px] flex items-center flex-wrap bg-pokedex bg-img-header bg-no-repeat p-[20px] border border-black transition-transform ease-linear duration-1000 after:contents-[''] after:block after:w-[30%] after:h-[15px] after:border after:border-black after:rounded-full after:absolute after:bottom-[20px] after:left-0 after:right-0 after:ml-auto after:mx-auto perspective-[0]">
                 <div className="relative z-20 cursor-pointer">

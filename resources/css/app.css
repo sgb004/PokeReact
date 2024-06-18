@@ -1,9 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer components {
     .indicator {
-        @apply w-[15px] h-[15px] rounded-full border-[1px] border-[#6d6d6d] pt-[1px] pl-[0.5px] after:content-[''] after:block after:w-[6px] after:h-[6px] after:rounded-full;
+        @apply w-[15px] h-[15px] rounded-full border-[1px] border-bg-border-gray pt-[1px] pl-[0.5px] after:content-[''] after:block after:w-[6px] after:h-[6px] after:rounded-full;
+    }
+
+    .screen {
+        @apply min-w-full;
     }
 }

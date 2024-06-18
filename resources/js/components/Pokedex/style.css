@@ -4,6 +4,29 @@
         height: calc(100% - 8px);
     }
 
+    .navigation {
+        &:has(.navigation-my-pokemon:checked) + .screens .screens-content {
+            transform: translateX(0%);
+        }
+
+        &:has(.navigation-pokemon:checked) + .screens .screens-content {
+            transform: translateX(-100%);
+        }
+
+        .navigation-button:has(.navigation-dispatcher:checked) {
+            @apply border-bg-border-gray text-[0.95rem];
+        }
+    }
+
+    .hinge {
+        height: calc(100% - 46px);
+
+        &::before,
+        &::after {
+            @apply content-[''] absolute block border-t border-b border-black h-[20px] w-full;
+        }
+    }
+
     .front-cover {
         width: calc(100% - 10px);
         mask-image: linear-gradient(
