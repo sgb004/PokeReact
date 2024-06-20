@@ -27,6 +27,47 @@
         }
     }
 
+    .screen {
+        .screen-header-button {
+            @apply size-screen-header-button bg-button-blue border-button-blue rounded-[3px] border min-w-[30px];
+
+            .screen-header-button-icon {
+                @apply size-screen-header-button-icon stroke-white;
+
+                path {
+                    @apply stroke-icon-line;
+                }
+            }
+        }
+
+        .screen-header-button:active {
+            @apply border-icon-line;
+
+            .screen-header-button-icon {
+                @apply size-screen-header-button-icon-active;
+            }
+        }
+
+        .filter-button:has(.filter-button-dispatcher:checked)
+            .screen-header-button-icon {
+            transform: rotateZ(180deg);
+        }
+
+        .screen-button-action.add-pokemon {
+            @apply bg-accept border-bg-border-gray;
+            filter: drop-shadow(0 0 5px #000);
+
+            &:hover {
+                transform: rotateZ(180deg);
+            }
+
+            &:active {
+                transform: scale(0.9) rotateZ(270deg);
+                filter: drop-shadow(0 0 10px #000);
+            }
+        }
+    }
+
     .front-cover {
         width: calc(100% - 10px);
         mask-image: linear-gradient(

@@ -21,7 +21,11 @@ export default {
                 "indicator-green": "#4d905e",
                 "indicator-green-light": "#7ca880",
                 "button-yellow": "#f7d466",
+                "button-blue": "#00acf8",
                 "bg-border-gray": "#6d6d6d",
+                accept: "#4d905e",
+                "accept-icon": "#d9ed92",
+                "icon-line": "#023e8a",
             },
             backgroundImage: {
                 "img-header":
@@ -36,6 +40,11 @@ export default {
             animation: {
                 "front-cover-triangule":
                     "front-cover-triangule 2s infinite ease-in-out",
+            },
+            size: {
+                "screen-header-button": "30px",
+                "screen-header-button-icon": "22px",
+                "screen-header-button-icon-active": "20px",
             },
         },
     },

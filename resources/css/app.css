@@ -10,6 +10,6 @@
     }
 
     .screen {
-        @apply min-w-full;
+        @apply min-w-full h-full;
     }
 }
