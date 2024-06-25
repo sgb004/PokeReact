@@ -1,6 +1,14 @@
-import React from "react";
+export type NavigationButtonProps = {
+    children: React.ReactNode;
+    name: string;
+    activated?: boolean;
+};
 
-const NavigationButton = ({ children, name, activated = false }) => {
+const NavigationButton = ({
+    children,
+    name,
+    activated = false,
+}: NavigationButtonProps) => {
     return (
         <label className="navigation-button flex justify-center items-center cursor-pointer rounded-[5px] bg-button-yellow w-[37px] border border-button-yellow text-base min-h-[37px] box-sizing">
             {children}
