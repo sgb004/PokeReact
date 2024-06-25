@@ -17,11 +17,13 @@ const Screen = ({
 }: ScreenProps) => {
     return (
         <div className="screen relative">
-            <div className="screen-content">
+            <div className="screen-content h-[100%] grid grid-cols-1 grid-rows-[auto_1fr_auto]">
                 <ScreenHeader filters={filters} />
-                <section>
+                <section className="flex justify-center items-center">
                     {pokemon.length == 0 ? (
-                        <div className="no-pokemon">{noPokemonMessage}</div>
+                        <div className="no-pokemon text-white">
+                            {noPokemonMessage}
+                        </div>
                     ) : (
                         pokemon.map((pokemon) => (
                             <div className="pokemon"></div>
