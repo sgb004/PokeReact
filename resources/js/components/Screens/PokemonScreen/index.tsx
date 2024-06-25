@@ -5,7 +5,7 @@ const PokemonScreen = () => {
     return (
         <Screen
             pokemon={[]}
-            noPokemonMessage="No Pokemon"
+            noPokemonMessage="No Pokémon were found"
             actions={[
                 {
                     name: "add-pokemon",
