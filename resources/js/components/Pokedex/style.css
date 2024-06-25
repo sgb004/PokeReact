@@ -16,6 +16,11 @@
         .navigation-button:has(.navigation-dispatcher:checked) {
             @apply border-bg-border-gray text-[0.95rem];
         }
+
+        .navigation-button:has(.navigation-dispatcher:checked)
+            .navigation-button-icon {
+            @apply w-[25px];
+        }
     }
 
     .hinge {
