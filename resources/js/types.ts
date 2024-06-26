@@ -8,3 +8,8 @@ export type ScreenFilters = {
     name: string;
     value: string;
 };
+
+export type PokemonPokedex = {
+    id: number;
+    name: string;
+};

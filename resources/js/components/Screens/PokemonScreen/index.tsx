@@ -1,10 +1,9 @@
-import React from "react";
 import Screen from "../Screen";
 
 const PokemonScreen = () => {
     return (
         <Screen
-            pokemon={[]}
+            getUrl="/api/pokedex"
             noPokemonMessage="No Pokémon were found"
             actions={[
                 {

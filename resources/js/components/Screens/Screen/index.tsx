@@ -1,16 +1,16 @@
-import React from "react";
 import { ScreenActions, ScreenFilters } from "../../../types";
 import ScreenHeader from "../ScreenHeader";
+import ScreenGrid from "../ScreenGrid";
 
 export type ScreenProps = {
-    pokemon: [];
+    getUrl: string;
     noPokemonMessage: string;
     actions: ScreenActions[];
     filters?: ScreenFilters[];
 };
 
 const Screen = ({
-    pokemon,
+    getUrl,
     noPokemonMessage,
     actions,
     filters,
@@ -19,17 +19,10 @@ const Screen = ({
         <div className="screen relative">
             <div className="screen-content h-[100%] grid grid-cols-1 grid-rows-[auto_1fr_auto]">
                 <ScreenHeader filters={filters} />
-                <section className="flex justify-center items-center">
-                    {pokemon.length == 0 ? (
-                        <div className="no-pokemon text-white">
-                            {noPokemonMessage}
-                        </div>
-                    ) : (
-                        pokemon.map((pokemon) => (
-                            <div className="pokemon"></div>
-                        ))
-                    )}
-                </section>
+                <ScreenGrid
+                    getUrl={getUrl}
+                    noPokemonMessage={noPokemonMessage}
+                />
                 <footer>
                     {actions.map((action) => (
                         <button
