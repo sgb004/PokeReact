@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\PokemonController;
+use App\Http\Controllers\Api\PokedexController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,4 +14,6 @@ Route::post('/pokemon', [PokemonController::class, 'store']);
 Route::patch('/pokemon/{id}', [PokemonController::class, 'updatePartial']);
 
 Route::delete('/pokemon/{id}', [PokemonController::class, 'destroy']);
+
+Route::get('/pokedex', [PokedexController::class, 'index']);
 
