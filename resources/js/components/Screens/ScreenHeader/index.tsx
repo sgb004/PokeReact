@@ -17,7 +17,7 @@ const ScreenHeader = ({ headerParams, filters, onChange }: ScreenHeader) => {
     }, [params]);
 
     return (
-        <header className="screen-header flex gap-[5px] p-[5px] bg-[#caf0f8] bg-[#a8dadc]">
+        <header className="screen-header flex gap-[5px] p-[5px] bg-header">
             {!filters ? null : (
                 <>
                     <label className="relative block screen-header-button">

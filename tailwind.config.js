@@ -26,6 +26,7 @@ export default {
                 accept: "#4d905e",
                 "accept-icon": "#d9ed92",
                 "icon-line": "#023e8a",
+                header: "#caf0f8",
                 "screen-grid": "#edf2f4",
             },
             backgroundImage: {
