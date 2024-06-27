@@ -102,6 +102,7 @@ const ScreenHeader = ({ headerParams, filters, onChange }: ScreenHeader) => {
                     }, 300);
                 }}
             />
+            {/*
             <button className="screen-header-button flex justify-center items-center">
                 <svg
                     className="screen-header-button-icon"
@@ -124,6 +125,7 @@ const ScreenHeader = ({ headerParams, filters, onChange }: ScreenHeader) => {
                     </g>
                 </svg>
             </button>
+			 */}
         </header>
     );
 };
