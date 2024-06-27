@@ -1,4 +1,9 @@
-import { ScreenActions, ScreenFilters } from "../../../types";
+import { useState } from "react";
+import {
+    ScreenActions,
+    ScreenFilters,
+    ScreenHeaderParams,
+} from "../../../types";
 import ScreenHeader from "../ScreenHeader";
 import ScreenGrid from "../ScreenGrid";
 
@@ -15,12 +20,23 @@ const Screen = ({
     actions,
     filters,
 }: ScreenProps) => {
+    const [headerParams, setHeaderParams] = useState<ScreenHeaderParams>({
+        filter: "number",
+        sort: "asc",
+        search: "",
+    });
+
     return (
         <div className="screen relative">
             <div className="screen-content h-[100%] grid grid-cols-1 grid-rows-[auto_1fr_auto]">
-                <ScreenHeader filters={filters} />
+                <ScreenHeader
+                    headerParams={headerParams}
+                    filters={filters}
+                    onChange={setHeaderParams}
+                />
                 <ScreenGrid
                     getUrl={getUrl}
+                    getUrlParams={headerParams}
                     noPokemonMessage={noPokemonMessage}
                 />
                 <footer>

@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { PokemonPokedex } from "../../../types";
+import { PokemonPokedex, ScreenHeaderParams } from "../../../types";
 
 type ScreenGridProps = {
     getUrl: string;
+    getUrlParams: ScreenHeaderParams;
     noPokemonMessage: string;
 };
 
@@ -12,12 +13,50 @@ const getTime = () => {
     return time;
 };
 
-const ScreenGrid = ({ getUrl, noPokemonMessage }: ScreenGridProps) => {
+const fullUrl = (url: string, getUrlParams: ScreenHeaderParams) => {
+    const params = new URLSearchParams(getUrlParams);
+    const urlWithParams = url.indexOf("?") > -1 ? url + "&" : url + "?";
+    return `${urlWithParams}${params.toString()}`;
+};
+
+const ScreenGrid = ({
+    getUrl,
+    getUrlParams,
+    noPokemonMessage,
+}: ScreenGridProps) => {
     const screenGridRef = useRef<HTMLDivElement>(null);
     const nextPageUrl = useRef(getUrl);
     const pokemon = useRef<PokemonPokedex[]>([]);
     const isLoading = useRef(false);
     const [render, setRender] = useState(1);
+
+    const loadMore = () => {
+        if (nextPageUrl.current === null) return false;
+        nextPageUrl.current = fullUrl(nextPageUrl.current, getUrlParams);
+
+        fetch(nextPageUrl.current)
+            .then((response) => response.json())
+            .then((data) => {
+                nextPageUrl.current = data.next_page_url;
+
+                for (const item of data.data) {
+                    pokemon.current.push({
+                        id: item.id,
+                        name: item.name,
+                    });
+                }
+
+                setRender(getTime());
+            });
+    };
+
+    useEffect(() => {
+        nextPageUrl.current = getUrl;
+        pokemon.current = [];
+        isLoading.current = false;
+        screenGridRef.current?.scrollTo(0, 0);
+        loadMore();
+    }, [getUrlParams]);
 
     useEffect(() => {
         isLoading.current = false;
@@ -27,27 +66,6 @@ const ScreenGrid = ({ getUrl, noPokemonMessage }: ScreenGridProps) => {
         const screenGrid = screenGridRef.current;
         const handleWheel = (event: WheelEvent) => event.stopPropagation();
         let handleScroll = () => {};
-
-        const loadMore = () => {
-            if (nextPageUrl.current === null) return false;
-
-            fetch(nextPageUrl.current)
-                .then((response) => response.json())
-                .then((data) => {
-                    nextPageUrl.current = data.next_page_url;
-
-                    for (const item of data.data) {
-                        pokemon.current.push({
-                            id: item.id,
-                            name: item.name,
-                        });
-                    }
-
-                    setRender(getTime());
-                });
-        };
-
-        loadMore();
 
         if (screenGrid) {
             handleScroll = () => {

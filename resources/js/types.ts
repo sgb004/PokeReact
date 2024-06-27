@@ -9,6 +9,12 @@ export type ScreenFilters = {
     value: string;
 };
 
+export type ScreenHeaderParams = {
+    filter: string;
+    sort: "asc" | "desc";
+    search: string;
+};
+
 export type PokemonPokedex = {
     id: number;
     name: string;

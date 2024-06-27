@@ -1,11 +1,21 @@
-import React from "react";
-import { ScreenFilters } from "../../../types";
+import { useState, useEffect, useRef } from "react";
+import { ScreenFilters, ScreenHeaderParams } from "../../../types";
 
 export type ScreenHeader = {
+    headerParams: ScreenHeaderParams;
     filters?: ScreenFilters[];
+    onChange: (params: ScreenHeaderParams) => void;
 };
 
-const ScreenHeader = ({ filters }: ScreenHeader) => {
+const ScreenHeader = ({ headerParams, filters, onChange }: ScreenHeader) => {
+    const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    const [params, setParams] = useState<ScreenHeaderParams>(headerParams);
+
+    useEffect(() => {
+        onChange(params);
+    }, [params]);
+
     return (
         <header className="screen-header flex gap-[5px] p-[5px] bg-[#caf0f8] bg-[#a8dadc]">
             {!filters ? null : (
@@ -28,9 +38,17 @@ const ScreenHeader = ({ filters }: ScreenHeader) => {
                                 strokeWidth="2.325"
                             />
                         </svg>
-                        <select className="opacity-0 relative size-screen-header-button cursor-pointer">
+                        <select
+                            className="opacity-0 relative size-screen-header-button cursor-pointer"
+                            onChange={(event) => {
+                                setParams({
+                                    ...params,
+                                    filter: event.target.value,
+                                });
+                            }}
+                        >
                             {filters.map((filter) => (
-                                <option key={filter.name} value={filter.name}>
+                                <option key={filter.name} value={filter.value}>
                                     {filter.name}
                                 </option>
                             ))}
@@ -40,6 +58,12 @@ const ScreenHeader = ({ filters }: ScreenHeader) => {
                         <input
                             type="checkbox"
                             className="hidden filter-button-dispatcher"
+                            onChange={(event) => {
+                                setParams({
+                                    ...params,
+                                    sort: event.target.checked ? "desc" : "asc",
+                                });
+                            }}
                         />
                         <svg
                             className="screen-header-button-icon"
@@ -68,6 +92,15 @@ const ScreenHeader = ({ filters }: ScreenHeader) => {
                 type="text"
                 placeholder="Search"
                 className="rounded-[3px] p-[3px_5px] h-[30px] w-[100%]"
+                onChange={(event) => {
+                    if (searchTimer.current) clearTimeout(searchTimer.current);
+                    searchTimer.current = setTimeout(() => {
+                        setParams({
+                            ...params,
+                            search: event.target.value,
+                        });
+                    }, 300);
+                }}
             />
             <button className="screen-header-button flex justify-center items-center">
                 <svg
