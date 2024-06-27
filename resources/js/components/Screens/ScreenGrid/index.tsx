@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { PokemonPokedex, ScreenHeaderParams } from "../../../types";
+import { PokemonPokedex } from "../../../types";
 
 type ScreenGridProps = {
-    getUrl: string;
-    getUrlParams: ScreenHeaderParams;
+    queryUrl: string;
     noPokemonMessage: string;
 };
 
@@ -13,26 +12,15 @@ const getTime = () => {
     return time;
 };
 
-const fullUrl = (url: string, getUrlParams: ScreenHeaderParams) => {
-    const params = new URLSearchParams(getUrlParams);
-    const urlWithParams = url.indexOf("?") > -1 ? url + "&" : url + "?";
-    return `${urlWithParams}${params.toString()}`;
-};
-
-const ScreenGrid = ({
-    getUrl,
-    getUrlParams,
-    noPokemonMessage,
-}: ScreenGridProps) => {
+const ScreenGrid = ({ queryUrl, noPokemonMessage }: ScreenGridProps) => {
     const screenGridRef = useRef<HTMLDivElement>(null);
-    const nextPageUrl = useRef(getUrl);
+    const nextPageUrl = useRef(queryUrl);
     const pokemon = useRef<PokemonPokedex[]>([]);
     const isLoading = useRef(false);
     const [render, setRender] = useState(1);
 
     const loadMore = () => {
         if (nextPageUrl.current === null) return false;
-        nextPageUrl.current = fullUrl(nextPageUrl.current, getUrlParams);
 
         fetch(nextPageUrl.current)
             .then((response) => response.json())
@@ -51,12 +39,12 @@ const ScreenGrid = ({
     };
 
     useEffect(() => {
-        nextPageUrl.current = getUrl;
+        nextPageUrl.current = queryUrl;
         pokemon.current = [];
         isLoading.current = false;
         screenGridRef.current?.scrollTo(0, 0);
         loadMore();
-    }, [getUrlParams]);
+    }, [queryUrl]);
 
     useEffect(() => {
         isLoading.current = false;
@@ -105,9 +93,9 @@ const ScreenGrid = ({
                 </div>
             ) : (
                 <>
-                    {pokemon.current.map((pokemon) => (
+                    {pokemon.current.map((pokemon, index) => (
                         <div
-                            key={pokemon.id}
+                            key={index}
                             className="pokemon flex flex-col items-center"
                         >
                             <img

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     ScreenActions,
     ScreenFilters,
@@ -8,23 +8,33 @@ import ScreenHeader from "../ScreenHeader";
 import ScreenGrid from "../ScreenGrid";
 
 export type ScreenProps = {
-    getUrl: string;
+    queryUrl: string;
     noPokemonMessage: string;
     actions: ScreenActions[];
     filters?: ScreenFilters[];
 };
 
+const fullUrl = (url: string, getUrlParams: ScreenHeaderParams) => {
+    const params = new URLSearchParams(getUrlParams);
+    const urlWithParams = url.indexOf("?") > -1 ? url + "&" : url + "?";
+    return `${urlWithParams}${params.toString()}`;
+};
+
 const Screen = ({
-    getUrl,
+    queryUrl,
     noPokemonMessage,
     actions,
     filters,
 }: ScreenProps) => {
-    const [headerParams, setHeaderParams] = useState<ScreenHeaderParams>({
+    const headerParams: ScreenHeaderParams = {
         filter: "number",
         sort: "asc",
         search: "",
-    });
+    };
+
+    const [queryFullUrl, setQueryFullUrl] = useState(
+        fullUrl(queryUrl, headerParams)
+    );
 
     return (
         <div className="screen relative">
@@ -32,11 +42,12 @@ const Screen = ({
                 <ScreenHeader
                     headerParams={headerParams}
                     filters={filters}
-                    onChange={setHeaderParams}
+                    onChange={(params: ScreenHeaderParams) =>
+                        setQueryFullUrl(fullUrl(queryUrl, params))
+                    }
                 />
                 <ScreenGrid
-                    getUrl={getUrl}
-                    getUrlParams={headerParams}
+                    queryUrl={queryFullUrl}
                     noPokemonMessage={noPokemonMessage}
                 />
                 <footer>
