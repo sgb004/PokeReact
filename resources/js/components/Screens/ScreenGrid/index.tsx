@@ -85,7 +85,7 @@ const ScreenGrid = ({ queryUrl, noPokemonMessage }: ScreenGridProps) => {
     return (
         <section
             ref={screenGridRef}
-            className="grid grid-cols-3 overflow-y-auto overflow-x-hidden p-[5px] gap-[5px] bg-screen-grid"
+            className="grid grid-cols-3 auto-rows-min overflow-y-auto overflow-x-hidden p-[5px_5px_60px_5px] bg-screen-grid"
         >
             {pokemon.current.length == 0 ? (
                 <div className="no-pokemon col-start-1 col-end-4 flex justify-center items-center">
@@ -102,7 +102,7 @@ const ScreenGrid = ({ queryUrl, noPokemonMessage }: ScreenGridProps) => {
                                 className="w-[80%] aspect-[1/1]"
                                 src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}
                             />
-                            <div className="name text-black first-letter:uppercase">
+                            <div className="name text-black first-letter:uppercase text-center">
                                 {pokemon.name}
                             </div>
                         </div>

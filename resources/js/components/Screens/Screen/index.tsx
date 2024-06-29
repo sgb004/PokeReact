@@ -54,7 +54,7 @@ const Screen = ({
                     {actions.map((action) => (
                         <button
                             key={action.name}
-                            className={`screen-button-action ${action.name} flex justify-center items-center align-items-center absolute rounded-full border border-black w-[40px] h-[40px] bottom-[10px] right-[10px] transition-all`}
+                            className={`screen-button-action ${action.name} flex justify-center items-center align-items-center absolute rounded-full border border-black w-[40px] h-[40px] bottom-[10px] right-[20px] transition-all`}
                             onClick={() => action.action()}
                         >
                             {action.content}
