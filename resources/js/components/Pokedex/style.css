@@ -58,18 +58,28 @@
             transform: rotateZ(180deg);
         }
 
-        .screen-button-action.add-pokemon {
-            @apply bg-accept border-bg-border-gray;
-            filter: drop-shadow(0 0 5px #000);
+        .screen-button-action {
+            &.add-pokemon {
+                @apply bg-accept border-bg-border-gray;
+                filter: drop-shadow(0 0 5px #000);
 
-            &:hover {
-                transform: rotateZ(180deg);
+                &:hover {
+                    transform: rotateZ(180deg);
+                }
+
+                &:active {
+                    transform: scale(0.9) rotateZ(270deg);
+                    filter: drop-shadow(0 0 10px #000);
+                }
             }
 
-            &:active {
-                transform: scale(0.9) rotateZ(270deg);
-                filter: drop-shadow(0 0 10px #000);
+            &.loading {
+                @apply animate-spin;
             }
+        }
+
+        .pokemon:has(.pokemon-from-pokedex:checked) {
+            @apply bg-selected;
         }
     }
 

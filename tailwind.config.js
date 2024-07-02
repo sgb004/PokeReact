@@ -28,6 +28,7 @@ export default {
                 "icon-line": "#023e8a",
                 header: "#caf0f8",
                 "screen-grid": "#edf2f4",
+                selected: "#b8d0eb",
             },
             backgroundImage: {
                 "img-header":

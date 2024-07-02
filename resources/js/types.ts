@@ -1,7 +1,7 @@
 export type ScreenActions = {
     name: string;
     content: string | JSX.Element;
-    action: () => void;
+    action: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
 
 export type ScreenFilters = {

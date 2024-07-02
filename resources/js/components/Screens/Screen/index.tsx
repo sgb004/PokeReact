@@ -8,6 +8,7 @@ import ScreenHeader from "../ScreenHeader";
 import ScreenGrid from "../ScreenGrid";
 
 export type ScreenProps = {
+    className?: string;
     queryUrl: string;
     noPokemonMessage: string;
     actions: ScreenActions[];
@@ -21,6 +22,7 @@ const fullUrl = (url: string, getUrlParams: ScreenHeaderParams) => {
 };
 
 const Screen = ({
+    className = "",
     queryUrl,
     noPokemonMessage,
     actions,
@@ -37,7 +39,7 @@ const Screen = ({
     );
 
     return (
-        <div className="screen relative">
+        <div className={`${className} screen relative`}>
             <div className="screen-content h-[100%] grid grid-cols-1 grid-rows-[auto_1fr_auto]">
                 <ScreenHeader
                     headerParams={headerParams}
@@ -55,7 +57,7 @@ const Screen = ({
                         <button
                             key={action.name}
                             className={`screen-button-action ${action.name} flex justify-center items-center align-items-center absolute rounded-full border border-black w-[40px] h-[40px] bottom-[10px] right-[20px] transition-all`}
-                            onClick={() => action.action()}
+                            onClick={(event) => action.action(event)}
                         >
                             {action.content}
                         </button>

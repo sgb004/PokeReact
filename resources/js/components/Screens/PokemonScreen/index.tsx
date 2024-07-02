@@ -1,16 +1,64 @@
 import Screen from "../Screen";
 
+const handleAddPokemon = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+) => {
+    const btn = event.currentTarget;
+    const selected = document.querySelectorAll<HTMLInputElement>(
+        ".pokedex-screen .pokemon-from-pokedex:checked"
+    );
+
+    if (!btn.classList.contains("loading") && selected.length > 0) {
+        const pokemonSelected = [];
+
+        for (const item of selected) {
+            pokemonSelected.push(item.value);
+            item.checked = false;
+        }
+
+        btn.classList.add("loading");
+
+        fetch("api/pokemon", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                pokemon: pokemonSelected,
+            }),
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    throw new Error("There was an error to add Pokémon");
+                }
+            })
+            .then((data) => {
+                console.log(data.message);
+
+                btn.classList.remove("loading");
+            })
+            .catch((error) => {
+                console.error(error);
+                for (const item of selected) {
+                    item.checked = true;
+                }
+                btn.classList.remove("loading");
+            });
+    }
+};
+
 const PokemonScreen = () => {
     return (
         <Screen
+            className="pokedex-screen"
             queryUrl="/api/pokedex"
             noPokemonMessage="No Pokémon were found"
             actions={[
                 {
                     name: "add-pokemon",
-                    action: () => {
-                        console.log("CLICK EN AGREGAR POKEMON");
-                    },
+                    action: handleAddPokemon,
                     content: (
                         <svg
                             height="30"

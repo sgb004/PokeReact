@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pokedex;
 use App\Models\Pokemon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -21,9 +22,10 @@ class PokemonController extends Controller
 	}
 
 	public function store(Request $request){
+
 		$validator = Validator::make($request->all(), [
-			'name' => 'required|max:255',
-			'api_id' => 'required|unique:pokemon'
+			'pokemon' => 'required|array',
+			'pokemon.*' => 'required|numeric|exists:pokedex,api_id'
 		]);
 
 		$result = [];
@@ -34,20 +36,30 @@ class PokemonController extends Controller
 				'errors' => $validator->errors()
 			];
 		}else{
-			$pokemon = Pokemon::create([
-				'name' => $request->name,
-				'api_id' => $request->api_id,
-				'nickname' => ''
-			]);
+			$isOk = true;
+			$pokemonFromPokedex = Pokedex::whereIn('api_id', $request->pokemon)->get();
 
-			$result = !$pokemon ?
-				[
-					'status' => 500,
-				] :
-				[
+			foreach($pokemonFromPokedex as $pokemon){
+				$isOk = Pokemon::create([
+					'name' => $pokemon->name,
+					'api_id' => $pokemon->api_id,
+					'nickname' => ''
+				]);
+
+				if(!$isOk){
+					$result = [
+						'status' => 500
+					];
+					break;
+				}
+			}
+
+			if($isOk){
+				$result = [
 					'status' => 200,
-					'pokemon' => $pokemon
+					'message' => 'Pokemon added successfully'
 				];
+			}
 		}
 
 		return response()->json($result, $result['status']);

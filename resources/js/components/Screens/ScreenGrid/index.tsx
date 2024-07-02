@@ -29,7 +29,7 @@ const ScreenGrid = ({ queryUrl, noPokemonMessage }: ScreenGridProps) => {
 
                 for (const item of data.data) {
                     pokemon.current.push({
-                        id: item.id,
+                        id: item.api_id,
                         name: item.name,
                     });
                 }
@@ -94,10 +94,16 @@ const ScreenGrid = ({ queryUrl, noPokemonMessage }: ScreenGridProps) => {
             ) : (
                 <>
                     {pokemon.current.map((pokemon, index) => (
-                        <div
+                        <label
                             key={index}
-                            className="pokemon flex flex-col items-center"
+                            className="pokemon flex flex-col items-center relative cursor-pointer transition-all duration-75 ease"
                         >
+                            <input
+                                type="checkbox"
+                                name="pokemon_from_pokedex"
+                                value={pokemon.id}
+                                className="pokemon-from-pokedex absolute top-0 left-0 hidden"
+                            />
                             <img
                                 className="w-[80%] aspect-[1/1]"
                                 src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}
@@ -105,7 +111,7 @@ const ScreenGrid = ({ queryUrl, noPokemonMessage }: ScreenGridProps) => {
                             <div className="name text-black first-letter:uppercase text-center">
                                 {pokemon.name}
                             </div>
-                        </div>
+                        </label>
                     ))}
                     {nextPageUrl.current ? (
                         <div className="spinner col-start-1 col-end-4 flex justify-center items-center">
