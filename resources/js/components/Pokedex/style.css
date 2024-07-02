@@ -81,6 +81,10 @@
         .pokemon:has(.pokemon-from-pokedex:checked) {
             @apply bg-selected;
         }
+
+        .pokemon:has(.pokemon-from-pokedex:disabled) {
+            @apply opacity-75;
+        }
     }
 
     .front-cover {

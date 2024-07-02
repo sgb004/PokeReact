@@ -11,9 +11,16 @@ const handleAddPokemon = (
     if (!btn.classList.contains("loading") && selected.length > 0) {
         const pokemonSelected = [];
 
+        const enablePokemonSelected = () => {
+            for (const item of selected) {
+                item.checked = false;
+                item.removeAttribute("disabled");
+            }
+        };
+
         for (const item of selected) {
             pokemonSelected.push(item.value);
-            item.checked = false;
+            item.setAttribute("disabled", "true");
         }
 
         btn.classList.add("loading");
@@ -38,6 +45,7 @@ const handleAddPokemon = (
                 console.log(data.message);
 
                 btn.classList.remove("loading");
+                enablePokemonSelected();
             })
             .catch((error) => {
                 console.error(error);
@@ -45,6 +53,7 @@ const handleAddPokemon = (
                     item.checked = true;
                 }
                 btn.classList.remove("loading");
+                enablePokemonSelected();
             });
     }
 };
