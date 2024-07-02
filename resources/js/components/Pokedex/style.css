@@ -74,7 +74,7 @@
             }
 
             &.loading {
-                @apply animate-spin;
+                @apply opacity-75 animate-spin;
             }
         }
 
@@ -142,5 +142,14 @@
     50%,
     100% {
         visibility: hidden;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
     }
 }
