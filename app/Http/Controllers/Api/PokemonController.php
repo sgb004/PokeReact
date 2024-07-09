@@ -43,7 +43,11 @@ class PokemonController extends Controller
 				$isOk = Pokemon::create([
 					'name' => $pokemon->name,
 					'api_id' => $pokemon->api_id,
-					'nickname' => ''
+					"cp" => 0,
+					"attack" => 0,
+					"defense" => 0,
+					"hp" => 0,
+					"favorite" => false
 				]);
 
 				if(!$isOk){
@@ -102,16 +106,39 @@ class PokemonController extends Controller
 		if(!$pokemon){
 			$result = ['status' => 404];
 		}else{
-			if($request->has('nickname')){
-				$pokemon->nickname = $request->nickname;
+			$rules = [
+				'name' => 'required|string',
+				'cp' => 'required|numeric|min:0|max:4724',
+				'attack' => 'required|numeric|min:0|max:15',
+				'defense' => 'required|numeric|min:0|max:15',
+				'hp' => 'required|numeric|min:0|max:15',
+				'favorite' => 'required|boolean'
+			];
+			$data = [];
 
-				$pokemon->save();
+			foreach($rules as $key => $rule){
+				if($request->has($key)){
+					$data[$key] = $request->$key;
+				}else{
+					unset($rules[$key]);
+				}
 			}
 
-			$result = [
-				'status' => 200,
-				'pokemon' => $pokemon
-			];
+			$validator = Validator::make($request->all(), $rules);
+
+			if($validator->fails()){
+				$result = [
+					'status' => 400,
+					'errors' => $validator->errors()
+				];
+			}else{
+				$pokemon->update($data);
+			
+				$result = [
+					'status' => 200,
+					'pokemon' => $pokemon
+				];
+			}
 		}
 
 		return response()->json($result, $result['status']);

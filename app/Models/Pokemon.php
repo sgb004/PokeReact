@@ -14,6 +14,10 @@ class Pokemon extends Model
 	protected $fillable = [
 		'name',
 		'api_id',
-		'nickname'
+		'cp',
+		'attack',
+		'defense',
+		'hp',
+		'favorite'
 	];
 }
