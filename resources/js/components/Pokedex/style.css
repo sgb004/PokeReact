@@ -127,6 +127,21 @@
     }
 }
 
+.notification {
+    &.info {
+        @apply text-info;
+    }
+    &.success {
+        @apply text-success;
+    }
+    &.warning {
+        @apply text-warning;
+    }
+    &.error {
+        @apply text-error;
+    }
+}
+
 @keyframes front-cover-after-show {
     0%,
     49.99% {

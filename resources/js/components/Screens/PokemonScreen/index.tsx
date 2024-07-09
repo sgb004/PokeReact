@@ -1,3 +1,4 @@
+import { addNotification } from "../../Notifications";
 import Screen from "../Screen";
 
 const handleAddPokemon = (
@@ -38,23 +39,28 @@ const handleAddPokemon = (
                 if (response.status === 200) {
                     return response.json();
                 } else {
-                    throw new Error("There was an error to add Pokémon");
+                    throw new Error(
+                        "An error occurred while adding the Pokémon"
+                    );
                 }
             })
             .then((data) => {
-                console.log(data.message);
+                addNotification(btn, data.message, "success");
 
                 btn.classList.remove("loading");
                 enablePokemonSelected();
             })
             .catch((error) => {
-                console.error(error);
+                addNotification(btn, error, "error");
+
                 for (const item of selected) {
                     item.checked = true;
                 }
                 btn.classList.remove("loading");
                 enablePokemonSelected();
             });
+    } else {
+        addNotification(btn, "Please select at least one Pokemon", "info");
     }
 };
 

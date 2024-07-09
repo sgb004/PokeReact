@@ -29,6 +29,10 @@ export default {
                 header: "#caf0f8",
                 "screen-grid": "#edf2f4",
                 selected: "#b8d0eb",
+                info: "#086a9b",
+                success: "#486e52",
+                warning: "#cbad14",
+                error: "#b51d40",
             },
             backgroundImage: {
                 "img-header":
@@ -39,10 +43,44 @@ export default {
                     "0%": { filter: "drop-shadow(0 0 0px var(--bg-color))" },
                     "100%": { filter: "drop-shadow(0 0 50px var(--bg-color))" },
                 },
+                "show-notification": {
+                    "0%": {
+                        opacity: 1,
+                        left: "-100%",
+                        "margin-top": "0",
+                        "grid-template-rows": "0fr",
+                    },
+                    "6.25%": {
+                        opacity: 1,
+                        left: "-100%",
+                        "margin-top": "5px",
+                        "grid-template-rows": "1fr",
+                    },
+                    "12.5%, 87.5%": {
+                        opacity: 1,
+                        left: "0%",
+                        "margin-top": "5px",
+                        "grid-template-rows": "1fr",
+                    },
+                    "93.75%": {
+                        opacity: 0,
+                        left: "0%",
+                        "margin-top": "5px",
+                        "grid-template-rows": "1fr",
+                    },
+                    "100%": {
+                        opacity: 0,
+                        left: "0%",
+                        "margin-top": "0",
+                        "grid-template-rows": "0fr",
+                    },
+                },
             },
             animation: {
                 "front-cover-triangule":
                     "front-cover-triangule 2s infinite ease-in-out",
+                "show-notification":
+                    "show-notification calc(var(--duration, 3s) + 1s) ease-in-out forwards",
             },
             size: {
                 "screen-header-button": "30px",
