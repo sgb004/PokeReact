@@ -10,15 +10,37 @@ use Illuminate\Support\Facades\Validator;
 
 class PokemonController extends Controller
 {
-    public function index(){
-		$pokemon = Pokemon::all();
-
-		$result = [
-			'status' => 200,
-			'data' => $pokemon
+    public function index(Request $request){
+		$filters = [
+			'number' => 'api_id', 
+			'name' => 'name', 
+			'cp' => 'cp', 
+			'attack' => 'attack', 
+			'defense' => 'defense', 
+			'hp' => 'hp', 
+			'favorite' => 'favorite'
 		];
+		$filter = $request->get('filter', 'number');
+		$filter = $filters[$filter] ?? 'api_id';
 
-		return response()->json($result, 200);
+		$sorts = ['asc' => 'asc', 'desc' => 'desc'];
+		$sort = $request->get('sort', 'asc');
+		$sort = $sorts[$sort] ?? 'asc';
+
+		$search = trim($request->get('search', ''));
+
+		$data = Pokemon::when($search, function($query) use ($search){
+			return $query->where('name', 'like', $search . '%');
+		})
+		->orderBy($filter, $sort)
+		->paginate(30)
+		->appends([
+			'filter' => $filter == 'api_id' ? 'number' : 'name',
+			'sort' => $sort,
+			'search' => $search
+		]);
+
+		return response()->json($data, 200);
 	}
 
 	public function store(Request $request){
