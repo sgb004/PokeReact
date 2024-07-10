@@ -13,7 +13,7 @@ Route::post('/pokemon', [PokemonController::class, 'store']);
 
 Route::patch('/pokemon/{id}', [PokemonController::class, 'updatePartial']);
 
-Route::delete('/pokemon/{id}', [PokemonController::class, 'destroy']);
+Route::delete('/pokemon/', [PokemonController::class, 'destroy']);
 
 Route::get('/pokedex', [PokedexController::class, 'index']);
 

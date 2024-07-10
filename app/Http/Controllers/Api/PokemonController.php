@@ -106,15 +106,26 @@ class PokemonController extends Controller
 		return response()->json($result, $result['status']);
 	}
 
-	public function destroy($id){
-		$pokemon = Pokemon::find($id);
+	public function destroy(Request $request){
+		$validator = Validator::make($request->all(), [
+			'pokemon' => 'required|array',
+			'pokemon.*' => 'required|numeric'
+		]);
 
-		$result = ['status' => 404];
+		$result = [];
 
-		if($pokemon){
-			$result = ['status' => 200];
+		if($validator->fails()){
+			$result = [
+				'status' => 400,
+				'errors' => $validator->errors()
+			];
+		}else{
+			Pokemon::whereIn('id', $request->pokemon)->delete();
 
-			$pokemon->delete();
+			$result = [
+				'status' => 200,
+				'message' => 'Pokemon deleted successfully'
+			];
 		}
 
 		return response()->json($result, $result['status']);
