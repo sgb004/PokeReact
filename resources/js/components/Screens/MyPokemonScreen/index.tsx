@@ -3,7 +3,7 @@ import Screen from "../Screen";
 const MyPokemonScreen = () => {
     return (
         <Screen
-            className="pokedex-screen"
+            className="pokemon-screen"
             queryUrl="/api/pokemon"
             noPokemonMessage="No Pokémon were found"
             actions={[]}
