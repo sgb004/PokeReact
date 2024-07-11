@@ -25,6 +25,9 @@ export default {
                 "bg-border-gray": "#6d6d6d",
                 accept: "#4d905e",
                 "accept-icon": "#d9ed92",
+                "button-transfer": "#f7d466",
+                "icon-transfer": "#ffeeb8",
+                "icon-transfer-border": "#b88c00",
                 "icon-line": "#023e8a",
                 header: "#caf0f8",
                 "screen-grid": "#edf2f4",
@@ -81,6 +84,7 @@ export default {
                     "front-cover-triangule 2s infinite ease-in-out",
                 "show-notification":
                     "show-notification calc(var(--duration, 3s) + 1s) ease-in-out forwards",
+                "far-near": "far-near 1s linear infinite",
             },
             size: {
                 "screen-header-button": "30px",

@@ -71,10 +71,42 @@
                     transform: scale(0.9) rotateZ(270deg);
                     filter: drop-shadow(0 0 10px #000);
                 }
+
+                &.loading {
+                    @apply opacity-75 animate-spin;
+                }
             }
 
-            &.loading {
-                @apply opacity-75 animate-spin;
+            &.transfer-pokemon {
+                @apply bg-button-transfer border-bg-border-gray;
+
+                svg path:first-child {
+                    --translateX-hover: -2px;
+                    --translateX-active: -4px;
+                    --translateX: -4px;
+                }
+
+                svg path:last-child {
+                    --translateX-hover: 2px;
+                    --translateX-active: 4px;
+                    --translateX: 4px;
+                }
+
+                &:hover svg path {
+                    transform: translateX(var(--translateX-hover));
+                }
+
+                &:active svg path {
+                    transform: translateX(var(--translateX-active));
+                }
+
+                &.loading {
+                    @apply opacity-75;
+
+                    svg path {
+                        @apply animate-far-near;
+                    }
+                }
             }
         }
 
@@ -170,5 +202,17 @@
     }
     to {
         transform: rotate(360deg);
+    }
+}
+
+@keyframes far-near {
+    0% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(var(--translateX));
+    }
+    100% {
+        transform: translateX(0);
     }
 }
