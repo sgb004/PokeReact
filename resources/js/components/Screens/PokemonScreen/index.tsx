@@ -1,67 +1,20 @@
-import { addNotification } from "../../Notifications";
+import { sendListPokemon } from "../actions";
 import Screen from "../Screen";
 
 const handleAddPokemon = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
 ) => {
-    const btn = event.currentTarget;
-    const selected = document.querySelectorAll<HTMLInputElement>(
-        ".pokedex-screen .pokemon-from-pokedex:checked"
-    );
-
-    if (!btn.classList.contains("loading") && selected.length > 0) {
-        const pokemonSelected = [];
-
-        const enablePokemonSelected = () => {
-            for (const item of selected) {
-                item.checked = false;
-                item.removeAttribute("disabled");
-            }
-        };
-
-        for (const item of selected) {
-            pokemonSelected.push(item.value);
-            item.setAttribute("disabled", "true");
-        }
-
-        btn.classList.add("loading");
-
-        fetch("api/pokemon", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                pokemon: pokemonSelected,
-            }),
-        })
-            .then((response) => {
-                if (response.status === 200) {
-                    return response.json();
-                } else {
-                    throw new Error(
-                        "An error occurred while adding the Pokémon"
-                    );
-                }
-            })
-            .then((data) => {
-                addNotification(btn, data.message, "success");
-
-                btn.classList.remove("loading");
-                enablePokemonSelected();
-            })
-            .catch((error) => {
-                addNotification(btn, error, "error");
-
-                for (const item of selected) {
-                    item.checked = true;
-                }
-                btn.classList.remove("loading");
-                enablePokemonSelected();
-            });
-    } else {
-        addNotification(btn, "Please select at least one Pokemon", "info");
-    }
+    sendListPokemon({
+        btn: event.currentTarget,
+        screen: "pokedex-screen",
+        url: "api/pokemon",
+        method: "POST",
+        messageError: "An error occurred while adding the Pokemon",
+        successCallback: (pokemon) => {
+            console.log("successCallback");
+            console.log(pokemon);
+        },
+    });
 };
 
 const PokemonScreen = () => {
