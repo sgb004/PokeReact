@@ -78,13 +78,35 @@ export default {
                         "grid-template-rows": "0fr",
                     },
                 },
+                "backdrop-grey-scale": {
+                    "0%": {
+                        background: "rgba(0, 0, 0, 0)",
+                        "backdrop-filter": "grayscale(0)",
+                    },
+                    "100%": {
+                        background: "rgba(0, 0, 0, 0.5)",
+                        "backdrop-filter": "grayscale(100%)",
+                    },
+                },
+                in: {
+                    "0%": {
+                        opacity: 0,
+                    },
+                    "100%": {
+                        opacity: 1,
+                    },
+                },
             },
+
             animation: {
                 "front-cover-triangule":
                     "front-cover-triangule 2s infinite ease-in-out",
                 "show-notification":
                     "show-notification calc(var(--duration, 3s) + 1s) ease-in-out forwards",
                 "far-near": "far-near 1s linear infinite",
+                "backdrop-grey-scale":
+                    "backdrop-grey-scale 0.5s forwards ease-in",
+                in: "in 0.25s ease-in",
             },
             size: {
                 "screen-header-button": "30px",

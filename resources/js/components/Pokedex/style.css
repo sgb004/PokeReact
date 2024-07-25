@@ -157,6 +157,14 @@
             animation: front-cover-after-hide forwards 1000ms linear;
         }
     }
+
+    .dialog-btn {
+        @apply min-w-20 bg-button-blue border border-button-blue  text-white rounded-[3px] p-[2px_5px];
+
+        &:hover {
+            @apply bg-icon-line;
+        }
+    }
 }
 
 .notification {

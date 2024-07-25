@@ -1,10 +1,35 @@
+import { useRef } from "react";
+import { sendListPokemon } from "../actions";
 import Screen from "../Screen";
 
-const handleRemovePokemon = () => {
+const handleRemovePokemon = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    confirm: (sending: () => void) => void
+) => {
     console.log("handleRemovePokemon");
+    sendListPokemon({
+        btn: event.currentTarget,
+        screen: "pokemon-screen",
+        url: "api/pokemon",
+        method: "DELETE",
+        messageError: "An error occurred while removing the Pokemon",
+        confirm,
+        successCallback: (pokemon) => {
+            console.log(pokemon);
+        },
+    });
 };
 
 const MyPokemonScreen = () => {
+    const dialogRef = useRef<HTMLDialogElement>(
+        document.createElement("dialog")
+    );
+    const acceptCallback = useRef<() => void>(() => {});
+    const confirmCallback = (sending: () => void) => {
+        acceptCallback.current = sending;
+        dialogRef.current.open = true;
+    };
+
     return (
         <Screen
             className="pokemon-screen"
@@ -13,7 +38,9 @@ const MyPokemonScreen = () => {
             actions={[
                 {
                     name: "transfer-pokemon",
-                    action: handleRemovePokemon,
+                    action: (event) => {
+                        handleRemovePokemon(event, confirmCallback);
+                    },
                     content: (
                         <svg
                             width="40"
@@ -71,7 +98,35 @@ const MyPokemonScreen = () => {
                     value: "favorite",
                 },
             ]}
-        />
+        >
+            <dialog
+                ref={dialogRef}
+                className="absolute top-0 left-0 w-full h-full animate-backdrop-grey-scale"
+            >
+                <div className="w-full h-full flex items-center justify-center p-[15px]">
+                    <form
+                        method="dialog"
+                        className="bg-white min-w-[200px] p-[15px] rounded-[5px] animate-in"
+                    >
+                        <p className="leading-[1.3] mb-[10px]">
+                            Are you sure you want to transfer the selected
+                            Pokémon?
+                        </p>
+                        <div className="flex justify-center gap-[10px]">
+                            <button className="dialog-btn">No</button>
+                            <button
+                                className="dialog-btn"
+                                onClick={() => {
+                                    acceptCallback.current();
+                                }}
+                            >
+                                Yes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </dialog>
+        </Screen>
     );
 };
 
