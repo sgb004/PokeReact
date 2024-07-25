@@ -97,6 +97,10 @@ const MyPokemonScreen = () => {
                     name: "Favorite",
                     value: "favorite",
                 },
+                {
+                    name: "Recent",
+                    value: "recent",
+                },
             ]}
         >
             <dialog

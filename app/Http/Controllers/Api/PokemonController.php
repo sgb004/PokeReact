@@ -18,10 +18,16 @@ class PokemonController extends Controller
 			'attack' => 'attack', 
 			'defense' => 'defense', 
 			'hp' => 'hp', 
-			'favorite' => 'favorite'
+			'favorite' => 'favorite',
+			'recent' => 'created_at'
 		];
-		$filter = $request->get('filter', 'number');
-		$filter = $filters[$filter] ?? 'api_id';
+		$filterSelected = $request->get('filter', 'number');
+		$filter = 'api_id';
+		if(isset($filters[$filterSelected])){
+			$filter = $filters[$filterSelected];
+		}else{
+			$filterSelected = 'number';
+		}
 
 		$sorts = ['asc' => 'asc', 'desc' => 'desc'];
 		$sort = $request->get('sort', 'asc');
@@ -35,7 +41,7 @@ class PokemonController extends Controller
 		->orderBy($filter, $sort)
 		->paginate(30)
 		->appends([
-			'filter' => $filter == 'api_id' ? 'number' : 'name',
+			'filter' => $filterSelected,
 			'sort' => $sort,
 			'search' => $search
 		]);
