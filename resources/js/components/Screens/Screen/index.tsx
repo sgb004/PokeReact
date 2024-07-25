@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ReactNode, useState } from "react";
 import {
     ScreenActions,
     ScreenFilters,
@@ -13,6 +13,7 @@ export type ScreenProps = {
     noPokemonMessage: string;
     actions: ScreenActions[];
     filters?: ScreenFilters[];
+    children?: ReactNode;
 };
 
 const fullUrl = (url: string, getUrlParams: ScreenHeaderParams) => {
@@ -27,6 +28,7 @@ const Screen = ({
     noPokemonMessage,
     actions,
     filters,
+    children,
 }: ScreenProps) => {
     const headerParams: ScreenHeaderParams = {
         filter: "number",
@@ -52,6 +54,7 @@ const Screen = ({
                     queryUrl={queryFullUrl}
                     noPokemonMessage={noPokemonMessage}
                 />
+                {children}
                 <footer>
                     {actions.map((action) => (
                         <button
