@@ -66,7 +66,7 @@ class PokemonController extends Controller
 		}else{
 			$isOk = true;
 			$pokemonFromPokedex = Pokedex::whereIn('api_id', $request->pokemon)->get();
-
+		
 			foreach($pokemonFromPokedex as $pokemon){
 				$isOk = Pokemon::create([
 					'name' => $pokemon->name,
@@ -87,9 +87,13 @@ class PokemonController extends Controller
 			}
 
 			if($isOk){
+				$limit = sizeof($pokemonFromPokedex);
+				$limit = $limit > 3 ? 3 : $limit;
+
 				$result = [
 					'status' => 200,
-					'message' => 'Pokemon added successfully'
+					'message' => 'Pokemon added successfully',
+					'pokemon' => Pokemon::orderBy('created_at', 'desc')->limit($limit)->get()
 				];
 			}
 		}
