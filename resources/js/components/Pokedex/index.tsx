@@ -82,6 +82,7 @@ const Pokedex = () => {
                             type="radio"
                             className="front-cover-dispatcher-open hidden"
                             name="front-cover-button"
+                            defaultChecked
                         />
                     </label>
                 </div>
