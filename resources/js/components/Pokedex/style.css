@@ -53,6 +53,18 @@
             }
         }
 
+        .screen-grid {
+            @apply grid grid-cols-3 auto-rows-min overflow-y-auto overflow-x-hidden;
+        }
+
+        &.pokemon-screen .screen-content {
+            @apply grid-rows-[auto_auto_1fr];
+
+            .recent-pokemon:has(.pokemon) {
+                @apply p-[5px];
+            }
+        }
+
         .filter-button:has(.filter-button-dispatcher:checked)
             .screen-header-button-icon {
             transform: rotateZ(180deg);

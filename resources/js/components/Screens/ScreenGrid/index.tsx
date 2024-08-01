@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { PokemonPokedex } from "../../../types";
+import PokemonImg from "../../PokemonImg";
 
 type ScreenGridProps = {
     queryUrl: string;
@@ -85,7 +86,7 @@ const ScreenGrid = ({ queryUrl, noPokemonMessage }: ScreenGridProps) => {
     return (
         <section
             ref={screenGridRef}
-            className="grid grid-cols-3 auto-rows-min overflow-y-auto overflow-x-hidden p-[5px_5px_60px_5px] bg-screen-grid"
+            className="screen-grid p-[5px_5px_60px_5px] bg-screen-grid"
         >
             {pokemon.current.length == 0 ? (
                 <div className="no-pokemon col-start-1 col-end-4 flex justify-center items-center">
@@ -104,10 +105,7 @@ const ScreenGrid = ({ queryUrl, noPokemonMessage }: ScreenGridProps) => {
                                 value={pokemon.id}
                                 className="pokemon-from-pokedex absolute top-0 left-0 hidden"
                             />
-                            <img
-                                className="w-[80%] aspect-[1/1]"
-                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}
-                            />
+                            <PokemonImg id={pokemon.id} />
                             <div className="name text-black first-letter:uppercase text-center">
                                 {pokemon.name}
                             </div>
