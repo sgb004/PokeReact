@@ -1,6 +1,13 @@
-import { useRef } from "react";
+import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { sendListPokemon } from "../actions";
 import Screen from "../Screen";
+import { PokemonPokedex, Sort } from "../../../types";
+import PokemonImg from "../../PokemonImg";
+
+export type MyPokemonScreenElement = {
+    showRecentPokemon: (pokemon: PokemonPokedex[]) => void;
+    current: HTMLDivElement | null;
+} & HTMLDivElement;
 
 const handleRemovePokemon = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -20,7 +27,9 @@ const handleRemovePokemon = (
     });
 };
 
-const MyPokemonScreen = () => {
+const MyPokemonScreen = forwardRef<MyPokemonScreenElement, {}>((props, ref) => {
+    const screenRef = useRef(null);
+
     const dialogRef = useRef<HTMLDialogElement>(
         document.createElement("dialog")
     );
@@ -30,8 +39,22 @@ const MyPokemonScreen = () => {
         dialogRef.current.open = true;
     };
 
+    const [recentPokemon, setRecentPokemon] = useState<PokemonPokedex[]>([]);
+
+    useImperativeHandle(
+        ref,
+        () => {
+            return {
+                showRecentPokemon: setRecentPokemon,
+                current: screenRef.current,
+            } as MyPokemonScreenElement;
+        },
+        []
+    );
+
     return (
         <Screen
+            ref={screenRef}
             className="pokemon-screen"
             queryUrl="/api/pokemon"
             noPokemonMessage="No Pokémon were found"
@@ -105,7 +128,7 @@ const MyPokemonScreen = () => {
         >
             <dialog
                 ref={dialogRef}
-                className="absolute top-0 left-0 w-full h-full animate-backdrop-grey-scale"
+                className="absolute top-0 left-0 w-full h-full animate-backdrop-grey-scale z-10"
             >
                 <div className="w-full h-full flex items-center justify-center p-[15px]">
                     <form
@@ -130,8 +153,35 @@ const MyPokemonScreen = () => {
                     </form>
                 </div>
             </dialog>
+            <section className="recent-pokemon screen-grid bg-screen-grid">
+                {recentPokemon && recentPokemon.length > 0 ? (
+                    <>
+                        {recentPokemon.map((pokemon, index) => (
+                            <label
+                                key={index}
+                                className="pokemon flex flex-col items-center relative cursor-pointer transition-all duration-75 ease"
+                            >
+                                <PokemonImg id={pokemon.id} />
+                                <div className="name text-black first-letter:uppercase text-center">
+                                    {pokemon.name}
+                                </div>
+                            </label>
+                        ))}
+                        <button
+                            className=""
+                            onClick={() => {
+                                setRecentPokemon([]);
+                            }}
+                        >
+                            Show recent pokemon
+                        </button>
+                    </>
+                ) : (
+                    <></>
+                )}
+            </section>
         </Screen>
     );
-};
+});
 
 export default MyPokemonScreen;

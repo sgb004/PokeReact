@@ -1,8 +1,15 @@
+import { PokemonPokedex } from "../../../types";
 import { sendListPokemon } from "../actions";
+import { MyPokemonScreenElement } from "../MyPokemonScreen";
 import Screen from "../Screen";
 
+type PokemonScreenProps = {
+    myPokemonScreenRef: React.RefObject<MyPokemonScreenElement>;
+};
+
 const handleAddPokemon = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    showRecentPokemon: (pokemon: PokemonPokedex[]) => void
 ) => {
     sendListPokemon({
         btn: event.currentTarget,
@@ -13,11 +20,12 @@ const handleAddPokemon = (
         successCallback: (pokemon) => {
             console.log("successCallback");
             console.log(pokemon);
+            showRecentPokemon(pokemon);
         },
     });
 };
 
-const PokemonScreen = () => {
+const PokemonScreen = ({ myPokemonScreenRef }: PokemonScreenProps) => {
     return (
         <Screen
             className="pokedex-screen"
@@ -26,7 +34,13 @@ const PokemonScreen = () => {
             actions={[
                 {
                     name: "add-pokemon",
-                    action: handleAddPokemon,
+                    action: (event) => {
+                        handleAddPokemon(
+                            event,
+                            myPokemonScreenRef?.current?.showRecentPokemon ??
+                                (() => {})
+                        );
+                    },
                     content: (
                         <svg
                             height="30"
