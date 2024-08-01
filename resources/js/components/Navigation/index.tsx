@@ -27,7 +27,7 @@ const Navigation = () => {
         <nav className="navigation relative mt-auto">
             <ul className="flex gap-[10px] pl-[10px] pr-[10px] p justify-end">
                 <li>
-                    <NavigationButton name="my-pokemon">
+                    <NavigationButton name="my-pokemon" activated={true}>
                         <span>
                             <svg
                                 className="navigation-button-icon"
@@ -46,7 +46,7 @@ const Navigation = () => {
                     </NavigationButton>
                 </li>
                 <li>
-                    <NavigationButton name="pokemon" activated={true}>
+                    <NavigationButton name="pokemon">
                         <span>
                             <img
                                 className="navigation-button-icon w-[30px]"
