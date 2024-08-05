@@ -1,12 +1,12 @@
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { sendListPokemon } from "../actions";
-import Screen from "../Screen";
-import { PokemonPokedex, Sort } from "../../../types";
+import Screen, { ScreenElement } from "../Screen";
+import { PokemonPokedex } from "../../../types";
 import PokemonImg from "../../PokemonImg";
 
 export type MyPokemonScreenElement = {
     showRecentPokemon: (pokemon: PokemonPokedex[]) => void;
-    current: HTMLDivElement | null;
+    current: ScreenElement | null;
 } & HTMLDivElement;
 
 const handleRemovePokemon = (
@@ -28,7 +28,7 @@ const handleRemovePokemon = (
 };
 
 const MyPokemonScreen = forwardRef<MyPokemonScreenElement, {}>((props, ref) => {
-    const screenRef = useRef(null);
+    const screenRef = useRef<ScreenElement>(null);
 
     const dialogRef = useRef<HTMLDialogElement>(
         document.createElement("dialog")
@@ -40,6 +40,23 @@ const MyPokemonScreen = forwardRef<MyPokemonScreenElement, {}>((props, ref) => {
     };
 
     const [recentPokemon, setRecentPokemon] = useState<PokemonPokedex[]>([]);
+
+    const handleShowRecentPokemon = () => {
+        const { header } = screenRef?.current ?? {};
+        const { filter, sort } = header?.getParams() ?? {};
+
+        if (filter == "recent" && sort == "desc") {
+            screenRef?.current?.grid?.reset();
+        } else {
+            header?.setParams({
+                filter: "recent",
+                sort: "desc",
+                search: "",
+            });
+        }
+
+        setRecentPokemon([]);
+    };
 
     useImperativeHandle(
         ref,
@@ -167,12 +184,7 @@ const MyPokemonScreen = forwardRef<MyPokemonScreenElement, {}>((props, ref) => {
                                 </div>
                             </label>
                         ))}
-                        <button
-                            className=""
-                            onClick={() => {
-                                setRecentPokemon([]);
-                            }}
-                        >
+                        <button className="" onClick={handleShowRecentPokemon}>
                             Show recent pokemon
                         </button>
                     </>
