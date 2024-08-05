@@ -9,9 +9,11 @@ export type ScreenFilters = {
     value: string;
 };
 
+export type Sort = "asc" | "desc";
+
 export type ScreenHeaderParams = {
     filter: string;
-    sort: "asc" | "desc";
+    sort: Sort;
     search: string;
 };
 
