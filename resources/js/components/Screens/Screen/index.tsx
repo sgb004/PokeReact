@@ -1,18 +1,18 @@
 import {
-    ForwardedRef,
     forwardRef,
-    LegacyRef,
     ReactNode,
     useState,
     useRef,
+    useImperativeHandle,
 } from "react";
 import {
     ScreenActions,
     ScreenFilters,
     ScreenHeaderParams,
+    Sort,
 } from "../../../types";
-import ScreenHeader from "../ScreenHeader";
-import ScreenGrid from "../ScreenGrid";
+import ScreenHeader, { ScreenHeaderElement } from "../ScreenHeader";
+import ScreenGrid, { ScreenGridElement } from "../ScreenGrid";
 
 export type ScreenProps = {
     className?: string;
@@ -21,7 +21,15 @@ export type ScreenProps = {
     actions: ScreenActions[];
     filters?: ScreenFilters[];
     children?: ReactNode;
+    filterDefault?: string;
+    sortDefault?: Sort;
 };
+
+export type ScreenElement = {
+    current: HTMLDivElement | null;
+    header: ScreenHeaderElement | null;
+    grid: ScreenGridElement | null;
+} & HTMLDivElement;
 
 const fullUrl = (url: string, getUrlParams: ScreenHeaderParams) => {
     const params = new URLSearchParams(getUrlParams);
@@ -38,13 +46,17 @@ const Screen = forwardRef<HTMLDivElement, ScreenProps>(
             actions,
             filters,
             children,
+            filterDefault = "number",
+            sortDefault = "asc",
         },
         ref
     ) => {
-        const screenRef = useRef(ref);
+        const screenRef = useRef(null);
+        const screenHeaderRef = useRef(null);
+        const screenGridRef = useRef(null);
         const headerParams: ScreenHeaderParams = {
-            filter: "number",
-            sort: "asc",
+            filter: filterDefault,
+            sort: sortDefault,
             search: "",
         };
 
@@ -52,13 +64,23 @@ const Screen = forwardRef<HTMLDivElement, ScreenProps>(
             fullUrl(queryUrl, headerParams)
         );
 
+        useImperativeHandle(
+            ref,
+            () => {
+                return {
+                    current: screenRef.current,
+                    header: screenHeaderRef.current,
+                    grid: screenGridRef.current,
+                } as ScreenElement;
+            },
+            []
+        );
+
         return (
-            <div
-                ref={ref ?? (screenRef as LegacyRef<HTMLDivElement>)}
-                className={`${className} screen relative`}
-            >
+            <div ref={screenRef} className={`${className} screen relative`}>
                 <div className="screen-content h-[100%] grid grid-cols-1 grid-rows-[auto_1fr_auto]">
                     <ScreenHeader
+                        ref={screenHeaderRef}
                         headerParams={headerParams}
                         filters={filters}
                         onChange={(params: ScreenHeaderParams) =>
@@ -67,6 +89,7 @@ const Screen = forwardRef<HTMLDivElement, ScreenProps>(
                     />
                     {children}
                     <ScreenGrid
+                        ref={screenGridRef}
                         queryUrl={queryFullUrl}
                         noPokemonMessage={noPokemonMessage}
                     />
