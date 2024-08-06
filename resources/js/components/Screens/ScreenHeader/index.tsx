@@ -8,7 +8,7 @@ export type ScreenHeader = {
 };
 
 export type ScreenHeaderElement = {
-    current: HTMLElement | null;
+    element: HTMLElement | null;
     setParams: (params: ScreenHeaderParams) => void;
     getParams: () => ScreenHeaderParams;
 } & HTMLElement;
@@ -30,7 +30,7 @@ const ScreenHeader = forwardRef<HTMLElement, ScreenHeader>(
             ref,
             () => {
                 return {
-                    current: screenHeaderRef.current,
+                    element: screenHeaderRef.current,
                     setParams,
                     getParams: () => {
                         return paramsRef.current;

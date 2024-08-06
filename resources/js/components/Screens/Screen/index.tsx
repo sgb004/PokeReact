@@ -26,7 +26,7 @@ export type ScreenProps = {
 };
 
 export type ScreenElement = {
-    current: HTMLDivElement | null;
+    element: HTMLDivElement | null;
     header: ScreenHeaderElement | null;
     grid: ScreenGridElement | null;
 } & HTMLDivElement;
@@ -68,7 +68,7 @@ const Screen = forwardRef<HTMLDivElement, ScreenProps>(
             ref,
             () => {
                 return {
-                    current: screenRef.current,
+                    element: screenRef.current,
                     header: screenHeaderRef.current,
                     grid: screenGridRef.current,
                 } as ScreenElement;

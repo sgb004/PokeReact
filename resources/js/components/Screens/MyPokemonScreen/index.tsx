@@ -5,8 +5,8 @@ import { PokemonPokedex } from "../../../types";
 import PokemonImg from "../../PokemonImg";
 
 export type MyPokemonScreenElement = {
+    element: ScreenElement | null;
     showRecentPokemon: (pokemon: PokemonPokedex[]) => void;
-    current: ScreenElement | null;
 } & HTMLDivElement;
 
 const handleRemovePokemon = (
@@ -62,8 +62,8 @@ const MyPokemonScreen = forwardRef<MyPokemonScreenElement, {}>((props, ref) => {
         ref,
         () => {
             return {
+                element: screenRef.current,
                 showRecentPokemon: setRecentPokemon,
-                current: screenRef.current,
             } as MyPokemonScreenElement;
         },
         []

@@ -14,7 +14,7 @@ export type ScreenGridProps = {
 };
 
 export type ScreenGridElement = {
-    current: HTMLDivElement | null;
+    element: HTMLDivElement | null;
     reset: () => void;
 } & HTMLDivElement;
 
@@ -103,7 +103,7 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
             ref,
             () => {
                 return {
-                    current: screenGridRef.current,
+                    element: screenGridRef.current,
                     reset: () => {
                         reset(nextPageUrl.current + "&page=1");
                         loadMore();
