@@ -60,8 +60,16 @@
         &.pokemon-screen .screen-content {
             @apply grid-rows-[auto_auto_1fr];
 
-            .recent-pokemon:has(.pokemon) {
-                @apply p-[5px];
+            .recent-pokemon:has(.go-out) {
+                @apply animate-hide-recent;
+            }
+
+            .recent-pokemon .recent-pokemon-action-btn {
+                @apply col-[3] text-xs xs:text-sm bg-button-yellow text-slate-700 rounded-[5px] p-[5px];
+            }
+
+            & > .screen-grid {
+                @apply z-[1];
             }
         }
 
@@ -234,5 +242,14 @@
     }
     100% {
         transform: translateX(0);
+    }
+}
+
+@keyframes hide-recent {
+    0% {
+        grid-template-rows: 1fr;
+    }
+    100% {
+        grid-template-rows: 0fr;
     }
 }

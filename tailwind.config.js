@@ -31,6 +31,7 @@ export default {
                 "icon-line": "#023e8a",
                 header: "#caf0f8",
                 "screen-grid": "#edf2f4",
+                "screen-grid-recent": "#e3f2f7",
                 selected: "#b8d0eb",
                 info: "#086a9b",
                 success: "#486e52",
@@ -96,8 +97,23 @@ export default {
                         opacity: 1,
                     },
                 },
+                "show-recent": {
+                    from: {
+                        "grid-template-rows": "0fr",
+                    },
+                    to: {
+                        "grid-template-rows": "1fr",
+                    },
+                },
+                "hide-recent": {
+                    from: {
+                        "grid-template-rows": "1fr",
+                    },
+                    to: {
+                        "grid-template-rows": "0fr",
+                    },
+                },
             },
-
             animation: {
                 "front-cover-triangule":
                     "front-cover-triangule 2s infinite ease-in-out",
@@ -107,11 +123,16 @@ export default {
                 "backdrop-grey-scale":
                     "backdrop-grey-scale 0.5s forwards ease-in",
                 in: "in 0.25s ease-in",
+                "show-recent": "show-recent 0.5s ease-out forwards",
+                "hide-recent": "hide-recent 0.5s ease-out forwards",
             },
             size: {
                 "screen-header-button": "30px",
                 "screen-header-button-icon": "22px",
                 "screen-header-button-icon-active": "20px",
+            },
+            screens: {
+                xs: "440px",
             },
         },
     },

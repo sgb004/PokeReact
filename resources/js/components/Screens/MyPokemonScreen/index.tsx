@@ -2,7 +2,7 @@ import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { sendListPokemon } from "../actions";
 import Screen, { ScreenElement } from "../Screen";
 import { PokemonPokedex } from "../../../types";
-import PokemonImg from "../../PokemonImg";
+import Recent from "./Recent";
 
 export type MyPokemonScreenElement = {
     element: ScreenElement | null;
@@ -54,8 +54,6 @@ const MyPokemonScreen = forwardRef<MyPokemonScreenElement, {}>((props, ref) => {
                 search: "",
             });
         }
-
-        setRecentPokemon([]);
     };
 
     useImperativeHandle(
@@ -170,28 +168,16 @@ const MyPokemonScreen = forwardRef<MyPokemonScreenElement, {}>((props, ref) => {
                     </form>
                 </div>
             </dialog>
-            <section className="recent-pokemon screen-grid bg-screen-grid">
-                {recentPokemon && recentPokemon.length > 0 ? (
-                    <>
-                        {recentPokemon.map((pokemon, index) => (
-                            <label
-                                key={index}
-                                className="pokemon flex flex-col items-center relative cursor-pointer transition-all duration-75 ease"
-                            >
-                                <PokemonImg id={pokemon.id} />
-                                <div className="name text-black first-letter:uppercase text-center">
-                                    {pokemon.name}
-                                </div>
-                            </label>
-                        ))}
-                        <button className="" onClick={handleShowRecentPokemon}>
-                            Show recent pokemon
-                        </button>
-                    </>
-                ) : (
-                    <></>
-                )}
-            </section>
+
+            {recentPokemon && recentPokemon.length > 0 ? (
+                <Recent
+                    recentPokemon={recentPokemon}
+                    setRecentPokemon={setRecentPokemon}
+                    handleShowRecentPokemon={handleShowRecentPokemon}
+                />
+            ) : (
+                <></>
+            )}
         </Screen>
     );
 });
