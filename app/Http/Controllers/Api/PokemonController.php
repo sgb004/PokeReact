@@ -88,7 +88,7 @@ class PokemonController extends Controller
 
 			if($isOk){
 				$limit = sizeof($pokemonFromPokedex);
-				$limit = $limit > 3 ? 3 : $limit;
+				$limit = $limit > 2 ? 2 : $limit;
 
 				$result = [
 					'status' => 200,
