@@ -6,8 +6,11 @@ export type PokemonFunctionParams = {
     url: string;
     method: "GET" | "POST" | "DELETE";
     messageError: string;
-    successCallback: (pokemon: Pokemon[]) => void;
-    errorCallback?: (pokemon: NodeListOf<HTMLInputElement>) => void;
+    successCallback: (pokemon: Pokemon[], pokemonSelected: number[]) => void;
+    errorCallback?: (
+        pokemon: NodeListOf<HTMLInputElement>,
+        pokemonSelected: number[]
+    ) => void;
 };
 
 export type SendingListPokemonParams = PokemonFunctionParams & {
@@ -28,7 +31,7 @@ const sendingListPokemon = ({
     successCallback,
     errorCallback,
 }: SendingListPokemonParams) => {
-    const pokemonSelected: string[] = [];
+    const pokemonSelected: number[] = [];
 
     const enablePokemonSelected = () => {
         for (const item of selected) {
@@ -38,7 +41,7 @@ const sendingListPokemon = ({
     };
 
     for (const item of selected) {
-        pokemonSelected.push(item.value);
+        pokemonSelected.push(parseInt(item.value));
         item.setAttribute("disabled", "true");
     }
 
@@ -61,7 +64,7 @@ const sendingListPokemon = ({
             }
         })
         .then((data) => {
-            successCallback(data.pokemon);
+            successCallback(data.pokemon, pokemonSelected);
 
             addNotification(btn, data.message, "success");
 
@@ -70,7 +73,7 @@ const sendingListPokemon = ({
         })
         .catch((error) => {
             if (errorCallback) {
-                errorCallback(selected);
+                errorCallback(selected, pokemonSelected);
             }
 
             addNotification(btn, error, "error");
