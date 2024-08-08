@@ -20,6 +20,8 @@ export type ScreenGridProps = {
 export type ScreenGridElement = {
     element: HTMLDivElement | null;
     reset: () => void;
+    getPokemon: () => Pokemon[];
+    setPokemon: (pokemon: Pokemon[]) => void;
 } & HTMLDivElement;
 
 const getTime = () => {
@@ -108,6 +110,11 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
                     reset: () => {
                         reset(nextPageUrl.current + "&page=1");
                         loadMore();
+                    },
+                    getPokemon: () => pokemon.current,
+                    setPokemon: (pokemonList: Pokemon[]) => {
+                        pokemon.current = pokemonList;
+                        setRender(getTime());
                     },
                 } as ScreenGridElement;
             },
