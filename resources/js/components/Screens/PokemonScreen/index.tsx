@@ -1,4 +1,5 @@
-import { PokemonPokedex } from "../../../types";
+import { Pokemon } from "../../../types";
+import dataToPokemon from "../../../utils/data-to-pokemon";
 import PokemonImg from "../../PokemonImg";
 import { sendListPokemon } from "../actions";
 import { MyPokemonScreenElement } from "../MyPokemonScreen";
@@ -10,7 +11,7 @@ type PokemonScreenProps = {
 
 const handleAddPokemon = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    showRecentPokemon: (pokemon: PokemonPokedex[]) => void
+    showRecentPokemon: (pokemon: Pokemon[]) => void
 ) => {
     sendListPokemon({
         btn: event.currentTarget,
@@ -19,9 +20,8 @@ const handleAddPokemon = (
         method: "POST",
         messageError: "An error occurred while adding the Pokemon",
         successCallback: (pokemon) => {
-            console.log("successCallback");
-            console.log(pokemon);
-            showRecentPokemon(pokemon);
+            const list = pokemon.map((pokemon) => dataToPokemon(pokemon));
+            showRecentPokemon(list);
         },
     });
 };
@@ -65,7 +65,7 @@ const PokemonScreen = ({ myPokemonScreenRef }: PokemonScreenProps) => {
                     value: "name",
                 },
             ]}
-            printGridItems={(pokemon: PokemonPokedex, index: number) => (
+            printGridItems={(pokemon: Pokemon, index: number) => (
                 <label
                     key={index}
                     className="pokemon flex flex-col items-center relative cursor-pointer transition-all duration-75 ease"
@@ -73,10 +73,10 @@ const PokemonScreen = ({ myPokemonScreenRef }: PokemonScreenProps) => {
                     <input
                         type="checkbox"
                         name="pokemon_from_pokedex"
-                        value={pokemon.id}
+                        value={pokemon.number}
                         className="pokemon-from-pokedex absolute top-0 left-0 hidden"
                     />
-                    <PokemonImg id={pokemon.id} />
+                    <PokemonImg id={pokemon.number} />
                     <div className="name text-black first-letter:uppercase text-center">
                         {pokemon.name}
                     </div>

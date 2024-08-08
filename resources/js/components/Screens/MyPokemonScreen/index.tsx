@@ -1,13 +1,13 @@
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { sendListPokemon } from "../actions";
 import Screen, { ScreenElement } from "../Screen";
-import { PokemonPokedex } from "../../../types";
+import { Pokemon } from "../../../types";
 import Recent from "./Recent";
 import PokemonImg from "../../PokemonImg";
 
 export type MyPokemonScreenElement = {
     element: ScreenElement | null;
-    showRecentPokemon: (pokemon: PokemonPokedex[]) => void;
+    showRecentPokemon: (pokemon: Pokemon[]) => void;
 } & HTMLDivElement;
 
 const handleRemovePokemon = (
@@ -40,7 +40,7 @@ const MyPokemonScreen = forwardRef<MyPokemonScreenElement, {}>((props, ref) => {
         dialogRef.current.open = true;
     };
 
-    const [recentPokemon, setRecentPokemon] = useState<PokemonPokedex[]>([]);
+    const [recentPokemon, setRecentPokemon] = useState<Pokemon[]>([]);
 
     const handleShowRecentPokemon = () => {
         const { header } = screenRef?.current ?? {};
@@ -141,7 +141,7 @@ const MyPokemonScreen = forwardRef<MyPokemonScreenElement, {}>((props, ref) => {
                     value: "recent",
                 },
             ]}
-            printGridItems={(pokemon: PokemonPokedex, index: number) => (
+            printGridItems={(pokemon: Pokemon, index: number) => (
                 <label
                     key={index}
                     className="pokemon flex flex-col items-center relative cursor-pointer transition-all duration-75 ease"
@@ -152,7 +152,7 @@ const MyPokemonScreen = forwardRef<MyPokemonScreenElement, {}>((props, ref) => {
                         value={pokemon.id}
                         className="pokemon-from-pokedex absolute top-0 left-0 hidden"
                     />
-                    <PokemonImg id={pokemon.id} />
+                    <PokemonImg number={pokemon.number} />
                     <div className="name text-black first-letter:uppercase text-center">
                         {pokemon.name}
                     </div>

@@ -6,13 +6,10 @@ import {
     useRef,
     useState,
 } from "react";
-import { PokemonPokedex } from "../../../types";
-import PokemonImg from "../../PokemonImg";
+import { Pokemon } from "../../../types";
+import dataToPokemon from "../../../utils/data-to-pokemon";
 
-export type PrintGridItems = (
-    pokemon: PokemonPokedex,
-    index: number
-) => ReactNode;
+export type PrintGridItems = (pokemon: Pokemon, index: number) => ReactNode;
 
 export type ScreenGridProps = {
     queryUrl: string;
@@ -35,7 +32,7 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
     ({ queryUrl, noPokemonMessage, printGridItems }, ref) => {
         const screenGridRef = useRef<HTMLDivElement>(null);
         const nextPageUrl = useRef(queryUrl);
-        const pokemon = useRef<PokemonPokedex[]>([]);
+        const pokemon = useRef<Pokemon[]>([]);
         const isLoading = useRef(false);
         const [render, setRender] = useState(1);
 
@@ -48,10 +45,7 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
                     nextPageUrl.current = data.next_page_url;
 
                     for (const item of data.data) {
-                        pokemon.current.push({
-                            id: item.api_id,
-                            name: item.name,
-                        });
+                        pokemon.current.push(dataToPokemon(item));
                     }
 
                     setRender(getTime());

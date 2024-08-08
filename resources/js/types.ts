@@ -17,7 +17,14 @@ export type ScreenHeaderParams = {
     search: string;
 };
 
-export type PokemonPokedex = {
+export type Pokemon = {
     id: number;
     name: string;
+    number: number;
+    cp: number;
+    attack: number;
+    defense: number;
+    hp: number;
+    favorite: boolean;
+    enabled: boolean;
 };

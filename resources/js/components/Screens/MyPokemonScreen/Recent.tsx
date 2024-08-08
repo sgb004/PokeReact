@@ -1,9 +1,9 @@
-import { PokemonPokedex } from "../../../types";
+import { Pokemon } from "../../../types";
 import PokemonImg from "../../PokemonImg";
 
 type Props = {
-    recentPokemon: PokemonPokedex[];
-    setRecentPokemon: (pokemon: PokemonPokedex[]) => void;
+    recentPokemon: Pokemon[];
+    setRecentPokemon: (pokemon: Pokemon[]) => void;
     handleShowRecentPokemon: () => void;
 };
 
@@ -28,7 +28,7 @@ const Recent = ({
                             key={index}
                             className="pokemon row-start-1 row-end-3 flex flex-col items-center relative cursor-pointer transition-all duration-75 ease"
                         >
-                            <PokemonImg id={pokemon.id} />
+                            <PokemonImg number={pokemon.number} />
                             <div className="name text-black first-letter:uppercase text-center">
                                 {pokemon.name}
                             </div>
