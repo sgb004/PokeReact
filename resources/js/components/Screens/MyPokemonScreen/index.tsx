@@ -12,9 +12,9 @@ export type MyPokemonScreenElement = {
 
 const handleRemovePokemon = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    confirm: (sending: () => void) => void
+    confirm: (sending: () => void) => void,
+    screen: ScreenElement | null
 ) => {
-    console.log("handleRemovePokemon");
     sendListPokemon({
         btn: event.currentTarget,
         screen: "pokemon-screen",
@@ -22,8 +22,16 @@ const handleRemovePokemon = (
         method: "DELETE",
         messageError: "An error occurred while removing the Pokemon",
         confirm,
-        successCallback: (pokemon) => {
-            console.log(pokemon);
+        successCallback: (pokemon, pokemonSelected) => {
+            const grid = screen?.grid;
+
+            if (grid) {
+                let pokemonList = grid.getPokemon();
+                pokemonList = pokemonList.filter(
+                    (pokemon) => !pokemonSelected.includes(pokemon.id)
+                );
+                grid.setPokemon(pokemonList);
+            }
         },
     });
 };
@@ -78,7 +86,11 @@ const MyPokemonScreen = forwardRef<MyPokemonScreenElement, {}>((props, ref) => {
                 {
                     name: "transfer-pokemon",
                     action: (event) => {
-                        handleRemovePokemon(event, confirmCallback);
+                        handleRemovePokemon(
+                            event,
+                            confirmCallback,
+                            screenRef.current
+                        );
                     },
                     content: (
                         <svg
