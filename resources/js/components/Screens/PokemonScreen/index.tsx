@@ -1,4 +1,5 @@
 import { PokemonPokedex } from "../../../types";
+import PokemonImg from "../../PokemonImg";
 import { sendListPokemon } from "../actions";
 import { MyPokemonScreenElement } from "../MyPokemonScreen";
 import Screen from "../Screen";
@@ -64,6 +65,23 @@ const PokemonScreen = ({ myPokemonScreenRef }: PokemonScreenProps) => {
                     value: "name",
                 },
             ]}
+            printGridItems={(pokemon: PokemonPokedex, index: number) => (
+                <label
+                    key={index}
+                    className="pokemon flex flex-col items-center relative cursor-pointer transition-all duration-75 ease"
+                >
+                    <input
+                        type="checkbox"
+                        name="pokemon_from_pokedex"
+                        value={pokemon.id}
+                        className="pokemon-from-pokedex absolute top-0 left-0 hidden"
+                    />
+                    <PokemonImg id={pokemon.id} />
+                    <div className="name text-black first-letter:uppercase text-center">
+                        {pokemon.name}
+                    </div>
+                </label>
+            )}
         />
     );
 };

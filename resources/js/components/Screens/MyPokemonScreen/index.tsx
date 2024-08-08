@@ -3,6 +3,7 @@ import { sendListPokemon } from "../actions";
 import Screen, { ScreenElement } from "../Screen";
 import { PokemonPokedex } from "../../../types";
 import Recent from "./Recent";
+import PokemonImg from "../../PokemonImg";
 
 export type MyPokemonScreenElement = {
     element: ScreenElement | null;
@@ -140,6 +141,23 @@ const MyPokemonScreen = forwardRef<MyPokemonScreenElement, {}>((props, ref) => {
                     value: "recent",
                 },
             ]}
+            printGridItems={(pokemon: PokemonPokedex, index: number) => (
+                <label
+                    key={index}
+                    className="pokemon flex flex-col items-center relative cursor-pointer transition-all duration-75 ease"
+                >
+                    <input
+                        type="checkbox"
+                        name="pokemon_from_pokedex"
+                        value={pokemon.id}
+                        className="pokemon-from-pokedex absolute top-0 left-0 hidden"
+                    />
+                    <PokemonImg id={pokemon.id} />
+                    <div className="name text-black first-letter:uppercase text-center">
+                        {pokemon.name}
+                    </div>
+                </label>
+            )}
         >
             <dialog
                 ref={dialogRef}

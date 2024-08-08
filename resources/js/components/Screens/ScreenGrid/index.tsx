@@ -1,5 +1,6 @@
 import {
     forwardRef,
+    ReactNode,
     useEffect,
     useImperativeHandle,
     useRef,
@@ -8,9 +9,15 @@ import {
 import { PokemonPokedex } from "../../../types";
 import PokemonImg from "../../PokemonImg";
 
+export type PrintGridItems = (
+    pokemon: PokemonPokedex,
+    index: number
+) => ReactNode;
+
 export type ScreenGridProps = {
     queryUrl: string;
     noPokemonMessage: string;
+    printGridItems: PrintGridItems;
 };
 
 export type ScreenGridElement = {
@@ -25,7 +32,7 @@ const getTime = () => {
 };
 
 const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
-    ({ queryUrl, noPokemonMessage }, ref) => {
+    ({ queryUrl, noPokemonMessage, printGridItems }, ref) => {
         const screenGridRef = useRef<HTMLDivElement>(null);
         const nextPageUrl = useRef(queryUrl);
         const pokemon = useRef<PokemonPokedex[]>([]);
@@ -124,23 +131,7 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
                     </div>
                 ) : (
                     <>
-                        {pokemon.current.map((pokemon, index) => (
-                            <label
-                                key={index}
-                                className="pokemon flex flex-col items-center relative cursor-pointer transition-all duration-75 ease"
-                            >
-                                <input
-                                    type="checkbox"
-                                    name="pokemon_from_pokedex"
-                                    value={pokemon.id}
-                                    className="pokemon-from-pokedex absolute top-0 left-0 hidden"
-                                />
-                                <PokemonImg id={pokemon.id} />
-                                <div className="name text-black first-letter:uppercase text-center">
-                                    {pokemon.name}
-                                </div>
-                            </label>
-                        ))}
+                        {pokemon.current.map(printGridItems)}
                         {nextPageUrl.current ? (
                             <div className="spinner col-start-1 col-end-4 flex justify-center items-center">
                                 Loading...

@@ -12,7 +12,7 @@ import {
     Sort,
 } from "../../../types";
 import ScreenHeader, { ScreenHeaderElement } from "../ScreenHeader";
-import ScreenGrid, { ScreenGridElement } from "../ScreenGrid";
+import ScreenGrid, { PrintGridItems, ScreenGridElement } from "../ScreenGrid";
 
 export type ScreenProps = {
     className?: string;
@@ -23,6 +23,7 @@ export type ScreenProps = {
     children?: ReactNode;
     filterDefault?: string;
     sortDefault?: Sort;
+    printGridItems: PrintGridItems;
 };
 
 export type ScreenElement = {
@@ -48,6 +49,7 @@ const Screen = forwardRef<HTMLDivElement, ScreenProps>(
             children,
             filterDefault = "number",
             sortDefault = "asc",
+            printGridItems,
         },
         ref
     ) => {
@@ -92,6 +94,7 @@ const Screen = forwardRef<HTMLDivElement, ScreenProps>(
                         ref={screenGridRef}
                         queryUrl={queryFullUrl}
                         noPokemonMessage={noPokemonMessage}
+                        printGridItems={printGridItems}
                     />
                     <footer>
                         {actions.map((action) => (
