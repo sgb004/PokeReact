@@ -1,4 +1,4 @@
-import { PokemonPokedex } from "../../types";
+import { Pokemon } from "../../types";
 import { addNotification } from "../Notifications";
 
 export type PokemonFunctionParams = {
@@ -6,7 +6,7 @@ export type PokemonFunctionParams = {
     url: string;
     method: "GET" | "POST" | "DELETE";
     messageError: string;
-    successCallback: (pokemon: PokemonPokedex[]) => void;
+    successCallback: (pokemon: Pokemon[]) => void;
     errorCallback?: (pokemon: NodeListOf<HTMLInputElement>) => void;
 };
 
