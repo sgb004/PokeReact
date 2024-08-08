@@ -58,7 +58,11 @@
         }
 
         &.pokemon-screen .screen-content {
-            @apply grid-rows-[auto_auto_1fr];
+            @apply grid-rows-[auto_1fr];
+
+            &:has(.recent-pokemon) {
+                @apply grid-rows-[auto_auto_1fr];
+            }
 
             .recent-pokemon:has(.go-out) {
                 @apply animate-hide-recent;
