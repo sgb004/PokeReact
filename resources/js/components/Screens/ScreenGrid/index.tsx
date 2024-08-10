@@ -37,6 +37,7 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
         const pokemon = useRef<Pokemon[]>([]);
         const isLoading = useRef(false);
         const [render, setRender] = useState(1);
+        const pokemonIsUpdated = useRef(false);
 
         const loadMore = () => {
             if (nextPageUrl.current === null) return false;
@@ -54,11 +55,14 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
                 });
         };
 
-        const reset = (queryUrl: string) => {
+        const reset = (queryUrl: string, resetScroll = true) => {
             nextPageUrl.current = queryUrl;
             pokemon.current = [];
             isLoading.current = false;
-            screenGridRef.current?.scrollTo(0, 0);
+
+            if (resetScroll) {
+                screenGridRef.current?.scrollTo(0, 0);
+            }
         };
 
         useEffect(() => {
@@ -68,6 +72,22 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
 
         useEffect(() => {
             isLoading.current = false;
+
+            if (pokemonIsUpdated.current) {
+                pokemonIsUpdated.current = false;
+
+                if (nextPageUrl.current !== null && screenGridRef.current) {
+                    const scrollHeight = screenGridRef.current.scrollHeight;
+                    const offsetHeight = screenGridRef.current.offsetHeight;
+                    const scrollPercent =
+                        ((scrollHeight - offsetHeight) * 100) / offsetHeight;
+
+                    if (scrollPercent < 10) {
+                        reset(nextPageUrl.current + "&page=1", false);
+                        loadMore();
+                    }
+                }
+            }
         }, [render]);
 
         useEffect(() => {
@@ -114,6 +134,7 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
                     getPokemon: () => pokemon.current,
                     setPokemon: (pokemonList: Pokemon[]) => {
                         pokemon.current = pokemonList;
+                        pokemonIsUpdated.current = true;
                         setRender(getTime());
                     },
                 } as ScreenGridElement;
