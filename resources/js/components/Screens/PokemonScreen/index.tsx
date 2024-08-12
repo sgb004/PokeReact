@@ -67,7 +67,7 @@ const PokemonScreen = ({ myPokemonScreenRef }: PokemonScreenProps) => {
             ]}
             printGridItems={(pokemon: Pokemon, index: number) => (
                 <label
-                    key={index}
+                    key={pokemon.number}
                     className="pokemon flex flex-col items-center relative cursor-pointer transition-all duration-75 ease"
                 >
                     <input
