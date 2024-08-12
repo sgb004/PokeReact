@@ -33,6 +33,7 @@ const getTime = () => {
 const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
     ({ queryUrl, noPokemonMessage, printGridItems }, ref) => {
         const screenGridRef = useRef<HTMLDivElement>(null);
+        const pageUrl = useRef(queryUrl);
         const nextPageUrl = useRef(queryUrl);
         const pokemon = useRef<Pokemon[]>([]);
         const isLoading = useRef(false);
@@ -41,6 +42,8 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
 
         const loadMore = () => {
             if (nextPageUrl.current === null) return false;
+
+            pageUrl.current = nextPageUrl.current;
 
             fetch(nextPageUrl.current)
                 .then((response) => response.json())
@@ -83,7 +86,7 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
                         ((scrollHeight - offsetHeight) * 100) / offsetHeight;
 
                     if (scrollPercent < 10) {
-                        reset(nextPageUrl.current + "&page=1", false);
+                        reset(pageUrl.current + "&page=1", false);
                         loadMore();
                     }
                 }
@@ -128,7 +131,7 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
                 return {
                     element: screenGridRef.current,
                     reset: () => {
-                        reset(nextPageUrl.current + "&page=1");
+                        reset(pageUrl.current + "&page=1");
                         loadMore();
                     },
                     getPokemon: () => pokemon.current,
