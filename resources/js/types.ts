@@ -1,3 +1,5 @@
+import { CSSProperties } from "react";
+
 export type ScreenActions = {
     name: string;
     content: string | JSX.Element;
@@ -28,3 +30,7 @@ export type Pokemon = {
     favorite: boolean;
     enabled: boolean;
 };
+
+export interface PokemonStatCSS extends CSSProperties {
+    "--value": number;
+}

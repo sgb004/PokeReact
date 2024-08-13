@@ -37,6 +37,8 @@ export default {
                 success: "#486e52",
                 warning: "#cbad14",
                 error: "#b51d40",
+                stats: "#ffa62b",
+                "stats-full": "#ef233c",
             },
             backgroundImage: {
                 "img-header":

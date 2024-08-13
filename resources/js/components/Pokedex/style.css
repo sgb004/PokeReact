@@ -189,6 +189,37 @@
             @apply bg-icon-line;
         }
     }
+
+    .pokemon-stats {
+        @apply text-stats;
+
+        &.stats-15-15-15 {
+            @apply text-stats-full;
+        }
+
+        .stat {
+            --value: 0;
+        }
+
+        .icon {
+            @apply block w-[15px] h-[15px] relative;
+
+            svg {
+                @apply block;
+            }
+
+            svg:first-child {
+                @apply opacity-50;
+            }
+
+            .over {
+                --percentage: calc(100% - (var(--value) / 15 * 100%));
+                @apply absolute top-0 left-0;
+                clip-path: inset(var(--percentage) 0 0 0);
+                transition: all 0.5s ease-in-out;
+            }
+        }
+    }
 }
 
 .notification {

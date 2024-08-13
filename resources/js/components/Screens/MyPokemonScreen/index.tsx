@@ -3,7 +3,7 @@ import { sendListPokemon } from "../actions";
 import Screen, { ScreenElement } from "../Screen";
 import { Pokemon } from "../../../types";
 import Recent from "./Recent";
-import PokemonImg from "../../PokemonImg";
+import PokemonElement from "./PokemonElement";
 
 export type MyPokemonScreenElement = {
     element: ScreenElement | null;
@@ -77,138 +77,168 @@ const MyPokemonScreen = forwardRef<MyPokemonScreenElement, {}>((props, ref) => {
     );
 
     return (
-        <Screen
-            ref={screenRef}
-            className="pokemon-screen"
-            queryUrl="/api/pokemon"
-            noPokemonMessage="No Pokémon were found"
-            actions={[
-                {
-                    name: "transfer-pokemon",
-                    action: (event) => {
-                        handleRemovePokemon(
-                            event,
-                            confirmCallback,
-                            screenRef.current
-                        );
-                    },
-                    content: (
-                        <svg
-                            width="40"
-                            height="40"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 40 40"
-                            className="fill-icon-transfer stroke-icon-transfer-border block"
+        <>
+            <svg className="screen-icons">
+                <defs>
+                    <symbol id="icon-sword" viewBox="0 0 30 30">
+                        <g
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="16"
                         >
-                            <g
-                                strokeLinejoin="round"
-                                strokeMiterlimit="10"
-                                strokeWidth="1"
-                                transform="matrix(.86164 0 0 .8405 7.059 7.334)"
+                            <path
+                                d="M8.443 14.614L19.528 1.196l9.305-.03-.029 9.306-13.418 11.085M11.914 18.086l8.751-8.751"
+                                stroke-width="2.3336"
+                            />
+                            <path
+                                d="M9.303 24.139l-4.36 4.36a1.167 1.167 0 01-1.649 0L1.5 26.707a1.167 1.167 0 010-1.648l4.361-4.361a1.167 1.167 0 000-1.663L2.828 16a1.167 1.167 0 010-1.663L4.665 12.5a1.167 1.167 0 011.663 0L17.5 23.672a1.167 1.167 0 010 1.663l-1.837 1.837a1.167 1.167 0 01-1.663 0l-3.034-3.033a1.167 1.167 0 00-1.663 0z"
+                                stroke-width="2.3336"
+                            />
+                        </g>
+                    </symbol>
+                    <symbol id="icon-shield" viewBox="0 0 30 30">
+                        <path
+                            d="M1.167 11.215V2.372a1.258 1.205 0 011.258-1.205h25.15a1.258 1.205 0 011.258 1.205v8.843c0 12.654-11.208 16.842-13.44 17.55a1.132 1.085 0 01-.786 0c-2.232-.708-13.44-4.896-13.44-17.55z"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2.334"
+                        />
+                    </symbol>
+                    <symbol id="icon-heart" viewBox="0 0 30 30">
+                        <path
+                            d="M15 28.833S1.167 20.03 1.167 9.34A7.193 8.174 0 0115 6.198v0A7.193 8.174 0 0128.833 9.34C28.833 20.031 15 28.833 15 28.833z"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2.334"
+                        />
+                    </symbol>
+                </defs>
+            </svg>
+            <Screen
+                ref={screenRef}
+                className="pokemon-screen"
+                queryUrl="/api/pokemon"
+                noPokemonMessage="No Pokémon were found"
+                actions={[
+                    {
+                        name: "transfer-pokemon",
+                        action: (event) => {
+                            handleRemovePokemon(
+                                event,
+                                confirmCallback,
+                                screenRef.current
+                            );
+                        },
+                        content: (
+                            <svg
+                                width="40"
+                                height="40"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 40 40"
+                                className="fill-icon-transfer stroke-icon-transfer-border block"
                             >
-                                <path
-                                    className="transition-all"
-                                    d="M11.152 7.377H29.52v5.77h-29L11.152 2.57z"
-                                />
-                                <path
-                                    className="transition-all"
-                                    d="M18.886 22.762H.519v-5.77h29L18.886 27.57z"
-                                />
-                            </g>
-                        </svg>
-                    ),
-                },
-            ]}
-            filters={[
-                {
-                    name: "Number",
-                    value: "number",
-                },
-                {
-                    name: "Name",
-                    value: "name",
-                },
-                {
-                    name: "CP",
-                    value: "cp",
-                },
-                {
-                    name: "Attack",
-                    value: "attack",
-                },
-                {
-                    name: "Defense",
-                    value: "defense",
-                },
-                {
-                    name: "HP",
-                    value: "hp",
-                },
-                {
-                    name: "Favorite",
-                    value: "favorite",
-                },
-                {
-                    name: "Recent",
-                    value: "recent",
-                },
-            ]}
-            printGridItems={(pokemon: Pokemon, index: number) => (
-                <label
-                    key={index}
-                    className="pokemon flex flex-col items-center relative cursor-pointer transition-all duration-75 ease"
-                >
-                    <input
-                        type="checkbox"
-                        name="pokemon_from_pokedex"
-                        value={pokemon.id}
-                        className="pokemon-from-pokedex absolute top-0 left-0 hidden"
-                    />
-                    <PokemonImg number={pokemon.number} />
-                    <div className="name text-black first-letter:uppercase text-center">
-                        {pokemon.name}
-                    </div>
-                </label>
-            )}
-        >
-            <dialog
-                ref={dialogRef}
-                className="absolute top-0 left-0 w-full h-full animate-backdrop-grey-scale z-10"
+                                <g
+                                    strokeLinejoin="round"
+                                    strokeMiterlimit="10"
+                                    strokeWidth="1"
+                                    transform="matrix(.86164 0 0 .8405 7.059 7.334)"
+                                >
+                                    <path
+                                        className="transition-all"
+                                        d="M11.152 7.377H29.52v5.77h-29L11.152 2.57z"
+                                    />
+                                    <path
+                                        className="transition-all"
+                                        d="M18.886 22.762H.519v-5.77h29L18.886 27.57z"
+                                    />
+                                </g>
+                            </svg>
+                        ),
+                    },
+                ]}
+                filters={[
+                    {
+                        name: "Number",
+                        value: "number",
+                    },
+                    {
+                        name: "Name",
+                        value: "name",
+                    },
+                    {
+                        name: "CP",
+                        value: "cp",
+                    },
+                    {
+                        name: "Attack",
+                        value: "attack",
+                    },
+                    {
+                        name: "Defense",
+                        value: "defense",
+                    },
+                    {
+                        name: "HP",
+                        value: "hp",
+                    },
+                    {
+                        name: "Favorite",
+                        value: "favorite",
+                    },
+                    {
+                        name: "Recent",
+                        value: "recent",
+                    },
+                ]}
+                printGridItems={(pokemon: Pokemon) => (
+                    <PokemonElement key={pokemon.id} pokemon={pokemon} />
+                )}
             >
-                <div className="w-full h-full flex items-center justify-center p-[15px]">
-                    <form
-                        method="dialog"
-                        className="bg-white min-w-[200px] p-[15px] rounded-[5px] animate-in"
-                    >
-                        <p className="leading-[1.3] mb-[10px]">
-                            Are you sure you want to transfer the selected
-                            Pokémon?
-                        </p>
-                        <div className="flex justify-center gap-[10px]">
-                            <button className="dialog-btn">No</button>
-                            <button
-                                className="dialog-btn"
-                                onClick={() => {
-                                    acceptCallback.current();
-                                }}
-                            >
-                                Yes
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </dialog>
+                <dialog
+                    ref={dialogRef}
+                    className="absolute top-0 left-0 w-full h-full animate-backdrop-grey-scale z-10"
+                >
+                    <div className="w-full h-full flex items-center justify-center p-[15px]">
+                        <form
+                            method="dialog"
+                            className="bg-white min-w-[200px] p-[15px] rounded-[5px] animate-in"
+                        >
+                            <p className="leading-[1.3] mb-[10px]">
+                                Are you sure you want to transfer the selected
+                                Pokémon?
+                            </p>
+                            <div className="flex justify-center gap-[10px]">
+                                <button className="dialog-btn">No</button>
+                                <button
+                                    className="dialog-btn"
+                                    onClick={() => {
+                                        acceptCallback.current();
+                                    }}
+                                >
+                                    Yes
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </dialog>
 
-            {recentPokemon && recentPokemon.length > 0 ? (
-                <Recent
-                    recentPokemon={recentPokemon}
-                    setRecentPokemon={setRecentPokemon}
-                    handleShowRecentPokemon={handleShowRecentPokemon}
-                />
-            ) : (
-                <></>
-            )}
-        </Screen>
+                {recentPokemon && recentPokemon.length > 0 ? (
+                    <Recent
+                        recentPokemon={recentPokemon}
+                        setRecentPokemon={setRecentPokemon}
+                        handleShowRecentPokemon={handleShowRecentPokemon}
+                    />
+                ) : (
+                    <></>
+                )}
+            </Screen>
+        </>
     );
 });
 
