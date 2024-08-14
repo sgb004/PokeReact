@@ -118,6 +118,33 @@ const MyPokemonScreen = forwardRef<MyPokemonScreenElement, {}>((props, ref) => {
                             stroke-width="2.334"
                         />
                     </symbol>
+                    <symbol id="icon-star" viewBox="0 0 30 30">
+                        <path
+                            d="M15.586 24.24l6.718 4.427c.866.568 1.932-.276 1.68-1.314l-1.947-7.942a1.16 1.204 0 01.387-1.217l6.024-5.216c.786-.678.387-2.048-.64-2.117l-7.863-.526a1.106 1.148 0 01-.973-.747L16.04 1.923a1.106 1.148 0 00-2.08 0l-2.932 7.665a1.106 1.148 0 01-.973.747l-7.863.526c-1.027.069-1.426 1.439-.64 2.117l6.024 5.216a1.16 1.204 0 01.387 1.217l-1.8 7.36c-.306 1.246.973 2.256 2 1.578l6.25-4.109a1.093 1.135 0 011.173 0z"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2.334"
+                        />
+                    </symbol>
+                    <symbol id="icon-pencil" viewBox="0 0 30 30">
+                        <g
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="16"
+                        >
+                            <path
+                                d="M24 1.2L28.8 6 14.4 20.4H9.6v-4.8zM20.4 4.8l4.8 4.8"
+                                stroke-width="2.4"
+                            />
+                            <path
+                                d="M27.6 14.4v13.2a1.2 1.2 0 01-1.2 1.2h-24a1.2 1.2 0 01-1.2-1.2v-24a1.2 1.2 0 011.2-1.2h13.2"
+                                stroke-width="2.4"
+                            />
+                        </g>
+                    </symbol>
                 </defs>
             </svg>
             <Screen

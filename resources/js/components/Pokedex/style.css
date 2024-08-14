@@ -220,6 +220,10 @@
             }
         }
     }
+
+    .favorite:has(.favorite-dispatcher:checked) .icon use {
+        fill: currentColor;
+    }
 }
 
 .notification {

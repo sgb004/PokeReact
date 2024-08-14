@@ -39,6 +39,8 @@ export default {
                 error: "#b51d40",
                 stats: "#ffa62b",
                 "stats-full": "#ef233c",
+                "icon-favorite": "#ffc300",
+                "icon-edit": "#ff9770",
             },
             backgroundImage: {
                 "img-header":
