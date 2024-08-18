@@ -4,11 +4,16 @@ import Screen, { ScreenElement } from "../Screen";
 import { Pokemon } from "../../../types";
 import Recent from "./Recent";
 import PokemonElement from "./PokemonElement";
+import { PokemonEditScreenElement } from "../PokemonEditScreen";
 
 export type MyPokemonScreenElement = {
     element: ScreenElement | null;
     showRecentPokemon: (pokemon: Pokemon[]) => void;
 } & HTMLDivElement;
+
+export type MyPokemonScreenProps = {
+    pokemonEditScreenRef: React.RefObject<PokemonEditScreenElement>;
+};
 
 const handleRemovePokemon = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -36,7 +41,10 @@ const handleRemovePokemon = (
     });
 };
 
-const MyPokemonScreen = forwardRef<MyPokemonScreenElement, {}>((_, ref) => {
+const MyPokemonScreen = forwardRef<
+    MyPokemonScreenElement,
+    MyPokemonScreenProps
+>(({ pokemonEditScreenRef }, ref) => {
     const screenRef = useRef<ScreenElement>(null);
 
     const dialogRef = useRef<HTMLDialogElement>(
@@ -224,7 +232,13 @@ const MyPokemonScreen = forwardRef<MyPokemonScreenElement, {}>((_, ref) => {
                     },
                 ]}
                 printGridItems={(pokemon: Pokemon) => (
-                    <PokemonElement key={pokemon.id} pokemon={pokemon} />
+                    <PokemonElement
+                        key={pokemon.id}
+                        pokemon={pokemon}
+                        onEdit={(pokemon) => {
+                            pokemonEditScreenRef.current?.setPokemon(pokemon);
+                        }}
+                    />
                 )}
             >
                 <dialog

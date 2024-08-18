@@ -10,6 +10,7 @@ type StatProps = {
 
 type PokemonProps = {
     pokemon: Pokemon;
+    onEdit: (pokemon: Pokemon) => void;
 };
 
 const Stat = ({ name, value, icon }: StatProps) => (
@@ -40,7 +41,7 @@ const Stat = ({ name, value, icon }: StatProps) => (
     </span>
 );
 
-const PokemonElement = ({ pokemon }: PokemonProps) => (
+const PokemonElement = ({ pokemon, onEdit }: PokemonProps) => (
     <div key={pokemon.id} className="pokemon p-[5px]">
         <label className="flex flex-col items-center relative cursor-pointer transition-all duration-75 ease">
             <div className="cp">
@@ -93,7 +94,10 @@ const PokemonElement = ({ pokemon }: PokemonProps) => (
                 />
                 <Stat name="hp" value={pokemon.hp} icon="icon-heart" />
             </div>
-            <button className="edit mb-auto w-[15px] h-[15px] center text-icon-edit flex justify-center items-center">
+            <button
+                className="edit mb-auto w-[15px] h-[15px] center text-icon-edit flex justify-center items-center"
+                onClick={() => onEdit(pokemon)}
+            >
                 <svg
                     width="13"
                     height="13"
