@@ -84,17 +84,17 @@ const MyPokemonScreen = forwardRef<MyPokemonScreenElement, {}>((props, ref) => {
                         <g
                             fill="none"
                             stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="16"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="16"
                         >
                             <path
                                 d="M8.443 14.614L19.528 1.196l9.305-.03-.029 9.306-13.418 11.085M11.914 18.086l8.751-8.751"
-                                stroke-width="2.3336"
+                                strokeWidth="2.3336"
                             />
                             <path
                                 d="M9.303 24.139l-4.36 4.36a1.167 1.167 0 01-1.649 0L1.5 26.707a1.167 1.167 0 010-1.648l4.361-4.361a1.167 1.167 0 000-1.663L2.828 16a1.167 1.167 0 010-1.663L4.665 12.5a1.167 1.167 0 011.663 0L17.5 23.672a1.167 1.167 0 010 1.663l-1.837 1.837a1.167 1.167 0 01-1.663 0l-3.034-3.033a1.167 1.167 0 00-1.663 0z"
-                                stroke-width="2.3336"
+                                strokeWidth="2.3336"
                             />
                         </g>
                     </symbol>
@@ -103,9 +103,9 @@ const MyPokemonScreen = forwardRef<MyPokemonScreenElement, {}>((props, ref) => {
                             d="M1.167 11.215V2.372a1.258 1.205 0 011.258-1.205h25.15a1.258 1.205 0 011.258 1.205v8.843c0 12.654-11.208 16.842-13.44 17.55a1.132 1.085 0 01-.786 0c-2.232-.708-13.44-4.896-13.44-17.55z"
                             fill="none"
                             stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2.334"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2.334"
                         />
                     </symbol>
                     <symbol id="icon-heart" viewBox="0 0 30 30">
@@ -113,35 +113,35 @@ const MyPokemonScreen = forwardRef<MyPokemonScreenElement, {}>((props, ref) => {
                             d="M15 28.833S1.167 20.03 1.167 9.34A7.193 8.174 0 0115 6.198v0A7.193 8.174 0 0128.833 9.34C28.833 20.031 15 28.833 15 28.833z"
                             fill="none"
                             stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2.334"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2.334"
                         />
                     </symbol>
                     <symbol id="icon-star" viewBox="0 0 30 30">
                         <path
                             d="M15.586 24.24l6.718 4.427c.866.568 1.932-.276 1.68-1.314l-1.947-7.942a1.16 1.204 0 01.387-1.217l6.024-5.216c.786-.678.387-2.048-.64-2.117l-7.863-.526a1.106 1.148 0 01-.973-.747L16.04 1.923a1.106 1.148 0 00-2.08 0l-2.932 7.665a1.106 1.148 0 01-.973.747l-7.863.526c-1.027.069-1.426 1.439-.64 2.117l6.024 5.216a1.16 1.204 0 01.387 1.217l-1.8 7.36c-.306 1.246.973 2.256 2 1.578l6.25-4.109a1.093 1.135 0 011.173 0z"
                             stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2.334"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2.334"
                         />
                     </symbol>
                     <symbol id="icon-pencil" viewBox="0 0 30 30">
                         <g
                             fill="none"
                             stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="16"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="16"
                         >
                             <path
                                 d="M24 1.2L28.8 6 14.4 20.4H9.6v-4.8zM20.4 4.8l4.8 4.8"
-                                stroke-width="2.4"
+                                strokeWidth="2.4"
                             />
                             <path
                                 d="M27.6 14.4v13.2a1.2 1.2 0 01-1.2 1.2h-24a1.2 1.2 0 01-1.2-1.2v-24a1.2 1.2 0 011.2-1.2h13.2"
-                                stroke-width="2.4"
+                                strokeWidth="2.4"
                             />
                         </g>
                     </symbol>
