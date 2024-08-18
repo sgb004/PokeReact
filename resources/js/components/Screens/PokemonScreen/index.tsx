@@ -1,5 +1,5 @@
 import { Pokemon } from "../../../types";
-import dataToPokemon from "../../../utils/data-to-pokemon";
+import dataToPokemon from "../../../utils/dataToPokemon";
 import PokemonImg from "../../PokemonImg";
 import { sendListPokemon } from "../actions";
 import { MyPokemonScreenElement } from "../MyPokemonScreen";

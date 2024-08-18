@@ -7,7 +7,7 @@ import {
     useState,
 } from "react";
 import { Pokemon } from "../../../types";
-import dataToPokemon from "../../../utils/data-to-pokemon";
+import dataToPokemon from "../../../utils/dataToPokemon";
 
 export type PrintGridItems = (pokemon: Pokemon, index: number) => ReactNode;
 
