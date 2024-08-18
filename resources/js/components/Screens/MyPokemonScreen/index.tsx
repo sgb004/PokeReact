@@ -22,7 +22,7 @@ const handleRemovePokemon = (
         method: "DELETE",
         messageError: "An error occurred while removing the Pokemon",
         confirm,
-        successCallback: (pokemon, pokemonSelected) => {
+        successCallback: (_, pokemonSelected) => {
             const grid = screen?.grid;
 
             if (grid) {
@@ -36,7 +36,7 @@ const handleRemovePokemon = (
     });
 };
 
-const MyPokemonScreen = forwardRef<MyPokemonScreenElement, {}>((props, ref) => {
+const MyPokemonScreen = forwardRef<MyPokemonScreenElement, {}>((_, ref) => {
     const screenRef = useRef<ScreenElement>(null);
 
     const dialogRef = useRef<HTMLDialogElement>(
