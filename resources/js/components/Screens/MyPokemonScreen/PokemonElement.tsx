@@ -1,4 +1,5 @@
 import { Pokemon, PokemonStatCSS } from "../../../types";
+import setFavorite from "../../../utils/setFavorite";
 import PokemonImg from "../../PokemonImg";
 
 type StatProps = {
@@ -63,6 +64,10 @@ const PokemonElement = ({ pokemon }: PokemonProps) => (
                     type="checkbox"
                     value={pokemon.id}
                     className="favorite-dispatcher absolute top-0 left-0 hidden"
+                    onChange={(event) =>
+                        setFavorite(pokemon, event.currentTarget)
+                    }
+                    defaultChecked={pokemon.favorite}
                 />
                 <svg
                     className="icon"
