@@ -13,6 +13,7 @@ import {
 } from "../../../types";
 import ScreenHeader, { ScreenHeaderElement } from "../ScreenHeader";
 import ScreenGrid, { PrintGridItems, ScreenGridElement } from "../ScreenGrid";
+import ScreenFooter from "../ScreenFooter";
 
 export type ScreenProps = {
     className?: string;
@@ -96,17 +97,7 @@ const Screen = forwardRef<HTMLDivElement, ScreenProps>(
                         noPokemonMessage={noPokemonMessage}
                         printGridItems={printGridItems}
                     />
-                    <footer>
-                        {actions.map((action) => (
-                            <button
-                                key={action.name}
-                                className={`screen-button-action ${action.name} flex justify-center items-center align-items-center absolute rounded-full border border-black w-[40px] h-[40px] bottom-[10px] right-[20px] transition-all z-10`}
-                                onClick={(event) => action.action(event)}
-                            >
-                                {action.content}
-                            </button>
-                        ))}
-                    </footer>
+                    <ScreenFooter actions={actions} />
                 </div>
             </div>
         );
