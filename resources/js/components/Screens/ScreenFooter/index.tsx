@@ -8,11 +8,7 @@ type ScreenFooterProps = {
 const ScreenFooter = ({ actions }: ScreenFooterProps) => (
     <footer>
         {actions.map((action, index) => (
-            <ButtonAction
-                key={action.name}
-                action={action}
-                className={`bottom-[${index * 50 + 10}px]`}
-            />
+            <ButtonAction key={action.name} action={action} position={index} />
         ))}
     </footer>
 );
