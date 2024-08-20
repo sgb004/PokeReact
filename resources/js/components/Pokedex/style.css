@@ -84,7 +84,7 @@
 
         .screen-button-action {
             &.add-pokemon {
-                @apply bg-accept border-bg-border-gray;
+                @apply bg-accept;
                 filter: drop-shadow(0 0 5px #000);
 
                 &:hover {
@@ -102,7 +102,7 @@
             }
 
             &.transfer-pokemon {
-                @apply bg-button-transfer border-bg-border-gray;
+                @apply bg-button-transfer;
 
                 svg path:first-child {
                     --translateX-hover: -2px;
