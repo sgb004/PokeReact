@@ -25,6 +25,8 @@ export default {
                 "bg-border-gray": "#6d6d6d",
                 accept: "#4d905e",
                 "accept-icon": "#d9ed92",
+                cancel: "#c1121f",
+                "icon-cancel": "#ff9b9b",
                 "button-transfer": "#f7d466",
                 "icon-transfer": "#ffeeb8",
                 "icon-transfer-border": "#b88c00",

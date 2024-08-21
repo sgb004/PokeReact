@@ -132,6 +132,14 @@
                     }
                 }
             }
+
+            &.edit-save {
+                @apply bg-accept text-accept-icon;
+            }
+
+            &.edit-cancel {
+                @apply bg-cancel text-icon-cancel;
+            }
         }
 
         .pokemon:has(.pokemon-from-pokedex:checked) {
