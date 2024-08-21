@@ -1,12 +1,32 @@
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
-import { Pokemon } from "../../../types";
+import { Pokemon, PokemonStatCSS, StatProps } from "../../../types";
 import ScreenFooter from "../ScreenFooter";
+import PokemonImg from "../../PokemonImg";
 
 export type PokemonEditScreenElement = {
     setPokemon: (pokemon: Pokemon) => void;
 } & HTMLDivElement;
 
 export type PokemonEditScreenProps = {};
+
+const Stat = ({ name, value, icon }: StatProps) => (
+    <span
+        className={`stat ${name} block`}
+        style={{ "--value": value } as PokemonStatCSS}
+    >
+        <span className="icon">
+            <svg
+                width="15"
+                height="15"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 30 30"
+            >
+                <use href={`#${icon}`} />
+            </svg>
+        </span>
+        <input type="number" step={1} min={0} max={15} defaultValue={value} />
+    </span>
+);
 
 const PokemonEditScreen = forwardRef<
     PokemonEditScreenElement,
@@ -32,10 +52,38 @@ const PokemonEditScreen = forwardRef<
             ref={screenRef}
             className="pokemon-edit-screen screen absolute top-0 left-0 w-full h-full z-50 bg-[#faf8ef]"
         >
-            <section>
-                <div className="cp">
-                    <span className="cp-title text-[11px]">CP</span>
-                    <span className="cp-value text-[18px]">{pokemon.cp}</span>
+            <section className="p-[5px] h-full grid">
+                <div className="cp flex justify-center h-[min-content] m-auto">
+                    <span className="cp-title text-[1rem] mt-auto mr-[5px] pb-[6px]">
+                        CP
+                    </span>
+                    <input
+                        type="number"
+                        className="cp-value text-[2rem] text-center outline-[1px] max-w-[110px]"
+                        min={0}
+                        max={4724}
+                        defaultValue={pokemon.cp}
+                    />
+                </div>
+                <PokemonImg number={pokemon.number} className="m-auto" />
+                <div className="name flex justify-center h-[min-content] overflow-hidden p-[1px]">
+                    <input
+                        className="text-center text-[2rem] mb-auto mr-auto ml-auto max-w-[100%]"
+                        defaultValue={pokemon.name}
+                    />
+                </div>
+                <div className="stats">
+                    <Stat
+                        name="attack"
+                        value={pokemon.attack}
+                        icon="icon-sword"
+                    />
+                    <Stat
+                        name="defense"
+                        value={pokemon.defense}
+                        icon="icon-shield"
+                    />
+                    <Stat name="hp" value={pokemon.hp} icon="icon-heart" />
                 </div>
             </section>
             <ScreenFooter

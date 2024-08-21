@@ -77,6 +77,13 @@
             }
         }
 
+        &.pokemon-edit-screen {
+            input {
+                @apply min-w-[50px] p-[0_5px] rounded-[2px] outline-bg-border-gray;
+                field-sizing: content;
+            }
+        }
+
         .filter-button:has(.filter-button-dispatcher:checked)
             .screen-header-button-icon {
             transform: rotateZ(180deg);
