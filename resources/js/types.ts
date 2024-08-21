@@ -34,3 +34,9 @@ export type Pokemon = {
 export interface PokemonStatCSS extends CSSProperties {
     "--value": number;
 }
+
+export type StatProps = {
+    name: string;
+    value: number;
+    icon: "icon-sword" | "icon-shield" | "icon-heart";
+};

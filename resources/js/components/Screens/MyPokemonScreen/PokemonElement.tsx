@@ -1,12 +1,6 @@
-import { Pokemon, PokemonStatCSS } from "../../../types";
+import { Pokemon, PokemonStatCSS, StatProps } from "../../../types";
 import setFavorite from "../../../utils/setFavorite";
 import PokemonImg from "../../PokemonImg";
-
-type StatProps = {
-    name: string;
-    value: number;
-    icon: "icon-sword" | "icon-shield" | "icon-heart";
-};
 
 type PokemonProps = {
     pokemon: Pokemon;
