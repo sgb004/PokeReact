@@ -4,6 +4,7 @@ import ScreenFooter from "../ScreenFooter";
 import PokemonImg from "../../PokemonImg";
 import StatSlider from "../../StatSlider";
 import patchPokemon from "../../../utils/patchPokemon";
+import Dialog from "../../Dialog";
 
 export type PokemonEditScreenElement = {
     setPokemon: (pokemon: Pokemon, updatePokemon: SetPokemon) => void;
@@ -17,7 +18,9 @@ const PokemonEditScreen = forwardRef<
 >((_, ref) => {
     const screenRef = useRef<PokemonEditScreenElement>(null);
     const callback = useRef<SetPokemon>(() => {});
+    const dialogRef = useRef<HTMLDialogElement>(null);
     const [pokemon, setPokemon] = useState<Pokemon | null>(null);
+    const originalData = JSON.stringify(pokemon);
 
     useImperativeHandle(
         ref,
@@ -149,6 +152,13 @@ const PokemonEditScreen = forwardRef<
                     />
                 </div>
             </section>
+
+            <Dialog
+                ref={dialogRef}
+                message="Do you want to exit without saving changes?"
+                onAccept={() => setPokemon(null)}
+            />
+
             <ScreenFooter
                 actions={[
                     {
@@ -189,7 +199,17 @@ const PokemonEditScreen = forwardRef<
                                 />
                             </svg>
                         ),
-                        action: () => setPokemon(null),
+                        action: () => {
+                            const currentData = JSON.stringify(pokemon);
+
+                            if (currentData === originalData) {
+                                setPokemon(null);
+                            } else {
+                                dialogRef.current instanceof
+                                    HTMLDialogElement &&
+                                    (dialogRef.current.open = true);
+                            }
+                        },
                     },
                 ]}
             />
