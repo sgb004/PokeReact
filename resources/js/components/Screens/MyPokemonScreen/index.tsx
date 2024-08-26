@@ -48,13 +48,12 @@ const MyPokemonScreen = forwardRef<
 >(({ pokemonEditScreenRef }, ref) => {
     const screenRef = useRef<ScreenElement>(null);
 
-    const dialogRef = useRef<HTMLDialogElement>(
-        document.createElement("dialog")
-    );
+    const dialogRef = useRef<HTMLDialogElement>(null);
     const acceptCallback = useRef<() => void>(() => {});
     const confirmCallback = (sending: () => void) => {
         acceptCallback.current = sending;
-        dialogRef.current.open = true;
+        dialogRef.current instanceof HTMLDialogElement &&
+            (dialogRef.current.open = true);
     };
 
     const [recentPokemon, setRecentPokemon] = useState<Pokemon[]>([]);
