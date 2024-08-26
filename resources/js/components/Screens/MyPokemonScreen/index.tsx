@@ -5,6 +5,7 @@ import { Pokemon } from "../../../types";
 import Recent from "./Recent";
 import PokemonElement from "./PokemonElement";
 import { PokemonEditScreenElement } from "../PokemonEditScreen";
+import Dialog from "../../Dialog";
 
 export type MyPokemonScreenElement = {
     element: ScreenElement | null;
@@ -244,33 +245,13 @@ const MyPokemonScreen = forwardRef<
                     />
                 )}
             >
-                <dialog
+                <Dialog
                     ref={dialogRef}
-                    className="absolute top-0 left-0 w-full h-full animate-backdrop-grey-scale z-10"
-                >
-                    <div className="w-full h-full flex items-center justify-center p-[15px]">
-                        <form
-                            method="dialog"
-                            className="bg-white min-w-[200px] p-[15px] rounded-[5px] animate-in"
-                        >
-                            <p className="leading-[1.3] mb-[10px]">
-                                Are you sure you want to transfer the selected
-                                Pokémon?
-                            </p>
-                            <div className="flex justify-center gap-[10px]">
-                                <button className="dialog-btn">No</button>
-                                <button
-                                    className="dialog-btn"
-                                    onClick={() => {
-                                        acceptCallback.current();
-                                    }}
-                                >
-                                    Yes
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </dialog>
+                    message="Are you sure you want to transfer the selected Pokemon?"
+                    onAccept={() => {
+                        acceptCallback.current();
+                    }}
+                />
 
                 {recentPokemon && recentPokemon.length > 0 ? (
                     <Recent
