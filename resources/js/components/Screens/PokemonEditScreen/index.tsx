@@ -1,11 +1,12 @@
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
-import { Pokemon } from "../../../types";
+import { Pokemon, SetPokemon } from "../../../types";
 import ScreenFooter from "../ScreenFooter";
 import PokemonImg from "../../PokemonImg";
 import StatSlider from "../../StatSlider";
+import patchPokemon from "../../../utils/patchPokemon";
 
 export type PokemonEditScreenElement = {
-    setPokemon: (pokemon: Pokemon) => void;
+    setPokemon: (pokemon: Pokemon, updatePokemon: SetPokemon) => void;
 } & HTMLDivElement;
 
 export type PokemonEditScreenProps = {};
@@ -15,15 +16,17 @@ const PokemonEditScreen = forwardRef<
     PokemonEditScreenProps
 >((_, ref) => {
     const screenRef = useRef<PokemonEditScreenElement>(null);
+    const callback = useRef<SetPokemon>(() => {});
     const [pokemon, setPokemon] = useState<Pokemon | null>(null);
-
-    console.log({ pokemon });
 
     useImperativeHandle(
         ref,
         () => {
             return {
-                setPokemon,
+                setPokemon: (pokemon: Pokemon, updatePokemon: SetPokemon) => {
+                    callback.current = updatePokemon;
+                    setPokemon(pokemon);
+                },
             } as PokemonEditScreenElement;
         },
         []
@@ -45,6 +48,9 @@ const PokemonEditScreen = forwardRef<
                         min={0}
                         max={4724}
                         defaultValue={pokemon.cp}
+                        onChange={(event) => {
+                            pokemon.cp = Number(event.target.value);
+                        }}
                     />
                 </div>
                 <PokemonImg number={pokemon.number} className="m-auto" />
@@ -52,6 +58,9 @@ const PokemonEditScreen = forwardRef<
                     <input
                         className="text-center text-[2rem] mb-auto mr-auto ml-auto max-w-[100%]"
                         defaultValue={pokemon.name}
+                        onChange={(event) => {
+                            pokemon.name = event.target.value;
+                        }}
                     />
                 </div>
                 <div className="stats mt-auto text-white">
@@ -85,7 +94,7 @@ const PokemonEditScreen = forwardRef<
                             </svg>
                         }
                         onChange={(value) => {
-                            console.log("attack", value);
+                            pokemon.attack = value;
                         }}
                     />
                     <StatSlider
@@ -110,7 +119,7 @@ const PokemonEditScreen = forwardRef<
                             </svg>
                         }
                         onChange={(value) => {
-                            console.log("defense", value);
+                            pokemon.defense = value;
                         }}
                     />
                     <StatSlider
@@ -135,7 +144,7 @@ const PokemonEditScreen = forwardRef<
                             </svg>
                         }
                         onChange={(value) => {
-                            console.log("hp", value);
+                            pokemon.hp = value;
                         }}
                     />
                 </div>
@@ -158,7 +167,11 @@ const PokemonEditScreen = forwardRef<
                                 />
                             </svg>
                         ),
-                        action: () => {},
+                        action: (event) =>
+                            patchPokemon(pokemon, event.currentTarget, () => {
+                                callback.current({ ...pokemon });
+                                setPokemon(null);
+                            }),
                     },
                     {
                         name: "edit-cancel",

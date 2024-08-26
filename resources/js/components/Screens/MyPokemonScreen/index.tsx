@@ -235,8 +235,11 @@ const MyPokemonScreen = forwardRef<
                     <PokemonElement
                         key={pokemon.id}
                         pokemon={pokemon}
-                        onEdit={(pokemon) => {
-                            pokemonEditScreenRef.current?.setPokemon(pokemon);
+                        onEdit={(pokemon, setPokemon) => {
+                            pokemonEditScreenRef.current?.setPokemon(
+                                pokemon,
+                                setPokemon
+                            );
                         }}
                     />
                 )}
