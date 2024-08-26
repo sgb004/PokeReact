@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Pokemon, SetPokemon, PokemonStatCSS, StatProps } from "../../../types";
 import setFavorite from "../../../utils/setFavorite";
 import PokemonImg from "../../PokemonImg";
