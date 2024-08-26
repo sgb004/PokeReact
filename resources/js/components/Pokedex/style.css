@@ -78,9 +78,30 @@
         }
 
         &.pokemon-edit-screen {
-            input {
+            input:not(.stat-slider-input) {
                 @apply min-w-[50px] p-[0_5px] rounded-[2px] outline-bg-border-gray;
                 field-sizing: content;
+            }
+
+            .stat input[type="number"] {
+                @apply outline-stat-slider rounded-full text-right;
+            }
+
+            .stat {
+                width: calc(100% - 75px);
+            }
+
+            .stats:has(.attack.stat-value-15):has(.defense.stat-value-15):has(
+                    .hp.stat-value-15
+                ) {
+                svg {
+                    @apply fill-stats-full-alt;
+                }
+
+                .progress-bar,
+                input[type="number"] {
+                    @apply bg-stats-full-alt;
+                }
             }
         }
 
@@ -253,6 +274,31 @@
     }
     &.error {
         @apply text-error;
+    }
+}
+
+.stat-slider {
+    --thumb-size: 25px;
+    --icon: none;
+
+    .progress {
+        width: calc(100% - var(--thumb-size));
+        left: calc(var(--thumb-size) / 2);
+
+        .progress-bar {
+            width: calc(var(--value) * 100% / var(--max));
+        }
+    }
+
+    .thumb {
+        left: calc(
+            (var(--value) * 100% / var(--max)) - (var(--thumb-size) / 2)
+        );
+
+        svg {
+            width: 90%;
+            height: 90%;
+        }
     }
 }
 

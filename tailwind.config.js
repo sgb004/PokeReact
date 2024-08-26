@@ -41,8 +41,11 @@ export default {
                 error: "#b51d40",
                 stats: "#ffa62b",
                 "stats-full": "#ef233c",
+                "stats-full-alt": "#d24119",
                 "icon-favorite": "#ffc300",
                 "icon-edit": "#ff9770",
+                "stat-slider": "#edede9",
+                "edit-back": "#faf8ef",
             },
             backgroundImage: {
                 "img-header":

@@ -1,32 +1,14 @@
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
-import { Pokemon, PokemonStatCSS, StatProps } from "../../../types";
+import { Pokemon } from "../../../types";
 import ScreenFooter from "../ScreenFooter";
 import PokemonImg from "../../PokemonImg";
+import StatSlider from "../../StatSlider";
 
 export type PokemonEditScreenElement = {
     setPokemon: (pokemon: Pokemon) => void;
 } & HTMLDivElement;
 
 export type PokemonEditScreenProps = {};
-
-const Stat = ({ name, value, icon }: StatProps) => (
-    <span
-        className={`stat ${name} block`}
-        style={{ "--value": value } as PokemonStatCSS}
-    >
-        <span className="icon">
-            <svg
-                width="15"
-                height="15"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 30 30"
-            >
-                <use href={`#${icon}`} />
-            </svg>
-        </span>
-        <input type="number" step={1} min={0} max={15} defaultValue={value} />
-    </span>
-);
 
 const PokemonEditScreen = forwardRef<
     PokemonEditScreenElement,
@@ -50,7 +32,7 @@ const PokemonEditScreen = forwardRef<
     return pokemon ? (
         <div
             ref={screenRef}
-            className="pokemon-edit-screen screen absolute top-0 left-0 w-full h-full z-50 bg-[#faf8ef]"
+            className="pokemon-edit-screen screen absolute top-0 left-0 w-full h-full z-50 bg-edit-back"
         >
             <section className="p-[5px] h-full grid">
                 <div className="cp flex justify-center h-[min-content] m-auto">
@@ -72,18 +54,90 @@ const PokemonEditScreen = forwardRef<
                         defaultValue={pokemon.name}
                     />
                 </div>
-                <div className="stats">
-                    <Stat
+                <div className="stats mt-auto text-white">
+                    <StatSlider
                         name="attack"
                         value={pokemon.attack}
-                        icon="icon-sword"
+                        className="mb-[5px]"
+                        thumb={
+                            <svg
+                                className="fill-stats "
+                                width="15"
+                                height="15"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 30 30"
+                            >
+                                <g
+                                    stroke="currentColor"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="16"
+                                >
+                                    <path
+                                        d="M8.443 14.614L19.528 1.196l9.305-.03-.029 9.306-13.418 11.085M11.914 18.086l8.751-8.751"
+                                        strokeWidth="2.3336"
+                                    ></path>
+                                    <path
+                                        d="M9.303 24.139l-4.36 4.36a1.167 1.167 0 01-1.649 0L1.5 26.707a1.167 1.167 0 010-1.648l4.361-4.361a1.167 1.167 0 000-1.663L2.828 16a1.167 1.167 0 010-1.663L4.665 12.5a1.167 1.167 0 011.663 0L17.5 23.672a1.167 1.167 0 010 1.663l-1.837 1.837a1.167 1.167 0 01-1.663 0l-3.034-3.033a1.167 1.167 0 00-1.663 0z"
+                                        strokeWidth="2.3336"
+                                    ></path>
+                                </g>
+                            </svg>
+                        }
+                        onChange={(value) => {
+                            console.log("attack", value);
+                        }}
                     />
-                    <Stat
+                    <StatSlider
                         name="defense"
                         value={pokemon.defense}
-                        icon="icon-shield"
+                        className="mb-[5px]"
+                        thumb={
+                            <svg
+                                className="fill-stats"
+                                width="15"
+                                height="15"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 30 30"
+                            >
+                                <path
+                                    d="M1.167 11.215V2.372a1.258 1.205 0 011.258-1.205h25.15a1.258 1.205 0 011.258 1.205v8.843c0 12.654-11.208 16.842-13.44 17.55a1.132 1.085 0 01-.786 0c-2.232-.708-13.44-4.896-13.44-17.55z"
+                                    stroke="currentColor"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2.334"
+                                ></path>
+                            </svg>
+                        }
+                        onChange={(value) => {
+                            console.log("defense", value);
+                        }}
                     />
-                    <Stat name="hp" value={pokemon.hp} icon="icon-heart" />
+                    <StatSlider
+                        name="hp"
+                        value={pokemon.hp}
+                        className="mb-[5px]"
+                        thumb={
+                            <svg
+                                className="fill-stats"
+                                width="15"
+                                height="15"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 30 30"
+                            >
+                                <path
+                                    d="M15 28.833S1.167 20.03 1.167 9.34A7.193 8.174 0 0115 6.198v0A7.193 8.174 0 0128.833 9.34C28.833 20.031 15 28.833 15 28.833z"
+                                    stroke="currentColor"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2.334"
+                                ></path>
+                            </svg>
+                        }
+                        onChange={(value) => {
+                            console.log("hp", value);
+                        }}
+                    />
                 </div>
             </section>
             <ScreenFooter
