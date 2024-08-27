@@ -89,6 +89,14 @@
 
             .stat {
                 width: calc(100% - 75px);
+
+                &.disabled {
+                    filter: grayscale(50%);
+
+                    input {
+                        @apply cursor-auto;
+                    }
+                }
             }
 
             .stats:has(.attack.stat-value-15):has(.defense.stat-value-15):has(
@@ -103,6 +111,10 @@
                     @apply bg-stats-full-alt;
                 }
             }
+
+            &.no-editing .edit-cancel {
+                @apply opacity-[0.75] pointer-events-none;
+            }
         }
 
         .filter-button:has(.filter-button-dispatcher:checked)
@@ -111,6 +123,10 @@
         }
 
         .screen-button-action {
+            &.loading {
+                @apply pointer-events-none;
+            }
+
             &.add-pokemon {
                 @apply bg-accept;
                 filter: drop-shadow(0 0 5px #000);

@@ -10,6 +10,7 @@ export type StatSliderProps = {
     className?: string;
     thumb?: ReactNode;
     onChange?: (value: number) => void;
+    disabled?: boolean;
 };
 
 const StatSlider = ({
@@ -21,6 +22,7 @@ const StatSlider = ({
     className,
     thumb,
     onChange,
+    disabled = false,
 }: StatSliderProps) => {
     const [val, setVal] = useState<number>(value);
 
@@ -32,7 +34,9 @@ const StatSlider = ({
 
     return (
         <div
-            className={`stat ${name} flex ${className} gap-[0] stat-value-${val}`}
+            className={`stat ${name} flex ${className} gap-[0] stat-value-${val} ${
+                disabled ? "disabled" : ""
+            }`}
             style={{ "--value": val, "--max": max } as PokemonStatCSS}
         >
             <div className={`stat-slider h-[30px] w-full relative`}>
@@ -54,6 +58,7 @@ const StatSlider = ({
                     value={val}
                     className="stat-slider-input block relative w-full h-full p-0 appearance-none z-20 opacity-0 cursor-pointer"
                     onChange={(event) => setVal(+event.currentTarget.value)}
+                    disabled={disabled}
                 />
             </div>
             <input
@@ -63,6 +68,7 @@ const StatSlider = ({
                 value={val}
                 className={`block h-[30px]  text-white bg-stats transition-colors`}
                 onChange={(event) => setVal(+event.currentTarget.value)}
+                disabled={disabled}
             />
         </div>
     );

@@ -20,6 +20,7 @@ const PokemonEditScreen = forwardRef<
     const callback = useRef<SetPokemon>(() => {});
     const dialogRef = useRef<HTMLDialogElement>(null);
     const [pokemon, setPokemon] = useState<Pokemon | null>(null);
+    const [editing, setEditing] = useState(true);
     const originalData = JSON.stringify(pokemon);
 
     useImperativeHandle(
@@ -38,7 +39,9 @@ const PokemonEditScreen = forwardRef<
     return pokemon ? (
         <div
             ref={screenRef}
-            className="pokemon-edit-screen screen absolute top-0 left-0 w-full h-full z-50 bg-edit-back"
+            className={`pokemon-edit-screen screen absolute top-0 left-0 w-full h-full z-50 bg-edit-back ${
+                editing ? "editing" : "no-editing"
+            }`}
         >
             <section className="p-[5px] h-full grid">
                 <div className="cp flex justify-center h-[min-content] m-auto">
@@ -54,6 +57,7 @@ const PokemonEditScreen = forwardRef<
                         onChange={(event) => {
                             pokemon.cp = Number(event.target.value);
                         }}
+                        disabled={!editing}
                     />
                 </div>
                 <PokemonImg number={pokemon.number} className="m-auto" />
@@ -64,6 +68,7 @@ const PokemonEditScreen = forwardRef<
                         onChange={(event) => {
                             pokemon.name = event.target.value;
                         }}
+                        disabled={!editing}
                     />
                 </div>
                 <div className="stats mt-auto text-white">
@@ -99,6 +104,7 @@ const PokemonEditScreen = forwardRef<
                         onChange={(value) => {
                             pokemon.attack = value;
                         }}
+                        disabled={!editing}
                     />
                     <StatSlider
                         name="defense"
@@ -124,6 +130,7 @@ const PokemonEditScreen = forwardRef<
                         onChange={(value) => {
                             pokemon.defense = value;
                         }}
+                        disabled={!editing}
                     />
                     <StatSlider
                         name="hp"
@@ -149,6 +156,7 @@ const PokemonEditScreen = forwardRef<
                         onChange={(value) => {
                             pokemon.hp = value;
                         }}
+                        disabled={!editing}
                     />
                 </div>
             </section>
@@ -177,11 +185,21 @@ const PokemonEditScreen = forwardRef<
                                 />
                             </svg>
                         ),
-                        action: (event) =>
-                            patchPokemon(pokemon, event.currentTarget, () => {
-                                callback.current({ ...pokemon });
-                                setPokemon(null);
-                            }),
+                        action: (event) => {
+                            setEditing(false);
+                            patchPokemon(
+                                pokemon,
+                                event.currentTarget,
+                                () => {
+                                    callback.current({ ...pokemon });
+                                    setPokemon(null);
+                                    setEditing(true);
+                                },
+                                () => {
+                                    setEditing(true);
+                                }
+                            );
+                        },
                     },
                     {
                         name: "edit-cancel",
@@ -200,6 +218,8 @@ const PokemonEditScreen = forwardRef<
                             </svg>
                         ),
                         action: () => {
+                            if (!editing) return;
+
                             const currentData = JSON.stringify(pokemon);
 
                             if (currentData === originalData) {

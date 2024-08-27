@@ -4,7 +4,8 @@ import { Pokemon } from "../types";
 const patchPokemon = (
     pokemon: Pokemon,
     element: HTMLElement,
-    successCallback: () => void
+    successCallback: () => void,
+    errorCallback?: () => void
 ) => {
     const name = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
 
@@ -28,7 +29,9 @@ const patchPokemon = (
             if (response.status === 200) {
                 return response.json();
             } else {
-                throw new Error(`Error to update the Pokémon ${name}`);
+                throw new Error(
+                    `Error to update the Pokémon ${name}, status: ${response.status}`
+                );
             }
         })
         .then(() => {
@@ -37,8 +40,14 @@ const patchPokemon = (
             element.classList.remove("loading");
         })
         .catch((error) => {
-            addNotification(element, error, "error");
+            console.error(error);
+            addNotification(
+                element,
+                `Error to update the Pokémon ${name}`,
+                "error"
+            );
             element.classList.remove("loading");
+            errorCallback && errorCallback();
         });
 };
 
