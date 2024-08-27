@@ -21,7 +21,21 @@ const PokemonEditScreen = forwardRef<
     const dialogRef = useRef<HTMLDialogElement>(null);
     const [pokemon, setPokemon] = useState<Pokemon | null>(null);
     const [editing, setEditing] = useState(true);
+    const [screenAnimation, setScreenAnimation] = useState("animate-open");
     const originalData = JSON.stringify(pokemon);
+
+    const closeScreen = () => {
+        screenRef.current?.addEventListener(
+            "animationend",
+            () => {
+                setPokemon(null);
+                setScreenAnimation("animate-open");
+            },
+            { once: true }
+        );
+
+        setScreenAnimation("animate-close");
+    };
 
     useImperativeHandle(
         ref,
@@ -39,7 +53,7 @@ const PokemonEditScreen = forwardRef<
     return pokemon ? (
         <div
             ref={screenRef}
-            className={`pokemon-edit-screen screen absolute top-0 left-0 w-full h-full z-50 bg-edit-back ${
+            className={`pokemon-edit-screen screen absolute top-[100%] left-0 w-full h-full z-50 bg-edit-back ${screenAnimation} ${
                 editing ? "editing" : "no-editing"
             }`}
         >
@@ -164,7 +178,7 @@ const PokemonEditScreen = forwardRef<
             <Dialog
                 ref={dialogRef}
                 message="Do you want to exit without saving changes?"
-                onAccept={() => setPokemon(null)}
+                onAccept={closeScreen}
             />
 
             <ScreenFooter
@@ -192,7 +206,7 @@ const PokemonEditScreen = forwardRef<
                                 event.currentTarget,
                                 () => {
                                     callback.current({ ...pokemon });
-                                    setPokemon(null);
+                                    closeScreen();
                                     setEditing(true);
                                 },
                                 () => {
@@ -223,7 +237,7 @@ const PokemonEditScreen = forwardRef<
                             const currentData = JSON.stringify(pokemon);
 
                             if (currentData === originalData) {
-                                setPokemon(null);
+                                closeScreen();
                             } else {
                                 dialogRef.current instanceof
                                     HTMLDialogElement &&

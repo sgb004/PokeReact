@@ -78,6 +78,14 @@
         }
 
         &.pokemon-edit-screen {
+            &.animate-open {
+                @apply animate-screen-go-top;
+            }
+
+            &.animate-close {
+                @apply animate-screen-go-bottom;
+            }
+
             input:not(.stat-slider-input) {
                 @apply min-w-[50px] p-[0_5px] rounded-[2px] outline-bg-border-gray;
                 field-sizing: content;
@@ -388,5 +396,23 @@
     }
     75% {
         transform: translateY(3px);
+    }
+}
+
+@keyframes screen-go-top {
+    to {
+        top: 0;
+    }
+}
+
+@keyframes screen-go-bottom {
+    0% {
+        top: 0;
+    }
+    25% {
+        top: -50%;
+    }
+    100% {
+        top: 100%;
     }
 }

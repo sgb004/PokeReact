@@ -135,6 +135,9 @@ export default {
                 "show-recent": "show-recent 0.5s ease-out forwards",
                 "hide-recent": "hide-recent 0.5s ease-out forwards",
                 "up-down": "up-down 1s linear infinite",
+                "screen-go-top": "screen-go-top 0.35s ease-in forwards",
+                "screen-go-bottom":
+                    "screen-go-bottom 0.7s ease-in-out forwards",
             },
             size: {
                 "screen-header-button": "30px",
