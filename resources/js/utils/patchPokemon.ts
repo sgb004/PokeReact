@@ -8,6 +8,8 @@ const patchPokemon = (
 ) => {
     const name = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
 
+    element.classList.add("loading");
+
     fetch(`/api/pokemon/${pokemon.id}`, {
         method: "PATCH",
         headers: {
@@ -32,9 +34,11 @@ const patchPokemon = (
         .then(() => {
             addNotification(element, `${name} was updated`, "success");
             successCallback();
+            element.classList.remove("loading");
         })
         .catch((error) => {
             addNotification(element, error, "error");
+            element.classList.remove("loading");
         });
 };
 

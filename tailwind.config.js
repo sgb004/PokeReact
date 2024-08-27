@@ -134,6 +134,7 @@ export default {
                 in: "in 0.25s ease-in",
                 "show-recent": "show-recent 0.5s ease-out forwards",
                 "hide-recent": "hide-recent 0.5s ease-out forwards",
+                "up-down": "up-down 1s linear infinite",
             },
             size: {
                 "screen-header-button": "30px",

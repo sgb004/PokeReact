@@ -163,6 +163,14 @@
 
             &.edit-save {
                 @apply bg-accept text-accept-icon;
+
+                &.loading {
+                    @apply opacity-75;
+
+                    svg {
+                        @apply animate-up-down;
+                    }
+                }
             }
 
             &.edit-cancel {
@@ -351,5 +359,18 @@
     }
     100% {
         grid-template-rows: 0fr;
+    }
+}
+
+@keyframes up-down {
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+    25% {
+        transform: translateY(-3px);
+    }
+    75% {
+        transform: translateY(3px);
     }
 }
