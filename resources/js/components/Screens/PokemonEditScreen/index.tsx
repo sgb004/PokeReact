@@ -43,7 +43,7 @@ const PokemonEditScreen = forwardRef<
             return {
                 setPokemon: (pokemon: Pokemon, updatePokemon: SetPokemon) => {
                     callback.current = updatePokemon;
-                    setPokemon(pokemon);
+                    setPokemon({ ...pokemon });
                 },
             } as PokemonEditScreenElement;
         },
@@ -205,7 +205,7 @@ const PokemonEditScreen = forwardRef<
                                 pokemon,
                                 event.currentTarget,
                                 () => {
-                                    callback.current({ ...pokemon });
+                                    callback.current(pokemon);
                                     closeScreen();
                                     setEditing(true);
                                 },

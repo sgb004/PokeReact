@@ -98,7 +98,7 @@ const PokemonElement = ({ pokemon, onEdit }: PokemonProps) => {
                 </div>
                 <button
                     className="edit mb-auto w-[15px] h-[15px] center text-icon-edit flex justify-center items-center"
-                    onClick={() => onEdit(pokemon, setData)}
+                    onClick={() => onEdit(data, setData)}
                 >
                     <svg
                         width="13"
