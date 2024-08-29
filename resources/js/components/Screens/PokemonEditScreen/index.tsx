@@ -53,11 +53,11 @@ const PokemonEditScreen = forwardRef<
     return pokemon ? (
         <div
             ref={screenRef}
-            className={`pokemon-edit-screen screen absolute top-[100%] left-0 w-full h-full z-50 bg-edit-back ${screenAnimation} ${
+            className={`pokemon-edit-screen screen absolute top-[100%] left-0 flex w-full h-full bg-gradient-to-b from-transparent to-edit-back to-[50%] backdrop-blur-[5px] z-50 ${screenAnimation} ${
                 editing ? "editing" : "no-editing"
             }`}
         >
-            <section className="p-[5px] h-full grid">
+            <section className="p-[5px] pt-[20px] mt-auto grid gap-[20px] ">
                 <div className="cp flex justify-center h-[min-content] m-auto">
                     <span className="cp-title text-[1rem] mt-auto mr-[5px] pb-[6px]">
                         CP
@@ -74,7 +74,10 @@ const PokemonEditScreen = forwardRef<
                         disabled={!editing}
                     />
                 </div>
-                <PokemonImg number={pokemon.number} className="m-auto" />
+                <PokemonImg
+                    number={pokemon.number}
+                    className="m-auto drop-shadow-pokemon-img"
+                />
                 <div className="name flex justify-center h-[min-content] overflow-hidden p-[1px]">
                     <input
                         className="text-center text-[2rem] mb-auto mr-auto ml-auto max-w-[100%]"
