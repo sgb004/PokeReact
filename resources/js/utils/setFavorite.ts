@@ -1,9 +1,20 @@
 import { addNotification } from "../components/Notifications";
 import { Pokemon } from "../types";
 
-const setFavorite = (pokemon: Pokemon, input: HTMLInputElement) => {
-    const favorite = input.checked ? 1 : 0;
+type Callback = (favorite: boolean) => void;
+
+const setFavorite = (
+    pokemon: Pokemon,
+    input: HTMLInputElement,
+    successCallback: Callback,
+    errorCallback?: Callback
+) => {
+    const isFavorite = input.checked;
+    const favorite = isFavorite ? 1 : 0;
     const name = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
+    const errorMessage = favorite
+        ? `Error to set as a favorite the Pokemon ${name}`
+        : `Error to unset as a favorite the Pokemon ${name}`;
 
     input.setAttribute("disabled", "disabled");
 
@@ -20,11 +31,7 @@ const setFavorite = (pokemon: Pokemon, input: HTMLInputElement) => {
             if (response.status === 200) {
                 return response.json();
             } else {
-                throw new Error(
-                    favorite
-                        ? `Error to set as a favorite the Pokémon ${name}`
-                        : `Error to unset as a favorite the Pokemon ${name}`
-                );
+                throw new Error(errorMessage);
             }
         })
         .then(() => {
@@ -37,12 +44,16 @@ const setFavorite = (pokemon: Pokemon, input: HTMLInputElement) => {
             );
 
             input.removeAttribute("disabled");
+
+            successCallback(isFavorite);
         })
         .catch((error) => {
-            addNotification(input, error, "error");
+            console.error(error);
+            addNotification(input, errorMessage, "error");
 
-            input.checked = !input.checked;
             input.removeAttribute("disabled");
+
+            errorCallback && errorCallback(isFavorite);
         });
 };
 
