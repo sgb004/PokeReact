@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Pokemon, SetPokemon, PokemonStatCSS, StatProps } from "../../../types";
-import setFavorite from "../../../utils/setFavorite";
 import PokemonImg from "../../PokemonImg";
+import Favorite from "./Favorite";
 
 type PokemonProps = {
     pokemon: Pokemon;
@@ -62,29 +62,12 @@ const PokemonElement = ({ pokemon, onEdit }: PokemonProps) => {
                 </div>
             </label>
             <div className="actions flex justify-center gap-[10px] p-[5px]">
-                <label className="favorite mb-auto text-icon-favorite cursor-pointer">
-                    <input
-                        type="checkbox"
-                        value={data.id}
-                        className="favorite-dispatcher absolute top-0 left-0 hidden"
-                        onChange={(event) =>
-                            setFavorite(pokemon, event.currentTarget)
-                        }
-                        defaultChecked={data.favorite}
-                    />
-                    <svg
-                        className="icon"
-                        width="15"
-                        height="15"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 30 30"
-                    >
-                        <use
-                            href="#icon-star"
-                            className="fill-transparent transition-colors duration-[500ms]"
-                        />
-                    </svg>
-                </label>
+                <Favorite
+                    pokemon={data}
+                    onChange={(favorite) => {
+                        data.favorite = favorite;
+                    }}
+                />
                 <div
                     className={`pokemon-stats flex justify-center gap-[10px] text-center stats-${data.attack}-${data.defense}-${data.hp}`}
                 >
