@@ -4,10 +4,11 @@ import setFavorite from "../../../utils/setFavorite";
 
 export type FavoriteProps = {
     pokemon: Pokemon;
+    className?: string;
     onChange: (favorite: boolean) => void;
 };
 
-const Favorite = ({ pokemon, onChange }: FavoriteProps) => {
+const Favorite = ({ pokemon, className, onChange }: FavoriteProps) => {
     const [value, setValue] = useState(pokemon.favorite);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +30,9 @@ const Favorite = ({ pokemon, onChange }: FavoriteProps) => {
     }, [pokemon]);
 
     return (
-        <label className="favorite relative mb-auto text-icon-favorite cursor-pointer">
+        <label
+            className={`favorite relative mb-auto text-icon-favorite cursor-pointer ${className}`}
+        >
             <input
                 type="checkbox"
                 className="favorite-dispatcher absolute top-0 left-0 hidden"

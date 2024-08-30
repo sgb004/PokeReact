@@ -5,6 +5,7 @@ import PokemonImg from "../../PokemonImg";
 import StatSlider from "../../StatSlider";
 import patchPokemon from "../../../utils/patchPokemon";
 import Dialog from "../../Dialog";
+import Favorite from "../MyPokemonScreen/Favorite";
 
 export type PokemonEditScreenElement = {
     setPokemon: (pokemon: Pokemon, updatePokemon: SetPokemon) => void;
@@ -22,7 +23,9 @@ const PokemonEditScreen = forwardRef<
     const [pokemon, setPokemon] = useState<Pokemon | null>(null);
     const [editing, setEditing] = useState(true);
     const [screenAnimation, setScreenAnimation] = useState("animate-open");
-    const originalData = JSON.stringify(pokemon);
+    const stringifyData = (data: Pokemon | null) =>
+        JSON.stringify(data).replace('"favorite":false', '"favorite":true');
+    const originalData = stringifyData(pokemon);
 
     const closeScreen = () => {
         screenRef.current?.addEventListener(
@@ -57,7 +60,14 @@ const PokemonEditScreen = forwardRef<
                 editing ? "editing" : "no-editing"
             }`}
         >
-            <section className="p-[5px] pt-[20px] mt-auto grid gap-[20px] ">
+            <section className="relative p-[5px] pt-[20px] mt-auto grid gap-[20px] ">
+                <Favorite
+                    pokemon={pokemon}
+                    className="m-auto top-[24px] right-[20px]"
+                    onChange={(favorite) => {
+                        pokemon.favorite = favorite;
+                    }}
+                />
                 <div className="cp flex justify-center h-[min-content] m-auto">
                     <span className="cp-title text-[1rem] mt-auto mr-[5px] pb-[6px]">
                         CP
@@ -237,7 +247,7 @@ const PokemonEditScreen = forwardRef<
                         action: () => {
                             if (!editing) return;
 
-                            const currentData = JSON.stringify(pokemon);
+                            const currentData = stringifyData(pokemon);
 
                             if (currentData === originalData) {
                                 closeScreen();

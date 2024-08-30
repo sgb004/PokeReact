@@ -86,6 +86,14 @@
                 @apply animate-screen-go-bottom;
             }
 
+            .favorite {
+                @apply absolute;
+
+                .icon {
+                    @apply w-[40px] h-[40px];
+                }
+            }
+
             input:not(.stat-slider-input) {
                 @apply min-w-[50px] p-[0_5px] rounded-[2px] outline-bg-border-gray;
                 field-sizing: content;
