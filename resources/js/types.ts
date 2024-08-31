@@ -31,7 +31,14 @@ export type Pokemon = {
     enabled: boolean;
 };
 
+export type PokemonAttrs = keyof Pokemon;
+
 export type SetPokemon = React.Dispatch<React.SetStateAction<Pokemon>>;
+
+export type PatchPokemon = (
+    key: PokemonAttrs,
+    value: string | number | boolean
+) => void;
 
 export interface PokemonStatCSS extends CSSProperties {
     "--value": number;

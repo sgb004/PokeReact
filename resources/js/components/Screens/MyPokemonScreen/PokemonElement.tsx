@@ -1,11 +1,22 @@
 import { useState } from "react";
-import { Pokemon, SetPokemon, PokemonStatCSS, StatProps } from "../../../types";
+import {
+    Pokemon,
+    SetPokemon,
+    PokemonStatCSS,
+    StatProps,
+    PatchPokemon,
+    PokemonAttrs,
+} from "../../../types";
 import PokemonImg from "../../PokemonImg";
 import Favorite from "./Favorite";
 
 type PokemonProps = {
     pokemon: Pokemon;
-    onEdit: (pokemon: Pokemon, setPokemon: SetPokemon) => void;
+    onEdit: (
+        pokemon: Pokemon,
+        setPokemon: SetPokemon,
+        patchPokemon: PatchPokemon
+    ) => void;
 };
 
 const Stat = ({ name, value, icon }: StatProps) => (
@@ -38,6 +49,12 @@ const Stat = ({ name, value, icon }: StatProps) => (
 
 const PokemonElement = ({ pokemon, onEdit }: PokemonProps) => {
     const [data, setData] = useState<Pokemon>(pokemon);
+    const patchPokemon = (
+        key: PokemonAttrs,
+        value: string | number | boolean
+    ) => {
+        setData({ ...data, [key]: value });
+    };
 
     return (
         <div
@@ -81,7 +98,7 @@ const PokemonElement = ({ pokemon, onEdit }: PokemonProps) => {
                 </div>
                 <button
                     className="edit mb-auto w-[15px] h-[15px] center text-icon-edit flex justify-center items-center"
-                    onClick={() => onEdit(data, setData)}
+                    onClick={() => onEdit(data, setData, patchPokemon)}
                 >
                     <svg
                         width="13"

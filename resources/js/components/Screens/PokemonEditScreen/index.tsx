@@ -1,5 +1,5 @@
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
-import { Pokemon, SetPokemon } from "../../../types";
+import { PatchPokemon, Pokemon, SetPokemon } from "../../../types";
 import ScreenFooter from "../ScreenFooter";
 import PokemonImg from "../../PokemonImg";
 import StatSlider from "../../StatSlider";
@@ -8,7 +8,11 @@ import Dialog from "../../Dialog";
 import Favorite from "../MyPokemonScreen/Favorite";
 
 export type PokemonEditScreenElement = {
-    setPokemon: (pokemon: Pokemon, updatePokemon: SetPokemon) => void;
+    setPokemon: (
+        pokemon: Pokemon,
+        updatePokemon: SetPokemon,
+        patchPokemon: PatchPokemon
+    ) => void;
 } & HTMLDivElement;
 
 export type PokemonEditScreenProps = {};
@@ -18,7 +22,8 @@ const PokemonEditScreen = forwardRef<
     PokemonEditScreenProps
 >((_, ref) => {
     const screenRef = useRef<PokemonEditScreenElement>(null);
-    const callback = useRef<SetPokemon>(() => {});
+    const updateCallback = useRef<SetPokemon>(() => {});
+    const patchCallback = useRef<PatchPokemon>(() => {});
     const dialogRef = useRef<HTMLDialogElement>(null);
     const [pokemon, setPokemon] = useState<Pokemon | null>(null);
     const [editing, setEditing] = useState(true);
@@ -44,8 +49,13 @@ const PokemonEditScreen = forwardRef<
         ref,
         () => {
             return {
-                setPokemon: (pokemon: Pokemon, updatePokemon: SetPokemon) => {
-                    callback.current = updatePokemon;
+                setPokemon: (
+                    pokemon: Pokemon,
+                    updatePokemon: SetPokemon,
+                    patchPokemon: PatchPokemon
+                ) => {
+                    updateCallback.current = updatePokemon;
+                    patchCallback.current = patchPokemon;
                     setPokemon({ ...pokemon });
                 },
             } as PokemonEditScreenElement;
@@ -66,6 +76,7 @@ const PokemonEditScreen = forwardRef<
                     className="m-auto top-[24px] right-[20px]"
                     onChange={(favorite) => {
                         pokemon.favorite = favorite;
+                        patchCallback.current("favorite", favorite);
                     }}
                 />
                 <div className="cp flex justify-center h-[min-content] m-auto">
@@ -218,7 +229,7 @@ const PokemonEditScreen = forwardRef<
                                 pokemon,
                                 event.currentTarget,
                                 () => {
-                                    callback.current(pokemon);
+                                    updateCallback.current(pokemon);
                                     closeScreen();
                                     setEditing(true);
                                 },
