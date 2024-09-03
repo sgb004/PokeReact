@@ -24,12 +24,6 @@ export type ScreenGridElement = {
     setPokemon: (pokemon: Pokemon[]) => void;
 } & HTMLDivElement;
 
-const getTime = () => {
-    const date = new Date();
-    const time = date.getTime();
-    return time;
-};
-
 const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
     ({ queryUrl, noPokemonMessage, printGridItems }, ref) => {
         const screenGridRef = useRef<HTMLDivElement>(null);
@@ -42,10 +36,12 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
         const fetchAborter = useRef<AbortController>(new AbortController());
         const [render, setRender] = useState(1);
 
+        const reRender = () => setRender(new Date().getTime());
+
         const loadMore = () => {
             if (nextPageUrl.current === null) {
                 isLoading.current = false;
-                setRender(getTime());
+                reRender();
                 return false;
             }
 
@@ -64,7 +60,7 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
 
                     isLoading.current = false;
 
-                    setRender(getTime());
+                    reRender();
                 });
         };
 
@@ -85,7 +81,7 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
             reset(queryUrl);
             isLoading.current = true;
 
-            setRender(getTime());
+            reRender();
             loadMore();
         }, [queryUrl]);
 
@@ -105,7 +101,7 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
                     }
                 } else if (pokemon.current.length === 0) {
                     isEmpty.current = true;
-                    setRender(getTime());
+                    reRender();
                 }
             }
         }, [render]);
@@ -127,7 +123,7 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
 
                     if (!isLoading.current && scrollPercentRounded > 75) {
                         isLoading.current = true;
-                        setRender(getTime());
+                        reRender();
                         loadMore();
                     }
                 };
@@ -156,7 +152,7 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
                     setPokemon: (pokemonList: Pokemon[]) => {
                         pokemon.current = pokemonList;
                         pokemonIsUpdated.current = true;
-                        setRender(getTime());
+                        reRender();
                     },
                 } as ScreenGridElement;
             },
