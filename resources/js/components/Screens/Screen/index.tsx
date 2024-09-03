@@ -19,6 +19,7 @@ export type ScreenProps = {
     className?: string;
     queryUrl: string;
     noPokemonMessage: string;
+    initialMessage: string;
     actions: ScreenActions[];
     filters?: ScreenFilters[];
     children?: ReactNode;
@@ -45,6 +46,7 @@ const Screen = forwardRef<HTMLDivElement, ScreenProps>(
             className = "",
             queryUrl,
             noPokemonMessage,
+            initialMessage,
             actions,
             filters,
             children,
@@ -95,6 +97,7 @@ const Screen = forwardRef<HTMLDivElement, ScreenProps>(
                         ref={screenGridRef}
                         queryUrl={queryFullUrl}
                         noPokemonMessage={noPokemonMessage}
+                        initialMessage={initialMessage}
                         printGridItems={printGridItems}
                     />
                     <ScreenFooter actions={actions} />

@@ -32,6 +32,7 @@ const PokemonScreen = ({ myPokemonScreenRef }: PokemonScreenProps) => {
             className="pokedex-screen"
             queryUrl="/api/pokedex"
             noPokemonMessage="No Pokémon were found"
+            initialMessage="It is necessary to load the Pokédex first"
             actions={[
                 {
                     name: "add-pokemon",

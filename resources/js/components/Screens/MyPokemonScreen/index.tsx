@@ -160,6 +160,7 @@ const MyPokemonScreen = forwardRef<
                 className="pokemon-screen"
                 queryUrl="/api/pokemon"
                 noPokemonMessage="No Pokémon were found"
+                initialMessage="Add Pokémon from the Pokédex"
                 actions={[
                     {
                         name: "transfer-pokemon",
