@@ -47,6 +47,10 @@ class PokemonController extends Controller
 			'search' => $search
 		]);
 
+		if(!empty($search )){
+			sleep(5);
+		}
+
 		return response()->json($data, 200);
 	}
 

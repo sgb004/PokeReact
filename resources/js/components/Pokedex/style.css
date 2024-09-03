@@ -55,6 +55,11 @@
 
         .screen-grid {
             @apply grid grid-cols-3 auto-rows-min overflow-y-auto overflow-x-hidden;
+
+            &:has(.no-pokemon),
+            &:has(.loading) {
+                @apply auto-rows-auto;
+            }
         }
 
         &.pokemon-screen .screen-content {
