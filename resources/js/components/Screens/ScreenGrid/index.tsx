@@ -15,6 +15,7 @@ export type PrintGridItems = (pokemon: Pokemon, index: number) => ReactNode;
 export type ScreenGridProps = {
     queryUrl: string;
     noPokemonMessage: string;
+    initialMessage: string;
     printGridItems: PrintGridItems;
 };
 
@@ -26,7 +27,7 @@ export type ScreenGridElement = {
 } & HTMLDivElement;
 
 const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
-    ({ queryUrl, noPokemonMessage, printGridItems }, ref) => {
+    ({ queryUrl, noPokemonMessage, initialMessage, printGridItems }, ref) => {
         const screenGridRef = useRef<HTMLDivElement>(null);
         const pageUrl = useRef(queryUrl);
         const nextPageUrl = useRef(queryUrl);
@@ -35,6 +36,7 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
         const isEmpty = useRef(false);
         const pokemonIsUpdated = useRef(false);
         const fetchAborter = useRef<AbortController>(new AbortController());
+        const showInitialMessage = useRef(true);
         const [render, setRender] = useState(1);
 
         const reRender = () => setRender(new Date().getTime());
@@ -54,6 +56,9 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
                     nextPageUrl.current = data.next_page_url;
                     isEmpty.current =
                         pokemon.current.length === 0 && data.data.length === 0;
+                    showInitialMessage.current =
+                        isEmpty.current &&
+                        pageUrl.current.match(/search=\s*(&|$)/) !== null;
 
                     for (const item of data.data) {
                         pokemon.current.push(dataToPokemon(item));
@@ -113,6 +118,7 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
                     }
                 } else if (pokemon.current.length === 0) {
                     isEmpty.current = true;
+                    showInitialMessage.current = true;
                     reRender();
                 }
             }
@@ -176,7 +182,11 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
                 ref={screenGridRef}
                 className="screen-grid p-[5px_5px_60px_5px] bg-screen-grid"
             >
-                {isEmpty.current ? (
+                {showInitialMessage.current && !isLoading.current ? (
+                    <div className="no-pokemon col-start-1 col-end-4 flex justify-center items-center">
+                        {initialMessage}
+                    </div>
+                ) : isEmpty.current ? (
                     <div className="no-pokemon col-start-1 col-end-4 flex justify-center items-center">
                         {noPokemonMessage}
                     </div>
