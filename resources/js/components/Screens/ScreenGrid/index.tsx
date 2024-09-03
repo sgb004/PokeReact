@@ -36,32 +36,45 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
         const pageUrl = useRef(queryUrl);
         const nextPageUrl = useRef(queryUrl);
         const pokemon = useRef<Pokemon[]>([]);
-        const isLoading = useRef(false);
-        const [render, setRender] = useState(1);
+        const isLoading = useRef(true);
+        const isEmpty = useRef(false);
         const pokemonIsUpdated = useRef(false);
+        const fetchAborter = useRef<AbortController>(new AbortController());
+        const [render, setRender] = useState(1);
 
         const loadMore = () => {
-            if (nextPageUrl.current === null) return false;
+            if (nextPageUrl.current === null) {
+                isLoading.current = false;
+                setRender(getTime());
+                return false;
+            }
 
             pageUrl.current = nextPageUrl.current;
 
-            fetch(nextPageUrl.current)
+            fetch(nextPageUrl.current, { signal: fetchAborter.current.signal })
                 .then((response) => response.json())
                 .then((data) => {
                     nextPageUrl.current = data.next_page_url;
+                    isEmpty.current =
+                        pokemon.current.length === 0 && data.data.length === 0;
 
                     for (const item of data.data) {
                         pokemon.current.push(dataToPokemon(item));
                     }
+
+                    isLoading.current = false;
 
                     setRender(getTime());
                 });
         };
 
         const reset = (queryUrl: string, resetScroll = true) => {
+            fetchAborter.current.abort();
+            fetchAborter.current = new AbortController();
             nextPageUrl.current = queryUrl;
             pokemon.current = [];
             isLoading.current = false;
+            isEmpty.current = false;
 
             if (resetScroll) {
                 screenGridRef.current?.scrollTo(0, 0);
@@ -70,12 +83,13 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
 
         useEffect(() => {
             reset(queryUrl);
+            isLoading.current = true;
+
+            setRender(getTime());
             loadMore();
         }, [queryUrl]);
 
         useEffect(() => {
-            isLoading.current = false;
-
             if (pokemonIsUpdated.current) {
                 pokemonIsUpdated.current = false;
 
@@ -89,6 +103,9 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
                         reset(pageUrl.current + "&page=1", false);
                         loadMore();
                     }
+                } else if (pokemon.current.length === 0) {
+                    isEmpty.current = true;
+                    setRender(getTime());
                 }
             }
         }, [render]);
@@ -110,6 +127,7 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
 
                     if (!isLoading.current && scrollPercentRounded > 75) {
                         isLoading.current = true;
+                        setRender(getTime());
                         loadMore();
                     }
                 };
@@ -150,21 +168,18 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
                 ref={screenGridRef}
                 className="screen-grid p-[5px_5px_60px_5px] bg-screen-grid"
             >
-                {pokemon.current.length == 0 ? (
+                {isEmpty.current ? (
                     <div className="no-pokemon col-start-1 col-end-4 flex justify-center items-center">
                         {noPokemonMessage}
                     </div>
                 ) : (
-                    <>
-                        {pokemon.current.map(printGridItems)}
-                        {nextPageUrl.current ? (
-                            <div className="spinner col-start-1 col-end-4 flex justify-center items-center">
-                                Loading...
-                            </div>
-                        ) : (
-                            <></>
-                        )}
-                    </>
+                    pokemon.current.map(printGridItems)
+                )}
+
+                {isLoading.current && (
+                    <div className="spinner col-start-1 col-end-4 flex justify-center items-center">
+                        Loading...
+                    </div>
                 )}
             </section>
         );
