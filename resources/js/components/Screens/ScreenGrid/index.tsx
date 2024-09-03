@@ -8,6 +8,7 @@ import {
 } from "react";
 import { Pokemon } from "../../../types";
 import dataToPokemon from "../../../utils/dataToPokemon";
+import { addNotification } from "../../Notifications";
 
 export type PrintGridItems = (pokemon: Pokemon, index: number) => ReactNode;
 
@@ -61,11 +62,22 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
                     isLoading.current = false;
 
                     reRender();
+                })
+                .catch((error) => {
+                    if (error !== "Abort" && screenGridRef.current) {
+                        console.error(error);
+
+                        addNotification(
+                            screenGridRef.current,
+                            "There was an error to get the Pokémon",
+                            "error"
+                        );
+                    }
                 });
         };
 
         const reset = (queryUrl: string, resetScroll = true) => {
-            fetchAborter.current.abort();
+            fetchAborter.current.abort("Abort");
             fetchAborter.current = new AbortController();
             nextPageUrl.current = queryUrl;
             pokemon.current = [];
