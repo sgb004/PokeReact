@@ -39,6 +39,7 @@ class PokemonController extends Controller
 			return $query->where('name', 'like', $search . '%');
 		})
 		->orderBy($filter, $sort)
+		->orderBy("id", $sort)
 		->paginate(30)
 		->appends([
 			'filter' => $filterSelected,
@@ -93,7 +94,7 @@ class PokemonController extends Controller
 				$result = [
 					'status' => 200,
 					'message' => 'Pokemon added successfully',
-					'pokemon' => Pokemon::orderBy('created_at', 'desc')->limit($limit)->get()
+					'pokemon' => Pokemon::orderBy('created_at', 'desc')->orderBy("id", "desc")->limit($limit)->get()
 				];
 			}
 		}
