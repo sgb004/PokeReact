@@ -6,6 +6,7 @@ import Recent from "./Recent";
 import PokemonElement from "./PokemonElement";
 import { PokemonEditScreenElement } from "../PokemonEditScreen";
 import Dialog from "../../Dialog";
+import NotFoundMessage from "../../NotFoundMessage";
 
 export type MyPokemonScreenElement = {
     element: ScreenElement | null;
@@ -159,7 +160,7 @@ const MyPokemonScreen = forwardRef<
                 ref={screenRef}
                 className="pokemon-screen"
                 queryUrl="/api/pokemon"
-                noPokemonMessage="No Pokémon were found"
+                noPokemonMessage={<NotFoundMessage />}
                 initialMessage="Add Pokémon from the Pokédex"
                 actions={[
                     {

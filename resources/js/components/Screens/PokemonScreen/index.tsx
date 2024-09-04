@@ -1,5 +1,6 @@
 import { Pokemon } from "../../../types";
 import dataToPokemon from "../../../utils/dataToPokemon";
+import NotFoundMessage from "../../NotFoundMessage";
 import PokemonImg from "../../PokemonImg";
 import { sendListPokemon } from "../actions";
 import { MyPokemonScreenElement } from "../MyPokemonScreen";
@@ -31,7 +32,7 @@ const PokemonScreen = ({ myPokemonScreenRef }: PokemonScreenProps) => {
         <Screen
             className="pokedex-screen"
             queryUrl="/api/pokedex"
-            noPokemonMessage="No Pokémon were found"
+            noPokemonMessage={<NotFoundMessage />}
             initialMessage="It is necessary to load the Pokédex first"
             actions={[
                 {
