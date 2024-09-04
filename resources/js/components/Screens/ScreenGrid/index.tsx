@@ -14,8 +14,8 @@ export type PrintGridItems = (pokemon: Pokemon, index: number) => ReactNode;
 
 export type ScreenGridProps = {
     queryUrl: string;
-    noPokemonMessage: string;
-    initialMessage: string;
+    noPokemonMessage: string | ReactNode;
+    initialMessage: string | ReactNode;
     printGridItems: PrintGridItems;
 };
 

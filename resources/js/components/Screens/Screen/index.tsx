@@ -18,8 +18,8 @@ import ScreenFooter from "../ScreenFooter";
 export type ScreenProps = {
     className?: string;
     queryUrl: string;
-    noPokemonMessage: string;
-    initialMessage: string;
+    noPokemonMessage: string | ReactNode;
+    initialMessage: string | ReactNode;
     actions: ScreenActions[];
     filters?: ScreenFilters[];
     children?: ReactNode;
