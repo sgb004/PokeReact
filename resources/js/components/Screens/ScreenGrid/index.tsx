@@ -9,6 +9,8 @@ import {
 import { Pokemon } from "../../../types";
 import dataToPokemon from "../../../utils/dataToPokemon";
 import { addNotification } from "../../Notifications";
+import Spinner from "../../Spinner";
+import PokeballIcon from "../../Icons/PokeballIcon";
 
 export type PrintGridItems = (pokemon: Pokemon, index: number) => ReactNode;
 
@@ -195,8 +197,8 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
                 )}
 
                 {isLoading.current && (
-                    <div className="loading col-start-1 col-end-4 flex justify-center items-center">
-                        Loading...
+                    <div className="spinner col-start-1 col-end-4 flex justify-center items-center">
+                        <Spinner />
                     </div>
                 )}
             </section>

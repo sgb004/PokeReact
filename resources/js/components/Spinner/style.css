@@ -1,0 +1,63 @@
+.pokeball-spinner {
+    animation: pokeball-spinner-rotate 1.5s infinite;
+
+    .top-cover {
+        fill: #ff0000;
+        animation: pokeball-spinner-top-cover-change-color 6s infinite;
+    }
+
+    .button {
+        --drop-shadow-color: #ff0000;
+        animation: pokeball-spinner-button-light 0.75s infinite;
+    }
+}
+
+@keyframes pokeball-spinner-rotate {
+    0%,
+    20% {
+        transform: rotate(0deg);
+    }
+    30% {
+        transform: rotate(-45deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pokeball-spinner-top-cover-change-color {
+    0%,
+    24% {
+        fill: #ff0000;
+    }
+    25%,
+    49% {
+        fill: #0073cf;
+    }
+    50%,
+    74% {
+        fill: #ffd700;
+    }
+    75%,
+    99% {
+        fill: #993399;
+    }
+    100% {
+        fill: #ff0000;
+    }
+}
+
+@keyframes pokeball-spinner-button-light {
+    0% {
+        fill: #fff;
+        filter: drop-shadow(0 0 0 var(--drop-shadow-color));
+    }
+    50% {
+        fill: #ff0000;
+        filter: drop-shadow(0 0 1px var(--drop-shadow-color));
+    }
+    100% {
+        fill: #fff;
+        filter: drop-shadow(0 0 0 var(--drop-shadow-color));
+    }
+}
