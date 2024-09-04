@@ -1,18 +1,13 @@
 export type PokeballIconProps = {
     className?: string;
-    height?: number;
-    width?: number;
+    size?: number;
 };
 
-const PokeballIcon = ({
-    className,
-    height = 30,
-    width = 30,
-}: PokeballIconProps) => (
+const PokeballIcon = ({ className, size = 30 }: PokeballIconProps) => (
     <svg
         className={className}
-        width={width}
-        height={height}
+        width={size}
+        height={size}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 30 30"
     >

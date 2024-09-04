@@ -1,8 +1,6 @@
 import PokeballIcon from "../Icons/PokeballIcon";
 import "./style.css";
 
-const Spinner = () => (
-    <PokeballIcon className="pokeball-spinner" width={45} height={45} />
-);
+const Spinner = () => <PokeballIcon className="pokeball-spinner" size={45} />;
 
 export default Spinner;
