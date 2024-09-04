@@ -1,8 +1,6 @@
 import "./style.css";
 
-type NotFoundMessageProps = {};
-
-function NotFoundMessage({}: NotFoundMessageProps) {
+function NotFoundMessage() {
     return (
         <div className="text-center">
             <svg

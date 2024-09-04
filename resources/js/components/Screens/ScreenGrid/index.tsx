@@ -10,7 +10,6 @@ import { Pokemon } from "../../../types";
 import dataToPokemon from "../../../utils/dataToPokemon";
 import { addNotification } from "../../Notifications";
 import Spinner from "../../Spinner";
-import PokeballIcon from "../../Icons/PokeballIcon";
 
 export type PrintGridItems = (pokemon: Pokemon, index: number) => ReactNode;
 
