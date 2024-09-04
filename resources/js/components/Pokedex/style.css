@@ -21,6 +21,10 @@
             .navigation-button-icon {
             @apply w-[25px];
         }
+
+        .navigation-button-icon.pokeball-icon g {
+            @apply fill-button-yellow;
+        }
     }
 
     .hinge {
