@@ -33,7 +33,7 @@ const Navigation = () => {
                         <span>
                             <PokeballIcon
                                 className="navigation-button-icon pokeball-icon"
-                                size={27}
+                                size={31}
                             />
                         </span>
                     </NavigationButton>
@@ -42,7 +42,7 @@ const Navigation = () => {
                     <NavigationButton name="pokemon">
                         <span>
                             <img
-                                className="navigation-button-icon w-[30px]"
+                                className="navigation-button-icon w-[31px]"
                                 src="/images/icon-pokedex.svg"
                             />
                         </span>
