@@ -5,6 +5,7 @@ import PokemonImg from "../../PokemonImg";
 import { sendListPokemon } from "../actions";
 import { MyPokemonScreenElement } from "../MyPokemonScreen";
 import Screen from "../Screen";
+import InitialMessage from "./InitialMessage";
 
 type PokemonScreenProps = {
     myPokemonScreenRef: React.RefObject<MyPokemonScreenElement>;
@@ -33,7 +34,7 @@ const PokemonScreen = ({ myPokemonScreenRef }: PokemonScreenProps) => {
             className="pokedex-screen"
             queryUrl="/api/pokedex"
             noPokemonMessage={<NotFoundMessage />}
-            initialMessage="It is necessary to load the Pokédex first"
+            initialMessage={<InitialMessage />}
             actions={[
                 {
                     name: "add-pokemon",

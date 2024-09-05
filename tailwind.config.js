@@ -126,6 +126,14 @@ export default {
                         "grid-template-rows": "0fr",
                     },
                 },
+                "rotate-y": {
+                    "0%": {
+                        transform: "rotateY(0deg)",
+                    },
+                    "100%": {
+                        transform: "rotateY(360deg)",
+                    },
+                },
             },
             animation: {
                 "front-cover-triangule":
@@ -142,6 +150,7 @@ export default {
                 "screen-go-top": "screen-go-top 0.35s ease-in forwards",
                 "screen-go-bottom":
                     "screen-go-bottom 0.7s ease-in-out forwards",
+                "rotate-y": "rotate-y 4s linear infinite",
             },
             size: {
                 "screen-header-button": "30px",
