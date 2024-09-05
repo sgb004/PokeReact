@@ -7,6 +7,7 @@ import PokemonElement from "./PokemonElement";
 import { PokemonEditScreenElement } from "../PokemonEditScreen";
 import Dialog from "../../Dialog";
 import NotFoundMessage from "../../NotFoundMessage";
+import InitialMessage from "./InitialMessage";
 
 export type MyPokemonScreenElement = {
     element: ScreenElement | null;
@@ -161,7 +162,7 @@ const MyPokemonScreen = forwardRef<
                 className="pokemon-screen"
                 queryUrl="/api/pokemon"
                 noPokemonMessage={<NotFoundMessage />}
-                initialMessage="Add Pokémon from the Pokédex"
+                initialMessage={<InitialMessage />}
                 actions={[
                     {
                         name: "transfer-pokemon",

@@ -84,6 +84,10 @@
             & > .screen-grid {
                 @apply z-[1];
             }
+
+            .initial-message svg g {
+                @apply transition-colors ease-linear;
+            }
         }
 
         &.pokemon-edit-screen {

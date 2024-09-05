@@ -53,6 +53,7 @@ export default {
             },
             dropShadow: {
                 "pokemon-img": "2px 4px 6px #000",
+                "pokedex-icon-hover": "0 0 3px #005fdc",
             },
             keyframes: {
                 "front-cover-triangule": {
