@@ -1,4 +1,5 @@
 import PokeballIcon from "../Icons/PokeballIcon";
+import PokedexIcon from "../Icons/PokedexIcon";
 
 export type NavigationButtonProps = {
     children: React.ReactNode;
@@ -15,6 +16,7 @@ const NavigationButton = ({
         <label className="navigation-button flex justify-center items-center cursor-pointer rounded-[5px] bg-button-yellow w-[37px] border border-button-yellow text-base min-h-[37px] box-sizing">
             {children}
             <input
+                id={`navigation-button-${name}-dispatcher`}
                 type="radio"
                 className={`navigation-dispatcher navigation-${name} hidden`}
                 name="navigation-button"
@@ -41,9 +43,9 @@ const Navigation = () => {
                 <li>
                     <NavigationButton name="pokemon">
                         <span>
-                            <img
-                                className="navigation-button-icon w-[31px]"
-                                src="/images/icon-pokedex.svg"
+                            <PokedexIcon
+                                className="navigation-button-icon"
+                                size={31}
                             />
                         </span>
                     </NavigationButton>
