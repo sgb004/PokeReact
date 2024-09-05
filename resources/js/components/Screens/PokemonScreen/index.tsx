@@ -1,10 +1,11 @@
+import { useRef } from "react";
 import { Pokemon } from "../../../types";
 import dataToPokemon from "../../../utils/dataToPokemon";
 import NotFoundMessage from "../../NotFoundMessage";
 import PokemonImg from "../../PokemonImg";
 import { sendListPokemon } from "../actions";
 import { MyPokemonScreenElement } from "../MyPokemonScreen";
-import Screen from "../Screen";
+import Screen, { ScreenElement } from "../Screen";
 import InitialMessage from "./InitialMessage";
 
 type PokemonScreenProps = {
@@ -29,12 +30,19 @@ const handleAddPokemon = (
 };
 
 const PokemonScreen = ({ myPokemonScreenRef }: PokemonScreenProps) => {
+    const screenRef = useRef<ScreenElement>(null);
+
     return (
         <Screen
+            ref={screenRef}
             className="pokedex-screen"
             queryUrl="/api/pokedex"
             noPokemonMessage={<NotFoundMessage />}
-            initialMessage={<InitialMessage />}
+            initialMessage={
+                <InitialMessage
+                    onPokedexLoaded={() => screenRef.current?.grid?.reset()}
+                />
+            }
             actions={[
                 {
                     name: "add-pokemon",

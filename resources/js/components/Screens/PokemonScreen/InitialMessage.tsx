@@ -7,6 +7,11 @@ type CodeProps = {
 
 type PercentageProps = {
     className?: string;
+    onComplete: () => void;
+};
+
+type InitialMessageProps = {
+    onPokedexLoaded: () => void;
 };
 
 const Code = ({ children }: CodeProps) => (
@@ -15,7 +20,7 @@ const Code = ({ children }: CodeProps) => (
     </code>
 );
 
-const Percentage = ({ className }: PercentageProps) => {
+const Percentage = ({ className, onComplete }: PercentageProps) => {
     const percentageRef = useRef<HTMLDivElement>(document.createElement("div"));
     const [percent, setPercent] = useState(0);
 
@@ -31,17 +36,16 @@ const Percentage = ({ className }: PercentageProps) => {
                 }
             })
             .then((data) => {
-                console.log(data);
                 setPercent(Math.floor(data.percentage_completed));
                 if (data.status === "running") {
                     setTimeout(checkStatus, 100);
                 } else if (data.status === "finished") {
-                    console.log("Completed");
                     addNotification(
                         percentageRef.current,
                         "The Pokédex was loaded successfully",
                         "success"
                     );
+                    setTimeout(onComplete, 1000);
                 }
             })
             .catch((error) => {
@@ -68,7 +72,7 @@ const Percentage = ({ className }: PercentageProps) => {
     );
 };
 
-const InitialMessage = () => {
+const InitialMessage = ({ onPokedexLoaded }: InitialMessageProps) => {
     return (
         <div className="initial-message text-center">
             <svg
@@ -96,7 +100,7 @@ const InitialMessage = () => {
             <Code>sail artisan queue:work</Code>
             <p>or:</p>
             <Code>php artisan queue:work</Code>
-            <Percentage className="mt-[15px]" />
+            <Percentage className="mt-[15px]" onComplete={onPokedexLoaded} />
         </div>
     );
 };
