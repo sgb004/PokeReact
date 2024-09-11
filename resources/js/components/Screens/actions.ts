@@ -1,4 +1,5 @@
 import { Pokemon } from "../../types";
+import { fetchSendingListPokemon } from "../../utils/fetchList";
 import { addNotification } from "../Notifications";
 
 export type PokemonFunctionParams = {
@@ -47,22 +48,19 @@ const sendingListPokemon = ({
 
     btn.classList.add("loading");
 
-    fetch(url, {
-        method,
-        headers: {
-            "Content-Type": "application/json",
+    fetchSendingListPokemon(
+        url,
+        {
+            method,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                pokemon: pokemonSelected,
+            }),
         },
-        body: JSON.stringify({
-            pokemon: pokemonSelected,
-        }),
-    })
-        .then((response) => {
-            if (response.status === 200) {
-                return response.json();
-            } else {
-                throw new Error(messageError);
-            }
-        })
+        messageError
+    )
         .then((data) => {
             successCallback(data.pokemon, pokemonSelected);
 
