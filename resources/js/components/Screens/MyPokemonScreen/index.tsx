@@ -8,6 +8,7 @@ import { PokemonEditScreenElement } from "../PokemonEditScreen";
 import Dialog from "../../Dialog";
 import NotFoundMessage from "../../NotFoundMessage";
 import InitialMessage from "./InitialMessage";
+import { fetchMyPokemonScreenGrid } from "../../../utils/fetchList";
 
 export type MyPokemonScreenElement = {
     element: ScreenElement | null;
@@ -160,6 +161,7 @@ const MyPokemonScreen = forwardRef<
             <Screen
                 ref={screenRef}
                 className="pokemon-screen"
+                screenGridFetchCall={fetchMyPokemonScreenGrid}
                 queryUrl="/api/pokemon"
                 noPokemonMessage={<NotFoundMessage />}
                 initialMessage={<InitialMessage />}

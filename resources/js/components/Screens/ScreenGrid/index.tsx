@@ -13,7 +13,18 @@ import Spinner from "../../Spinner";
 
 export type PrintGridItems = (pokemon: Pokemon, index: number) => ReactNode;
 
+export type ScreenGridFetchRequest = {
+    data: Pokemon[];
+    next_page_url: string;
+};
+
+export type ScreenGridFetchCall = (
+    input: RequestInfo | URL,
+    init?: RequestInit
+) => Promise<ScreenGridFetchRequest>;
+
 export type ScreenGridProps = {
+    fetchCall: ScreenGridFetchCall;
     queryUrl: string;
     noPokemonMessage: string | ReactNode;
     initialMessage: string | ReactNode;
@@ -28,7 +39,16 @@ export type ScreenGridElement = {
 } & HTMLDivElement;
 
 const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
-    ({ queryUrl, noPokemonMessage, initialMessage, printGridItems }, ref) => {
+    (
+        {
+            fetchCall,
+            queryUrl,
+            noPokemonMessage,
+            initialMessage,
+            printGridItems,
+        },
+        ref
+    ) => {
         const screenGridRef = useRef<HTMLDivElement>(null);
         const pageUrl = useRef(queryUrl);
         const nextPageUrl = useRef(queryUrl);
@@ -51,8 +71,9 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
 
             pageUrl.current = nextPageUrl.current;
 
-            fetch(nextPageUrl.current, { signal: fetchAborter.current.signal })
-                .then((response) => response.json())
+            fetchCall(nextPageUrl.current, {
+                signal: fetchAborter.current.signal,
+            })
                 .then((data) => {
                     nextPageUrl.current = data.next_page_url;
                     isEmpty.current =

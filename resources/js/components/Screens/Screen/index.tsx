@@ -12,11 +12,16 @@ import {
     Sort,
 } from "../../../types";
 import ScreenHeader, { ScreenHeaderElement } from "../ScreenHeader";
-import ScreenGrid, { PrintGridItems, ScreenGridElement } from "../ScreenGrid";
+import ScreenGrid, {
+    PrintGridItems,
+    ScreenGridElement,
+    ScreenGridFetchCall,
+} from "../ScreenGrid";
 import ScreenFooter from "../ScreenFooter";
 
 export type ScreenProps = {
     className?: string;
+    screenGridFetchCall: ScreenGridFetchCall;
     queryUrl: string;
     noPokemonMessage: string | ReactNode;
     initialMessage: string | ReactNode;
@@ -44,6 +49,7 @@ const Screen = forwardRef<HTMLDivElement, ScreenProps>(
     (
         {
             className = "",
+            screenGridFetchCall,
             queryUrl,
             noPokemonMessage,
             initialMessage,
@@ -95,6 +101,7 @@ const Screen = forwardRef<HTMLDivElement, ScreenProps>(
                     {children}
                     <ScreenGrid
                         ref={screenGridRef}
+                        fetchCall={screenGridFetchCall}
                         queryUrl={queryFullUrl}
                         noPokemonMessage={noPokemonMessage}
                         initialMessage={initialMessage}

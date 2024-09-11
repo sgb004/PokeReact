@@ -7,6 +7,7 @@ import { sendListPokemon } from "../actions";
 import { MyPokemonScreenElement } from "../MyPokemonScreen";
 import Screen, { ScreenElement } from "../Screen";
 import InitialMessage from "./InitialMessage";
+import { fetchPokedexScreenGrid } from "../../../utils/fetchList";
 
 type PokemonScreenProps = {
     myPokemonScreenRef: React.RefObject<MyPokemonScreenElement>;
@@ -36,6 +37,7 @@ const PokemonScreen = ({ myPokemonScreenRef }: PokemonScreenProps) => {
         <Screen
             ref={screenRef}
             className="pokedex-screen"
+            screenGridFetchCall={fetchPokedexScreenGrid}
             queryUrl="/api/pokedex"
             noPokemonMessage={<NotFoundMessage />}
             initialMessage={
