@@ -17,8 +17,8 @@ let fetchToMyPokemonScreenGrid = fetchScreenGrid;
 
 let fetchToSendingListPokemon = (
     input: RequestInfo | URL,
-    init?: RequestInit,
-    messageError?: string
+    init: RequestInit,
+    errorMessage: string
 ) =>
     new Promise<{ pokemon: Pokemon[]; message: string }>((resolve, reject) =>
         fetch(input, init)
@@ -26,7 +26,25 @@ let fetchToSendingListPokemon = (
                 if (response.status === 200) {
                     return response.json();
                 } else {
-                    throw new Error(messageError);
+                    throw new Error(errorMessage);
+                }
+            })
+            .then(resolve)
+            .catch(reject)
+    );
+
+let fetchToSetFavorite = (
+    input: RequestInfo | URL,
+    init: RequestInit,
+    errorMessage: string
+) =>
+    new Promise((resolve, reject) =>
+        fetch(input, init)
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    throw new Error(errorMessage);
                 }
             })
             .then(resolve)
@@ -42,3 +60,5 @@ export const fetchPokedexScreenGrid = fetchScreenGrid;
 export const fetchMyPokemonScreenGrid = fetchToMyPokemonScreenGrid;
 
 export const fetchSendingListPokemon = fetchToSendingListPokemon;
+
+export const fetchSetFavorite = fetchToSetFavorite;

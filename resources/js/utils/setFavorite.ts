@@ -1,5 +1,6 @@
 import { addNotification } from "../components/Notifications";
 import { Pokemon } from "../types";
+import { fetchSetFavorite } from "./fetchList";
 
 type Callback = (favorite: boolean) => void;
 
@@ -18,22 +19,19 @@ const setFavorite = (
 
     input.setAttribute("disabled", "disabled");
 
-    fetch(`/api/pokemon/${pokemon.id}`, {
-        method: "PATCH",
-        headers: {
-            "Content-Type": "application/json",
+    fetchSetFavorite(
+        `/api/pokemon/${pokemon.id}`,
+        {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                favorite,
+            }),
         },
-        body: JSON.stringify({
-            favorite,
-        }),
-    })
-        .then((response) => {
-            if (response.status === 200) {
-                return response.json();
-            } else {
-                throw new Error(errorMessage);
-            }
-        })
+        errorMessage
+    )
         .then(() => {
             addNotification(
                 input,
