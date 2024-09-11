@@ -1,5 +1,5 @@
 import { Pokemon } from "../../types";
-import { fetchSendingListPokemon } from "../../utils/fetchList";
+import { fetchSendingListPokemon } from "../../utils/fetchMethods";
 import { addNotification } from "../Notifications";
 
 export type PokemonFunctionParams = {

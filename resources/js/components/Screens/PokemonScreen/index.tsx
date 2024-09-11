@@ -7,7 +7,7 @@ import { sendListPokemon } from "../actions";
 import { MyPokemonScreenElement } from "../MyPokemonScreen";
 import Screen, { ScreenElement } from "../Screen";
 import InitialMessage from "./InitialMessage";
-import { fetchPokedexScreenGrid } from "../../../utils/fetchList";
+import { fetchPokedexScreenGrid } from "../../../utils/fetchMethods";
 
 type PokemonScreenProps = {
     myPokemonScreenRef: React.RefObject<MyPokemonScreenElement>;

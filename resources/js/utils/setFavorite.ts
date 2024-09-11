@@ -1,6 +1,6 @@
 import { addNotification } from "../components/Notifications";
 import { Pokemon } from "../types";
-import { fetchSetFavorite } from "./fetchList";
+import { fetchSetFavorite } from "./fetchMethods";
 
 type Callback = (favorite: boolean) => void;
 

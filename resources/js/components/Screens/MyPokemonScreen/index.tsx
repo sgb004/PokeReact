@@ -8,7 +8,7 @@ import { PokemonEditScreenElement } from "../PokemonEditScreen";
 import Dialog from "../../Dialog";
 import NotFoundMessage from "../../NotFoundMessage";
 import InitialMessage from "./InitialMessage";
-import { fetchMyPokemonScreenGrid } from "../../../utils/fetchList";
+import { fetchMyPokemonScreenGrid } from "../../../utils/fetchMethods";
 
 export type MyPokemonScreenElement = {
     element: ScreenElement | null;
