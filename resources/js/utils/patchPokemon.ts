@@ -1,5 +1,6 @@
 import { addNotification } from "../components/Notifications";
 import { Pokemon } from "../types";
+import { fetchPatchPokemon } from "./fetchMethods";
 
 const patchPokemon = (
     pokemon: Pokemon,
@@ -11,29 +12,24 @@ const patchPokemon = (
 
     element.classList.add("loading");
 
-    fetch(`/api/pokemon/${pokemon.id}`, {
-        method: "PATCH",
-        headers: {
-            "Content-Type": "application/json",
+    fetchPatchPokemon(
+        `/api/pokemon/${pokemon.id}`,
+        {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name,
+                cp: pokemon.cp,
+                attack: pokemon.attack,
+                defense: pokemon.defense,
+                hp: pokemon.hp,
+                favorite: pokemon.favorite,
+            }),
         },
-        body: JSON.stringify({
-            name,
-            cp: pokemon.cp,
-            attack: pokemon.attack,
-            defense: pokemon.defense,
-            hp: pokemon.hp,
-            favorite: pokemon.favorite,
-        }),
-    })
-        .then((response) => {
-            if (response.status === 200) {
-                return response.json();
-            } else {
-                throw new Error(
-                    `Error to update the Pokémon ${name}, status: ${response.status}`
-                );
-            }
-        })
+        name
+    )
         .then(() => {
             addNotification(element, `${name} was updated`, "success");
             successCallback();

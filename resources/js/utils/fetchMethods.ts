@@ -51,6 +51,26 @@ let fetchToSetFavorite = (
             .catch(reject)
     );
 
+let fetchToPatchPokemon = (
+    input: RequestInfo | URL,
+    init: RequestInit,
+    name: string
+) =>
+    new Promise((resolve, reject) =>
+        fetch(input, init)
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    throw new Error(
+                        `Error to update the Pokémon ${name}, status: ${response.status}`
+                    );
+                }
+            })
+            .then(resolve)
+            .catch(reject)
+    );
+
 if (appUseIndexedDB) {
     /* TODO: Implement fetch to IndexedDB */
 }
@@ -62,3 +82,5 @@ export const fetchMyPokemonScreenGrid = fetchToMyPokemonScreenGrid;
 export const fetchSendingListPokemon = fetchToSendingListPokemon;
 
 export const fetchSetFavorite = fetchToSetFavorite;
+
+export const fetchPatchPokemon = fetchToPatchPokemon;
