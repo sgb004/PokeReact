@@ -13,6 +13,8 @@ const fetchScreenGrid = (input: RequestInfo | URL, init?: RequestInit) =>
             .catch(reject)
     );
 
+let fetchToMyPokemonScreenGrid = fetchScreenGrid;
+
 let fetchToSendingListPokemon = (
     input: RequestInfo | URL,
     init?: RequestInit,
@@ -31,26 +33,12 @@ let fetchToSendingListPokemon = (
             .catch(reject)
     );
 
-let fetchList = {
-    pokedexScreenGrid: fetchScreenGrid,
-    myPokemonScreenGrid: fetchScreenGrid,
-};
-
 if (appUseIndexedDB) {
-    fetchList["myPokemonScreenGrid"] = () =>
-        new Promise((resolve) => {
-            resolve({ data: [] });
-        });
+    /* TODO: Implement fetch to IndexedDB */
 }
 
-export const fetchPokedexScreenGrid = (
-    input: RequestInfo | URL,
-    init?: RequestInit
-) => fetchList.pokedexScreenGrid(input, init);
+export const fetchPokedexScreenGrid = fetchScreenGrid;
 
-export const fetchMyPokemonScreenGrid = (
-    input: RequestInfo | URL,
-    init?: RequestInit
-) => fetchList.myPokemonScreenGrid(input, init);
+export const fetchMyPokemonScreenGrid = fetchToMyPokemonScreenGrid;
 
 export const fetchSendingListPokemon = fetchToSendingListPokemon;
