@@ -1,4 +1,5 @@
 import { ScreenGridFetchRequest } from "../components/Screens/ScreenGrid";
+import { getPokemonIndexedDB } from "../indexedDB/driver";
 import { Pokemon } from "../types";
 
 const appUseIndexedDB = window[
@@ -73,6 +74,13 @@ let fetchToPatchPokemon = (
 
 if (appUseIndexedDB) {
     /* TODO: Implement fetch to IndexedDB */
+
+    fetchToMyPokemonScreenGrid = (input: RequestInfo | URL) =>
+        new Promise<ScreenGridFetchRequest>((resolve, reject) =>
+            getPokemonIndexedDB(input)
+                .then((data) => resolve(data))
+                .catch(reject)
+        );
 }
 
 export const fetchPokedexScreenGrid = fetchScreenGrid;
