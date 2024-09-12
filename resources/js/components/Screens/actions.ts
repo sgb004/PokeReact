@@ -5,7 +5,7 @@ import { addNotification } from "../Notifications";
 export type PokemonFunctionParams = {
     btn: EventTarget & HTMLButtonElement;
     url: string;
-    method: "GET" | "POST" | "DELETE";
+    method: "POST" | "DELETE";
     messageError: string;
     successCallback: (pokemon: Pokemon[], pokemonSelected: number[]) => void;
     errorCallback?: (
@@ -48,19 +48,7 @@ const sendingListPokemon = ({
 
     btn.classList.add("loading");
 
-    fetchSendingListPokemon(
-        url,
-        {
-            method,
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                pokemon: pokemonSelected,
-            }),
-        },
-        messageError
-    )
+    fetchSendingListPokemon(url, method, pokemonSelected, messageError)
         .then((data) => {
             successCallback(data.pokemon, pokemonSelected);
 

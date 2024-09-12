@@ -17,12 +17,21 @@ const fetchScreenGrid = (input: RequestInfo | URL, init?: RequestInit) =>
 let fetchToMyPokemonScreenGrid = fetchScreenGrid;
 
 let fetchToSendingListPokemon = (
-    input: RequestInfo | URL,
-    init: RequestInit,
+    url: RequestInfo | URL,
+    method: "POST" | "DELETE",
+    pokemonSelected: number[],
     errorMessage: string
 ) =>
     new Promise<{ pokemon: Pokemon[]; message: string }>((resolve, reject) =>
-        fetch(input, init)
+        fetch(url, {
+            method,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                pokemon: pokemonSelected,
+            }),
+        })
             .then((response) => {
                 if (response.status === 200) {
                     return response.json();
