@@ -1,5 +1,7 @@
-import { Pokemon } from "../types";
+import { Pokemon as PokemonType } from "../types";
 import IndexedDBConnection from "./IndexedDBConnection";
+
+type Pokemon = Omit<PokemonType, "id" | "enabled">;
 
 class PokemonIndexedDB extends IndexedDBConnection {
     _DB_NAME = "pokedex";
@@ -25,13 +27,32 @@ class PokemonIndexedDB extends IndexedDBConnection {
             store.createIndex("defense", "defense", { unique: false });
             store.createIndex("hp", "hp", { unique: false });
             store.createIndex("favorite", "favorite", { unique: false });
+            store.createIndex("created_at", "created_at", { unique: false });
+            store.createIndex("updated_at", "updated_at", { unique: false });
         };
 
         return super.init(onupgradeneeded);
     }
 
-    getAll(orderBy: string, direction: "next" | "prev", search: string) {
-        return super.getAll(orderBy, "id", direction, search, "nameNormalized");
+    getAll({
+        orderBy,
+        direction,
+        search,
+        limit,
+    }: {
+        orderBy: string;
+        direction: "next" | "prev";
+        search?: string;
+        limit?: number[];
+    }) {
+        return super.getAll({
+            orderBy,
+            keyPath: "id",
+            direction,
+            search: search ?? "",
+            searchColumn: "nameNormalized",
+            limit,
+        });
     }
 
     add(pokemon: Pokemon) {
