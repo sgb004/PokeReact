@@ -1,6 +1,9 @@
 import { ScreenGridFetchRequest } from "../components/Screens/ScreenGrid";
-import { getPokemonIndexedDB } from "../indexedDB/driver";
-import { Pokemon } from "../types";
+import {
+    getPokemonIndexedDB,
+    sendListPokemonIndexedDB,
+} from "../indexedDB/driver";
+import { SendingListFetchRequest } from "../types";
 
 const appUseIndexedDB = window[
     "appUseIndexedDB" as keyof typeof window
@@ -22,7 +25,7 @@ let fetchToSendingListPokemon = (
     pokemonSelected: number[],
     errorMessage: string
 ) =>
-    new Promise<{ pokemon: Pokemon[]; message: string }>((resolve, reject) =>
+    new Promise<SendingListFetchRequest>((resolve, reject) =>
         fetch(url, {
             method,
             headers: {
@@ -90,6 +93,21 @@ if (appUseIndexedDB) {
                 .then((data) => resolve(data))
                 .catch(reject)
         );
+
+    fetchToSendingListPokemon = (
+        _,
+        method: "POST" | "DELETE",
+        pokemonSelected: number[],
+        errorMessage: string
+    ) =>
+        new Promise<SendingListFetchRequest>((resolve, reject) => {
+            sendListPokemonIndexedDB(method, pokemonSelected)
+                .then(resolve)
+                .catch((error) => {
+                    console.error(error);
+                    reject(errorMessage);
+                });
+        });
 }
 
 export const fetchPokedexScreenGrid = fetchScreenGrid;
