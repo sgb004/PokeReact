@@ -49,3 +49,8 @@ export type StatProps = {
     value: number;
     icon: "icon-sword" | "icon-shield" | "icon-heart";
 };
+
+export type SendingListFetchRequest = {
+    pokemon: Pokemon[];
+    message: string;
+};
