@@ -15,7 +15,7 @@ export type PrintGridItems = (pokemon: Pokemon, index: number) => ReactNode;
 
 export type ScreenGridFetchRequest = {
     data: Pokemon[];
-    next_page_url: string;
+    next_page_url: string | null;
 };
 
 export type ScreenGridFetchCall = (
@@ -51,7 +51,7 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
     ) => {
         const screenGridRef = useRef<HTMLDivElement>(null);
         const pageUrl = useRef(queryUrl);
-        const nextPageUrl = useRef(queryUrl);
+        const nextPageUrl = useRef<string | null>(queryUrl);
         const pokemon = useRef<Pokemon[]>([]);
         const isLoading = useRef(true);
         const isEmpty = useRef(false);
