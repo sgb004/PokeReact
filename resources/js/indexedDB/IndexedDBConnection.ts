@@ -76,20 +76,34 @@ class IndexedDBConnection {
         });
     }
 
-    getAll(
-        orderBy: string,
-        keyPath: string,
-        direction: "next" | "prev",
-        search: string,
-        searchColumn: string
-    ) {
+    getAll({
+        orderBy,
+        keyPath,
+        direction,
+        search,
+        searchColumn,
+        limit,
+    }: {
+        orderBy: string;
+        keyPath: string;
+        direction: "next" | "prev";
+        search: string;
+        searchColumn: string;
+        limit?: number[];
+    }) {
         return new Promise((resolve, reject) => {
             const store = this.getObjectStore(this._DB_STORE_NAME, "readonly");
             const data: any = [];
+            const limitStart =
+                limit && limit[0] && limit[0] >= 0 ? limit[0] : 0;
+            const limitEnd =
+                limit && limit[1] && limit[1] > 0 ? limit[1] - 1 : 0;
 
             let index: IDBObjectStore | IDBIndex = store;
             let range: IDBValidKey | IDBKeyRange | null = null;
             let request;
+            let count = 0;
+            let countEnd = 0;
 
             if (search === "" && orderBy !== keyPath) {
                 index = store.index(orderBy);
@@ -106,8 +120,12 @@ class IndexedDBConnection {
             request.onsuccess = (event: Event) => {
                 const cursor = (event.target as IDBRequest).result;
 
-                if (cursor) {
-                    data.push(cursor.value);
+                if (cursor && (limitEnd === 0 || countEnd <= limitEnd)) {
+                    if (count >= limitStart) {
+                        data.push(cursor.value);
+                        countEnd++;
+                    }
+                    count++;
                     cursor.continue();
                 } else {
                     if (search != "") {
