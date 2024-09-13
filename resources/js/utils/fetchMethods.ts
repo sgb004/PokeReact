@@ -46,13 +46,17 @@ let fetchToSendingListPokemon = (
             .catch(reject)
     );
 
-let fetchToSetFavorite = (
-    input: RequestInfo | URL,
-    init: RequestInit,
-    errorMessage: string
-) =>
+let fetchToSetFavorite = (id: number, favorite: 1 | 0, errorMessage: string) =>
     new Promise((resolve, reject) =>
-        fetch(input, init)
+        fetch(`/api/pokemon/${id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                favorite,
+            }),
+        })
             .then((response) => {
                 if (response.status === 200) {
                     return response.json();

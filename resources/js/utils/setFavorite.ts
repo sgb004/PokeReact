@@ -19,19 +19,7 @@ const setFavorite = (
 
     input.setAttribute("disabled", "disabled");
 
-    fetchSetFavorite(
-        `/api/pokemon/${pokemon.id}`,
-        {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                favorite,
-            }),
-        },
-        errorMessage
-    )
+    fetchSetFavorite(pokemon.id, favorite, errorMessage)
         .then(() => {
             addNotification(
                 input,
