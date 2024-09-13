@@ -90,6 +90,17 @@ export const getPokemonIndexedDB = (input: RequestInfo | URL) => {
     });
 };
 
+const deletePokemonIndexedDB = (ids: number[]) =>
+    new Promise((resolve, reject) => {
+        const list = ids.map((id) => pokemonIndexedDB.delete(id));
+
+        Promise.all(list)
+            .then(() => {
+                resolve({ message: "Pokemon deleted successfully" });
+            })
+            .catch(reject);
+    });
+
 export const sendListPokemonIndexedDB = (
     method: "POST" | "DELETE",
     pokemonSelected: number[]
@@ -98,6 +109,13 @@ export const sendListPokemonIndexedDB = (
         return new Promise<SendingListFetchRequest>((resolve, reject) => {
             initPokemonIndexedDB()
                 .then(() => addPokemonIndexedDB(pokemonSelected))
+                .then((data) => resolve(data as SendingListFetchRequest))
+                .catch(reject);
+        });
+    } else if (method === "DELETE") {
+        return new Promise<SendingListFetchRequest>((resolve, reject) => {
+            initPokemonIndexedDB()
+                .then(() => deletePokemonIndexedDB(pokemonSelected))
                 .then((data) => resolve(data as SendingListFetchRequest))
                 .catch(reject);
         });
