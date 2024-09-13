@@ -83,7 +83,7 @@ export const getPokemonIndexedDB = (input: RequestInfo | URL) => {
             .then((pokemon) =>
                 resolve({
                     data: pokemon as Pokemon[],
-                    next_page_url: "",
+                    next_page_url: null,
                 })
             )
             .catch(reject);
