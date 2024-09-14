@@ -134,7 +134,7 @@ export const patchPokemonIndexedDB = (id: Number, data: Object) =>
                 pokemonIndexedDB.update({
                     ...pokemon,
                     ...pokemonData,
-                })
+                } as Pokemon)
             )
             .then(resolve)
             .catch(reject);

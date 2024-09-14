@@ -99,8 +99,6 @@ let fetchToPatchPokemon = (id: number, pokemon: Pokemon) =>
     );
 
 if (appUseIndexedDB) {
-    /* TODO: Implement fetch to IndexedDB */
-
     fetchToMyPokemonScreenGrid = (input: RequestInfo | URL) =>
         new Promise<ScreenGridFetchRequest>((resolve, reject) =>
             getPokemonIndexedDB(input)
@@ -132,6 +130,25 @@ if (appUseIndexedDB) {
                     reject(errorMessage);
                 });
         });
+
+    fetchToPatchPokemon = (id: number, pokemon: Pokemon) => {
+        console.log(pokemon);
+
+        return new Promise((resolve, reject) => {
+            patchPokemonIndexedDB(id, {
+                name: pokemon.name,
+                cp: pokemon.cp,
+                attack: pokemon.attack,
+                defense: pokemon.defense,
+                hp: pokemon.hp,
+            })
+                .then(resolve)
+                .catch((error) => {
+                    console.error(error);
+                    reject(`Error to update the Pokémon ${pokemon.name}`);
+                });
+        });
+    };
 }
 
 export const fetchPokedexScreenGrid = fetchScreenGrid;
