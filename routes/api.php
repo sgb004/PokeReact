@@ -2,18 +2,20 @@
 
 use App\Http\Controllers\Api\PokemonController;
 use App\Http\Controllers\Api\PokedexController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\PokemonNotAllowedController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/pokemon', [PokemonController::class, 'index']);
 
-Route::get('/pokemon/{id}', [PokemonController::class, 'show']);
+$classToUSe = (env('USE_MY_POKEMON_INDEXEDDB') === true) ? PokemonNotAllowedController::class : PokemonController::class;
 
-Route::post('/pokemon', [PokemonController::class, 'store']);
+Route::get('/pokemon', [$classToUSe, 'index']);
 
-Route::patch('/pokemon/{id}', [PokemonController::class, 'updatePartial']);
+Route::get('/pokemon/{id}', [$classToUSe, 'show']);
 
-Route::delete('/pokemon/', [PokemonController::class, 'destroy']);
+Route::post('/pokemon', [$classToUSe, 'store']);
+
+Route::patch('/pokemon/{id}', [$classToUSe, 'updatePartial']);
+
+Route::delete('/pokemon/', [$classToUSe, 'destroy']);
 
 Route::get('/pokedex', [PokedexController::class, 'index']);
-
