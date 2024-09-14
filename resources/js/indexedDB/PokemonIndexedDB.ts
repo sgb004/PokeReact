@@ -59,18 +59,20 @@ class PokemonIndexedDB extends IndexedDBConnection {
         return super.get(id) as Promise<Pokemon>;
     }
 
-    add(pokemon: PokemonAdd) {
-        return super.add({
+    normalize(pokemon: Pokemon | PokemonAdd) {
+        return {
             ...pokemon,
+            favorite: pokemon.favorite ? 1 : 0,
             nameNormalized: this.strNormalize(pokemon.name),
-        });
+        };
+    }
+
+    add(pokemon: PokemonAdd) {
+        return super.add(this.normalize(pokemon));
     }
 
     update(pokemon: Pokemon) {
-        return super.update({
-            ...pokemon,
-            nameNormalized: this.strNormalize(pokemon.name),
-        });
+        return super.update(this.normalize(pokemon));
     }
 }
 
