@@ -75,10 +75,15 @@ const deletePokemonIndexedDB = (ids: number[]) =>
     });
 
 export const getPokemonIndexedDB = (input: RequestInfo | URL) => {
-    const params = new URLSearchParams(input as string);
-    const orderBy = params.get("filter") ?? "number";
+    const paramsStr = `${input}`.split("?")[1] ?? "";
+    const params = new URLSearchParams(paramsStr);
     const direction = params.get("sort") === "asc" ? "next" : "prev";
     const search = params.get("search") ?? "";
+    let orderBy = params.get("filter") ?? "number";
+
+    if (orderBy === "recent") {
+        orderBy = "created_at";
+    }
 
     return new Promise<ScreenGridFetchRequest>((resolve, reject) => {
         initPokemonIndexedDB()
