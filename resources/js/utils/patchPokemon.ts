@@ -12,24 +12,7 @@ const patchPokemon = (
 
     element.classList.add("loading");
 
-    fetchPatchPokemon(
-        `/api/pokemon/${pokemon.id}`,
-        {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                name,
-                cp: pokemon.cp,
-                attack: pokemon.attack,
-                defense: pokemon.defense,
-                hp: pokemon.hp,
-                favorite: pokemon.favorite,
-            }),
-        },
-        name
-    )
+    fetchPatchPokemon(pokemon.id, pokemon)
         .then(() => {
             addNotification(element, `${name} was updated`, "success");
             successCallback();

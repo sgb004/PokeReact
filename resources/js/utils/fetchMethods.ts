@@ -4,7 +4,7 @@ import {
     patchPokemonIndexedDB,
     sendListPokemonIndexedDB,
 } from "../indexedDB/driver";
-import { SendingListFetchRequest } from "../types";
+import { Pokemon, SendingListFetchRequest } from "../types";
 
 const appUseIndexedDB = window[
     "appUseIndexedDB" as keyof typeof window
@@ -69,19 +69,28 @@ let fetchToSetFavorite = (id: number, favorite: 1 | 0, errorMessage: string) =>
             .catch(reject)
     );
 
-let fetchToPatchPokemon = (
-    input: RequestInfo | URL,
-    init: RequestInit,
-    name: string
-) =>
+let fetchToPatchPokemon = (id: number, pokemon: Pokemon) =>
     new Promise((resolve, reject) =>
-        fetch(input, init)
+        fetch(`/api/pokemon/${id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name: pokemon.name,
+                cp: pokemon.cp,
+                attack: pokemon.attack,
+                defense: pokemon.defense,
+                hp: pokemon.hp,
+                favorite: pokemon.favorite,
+            }),
+        })
             .then((response) => {
                 if (response.status === 200) {
                     return response.json();
                 } else {
                     throw new Error(
-                        `Error to update the Pokémon ${name}, status: ${response.status}`
+                        `Error to update the Pokémon ${pokemon.name}, status: ${response.status}`
                     );
                 }
             })
