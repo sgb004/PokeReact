@@ -29,7 +29,7 @@ class IndexedDBConnection {
                 this.DB = (event.target as IDBOpenDBRequest).result;
                 resolve(this.DB);
             };
-            request.onerror = reject;
+            request.onerror = () => reject(request.error);
         });
     }
 
@@ -71,8 +71,8 @@ class IndexedDBConnection {
             const store = this.getObjectStore(this._DB_STORE_NAME, "readonly");
             const request = store.get(key);
 
-            request.onsuccess = resolve;
-            request.onerror = reject;
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
         });
     }
 
@@ -141,7 +141,7 @@ class IndexedDBConnection {
                     resolve(data);
                 }
             };
-            request.onerror = reject;
+            request.onerror = () => reject(request.error);
         });
     }
 
@@ -150,8 +150,8 @@ class IndexedDBConnection {
             const store = this.getObjectStore(this._DB_STORE_NAME, "readwrite");
             const request = store.add(data);
 
-            request.onsuccess = resolve;
-            request.onerror = reject;
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
         });
     }
 
@@ -160,8 +160,8 @@ class IndexedDBConnection {
             const store = this.getObjectStore(this._DB_STORE_NAME, "readwrite");
             const request = store.put(data);
 
-            request.onsuccess = resolve;
-            request.onerror = reject;
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
         });
     }
 
@@ -170,8 +170,8 @@ class IndexedDBConnection {
             const store = this.getObjectStore(this._DB_STORE_NAME, "readwrite");
             const request = store.delete(key);
 
-            request.onsuccess = resolve;
-            request.onerror = reject;
+            request.onsuccess = () => resolve(null);
+            request.onerror = () => reject(request.error);
         });
     }
 }
