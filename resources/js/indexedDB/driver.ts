@@ -125,3 +125,19 @@ export const sendListPokemonIndexedDB = (
         );
     }
 };
+
+export const patchPokemonIndexedDB = (id: Number, data: Object) =>
+    new Promise((resolve, reject) => {
+        const pokemonData = { id, ...data };
+
+        initPokemonIndexedDB()
+            .then(() => pokemonIndexedDB.get(id as IDBValidKey))
+            .then((pokemon) =>
+                pokemonIndexedDB.update({
+                    ...pokemon,
+                    ...pokemonData,
+                })
+            )
+            .then(resolve)
+            .catch(reject);
+    });

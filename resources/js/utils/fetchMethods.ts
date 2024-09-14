@@ -1,6 +1,7 @@
 import { ScreenGridFetchRequest } from "../components/Screens/ScreenGrid";
 import {
     getPokemonIndexedDB,
+    patchPokemonIndexedDB,
     sendListPokemonIndexedDB,
 } from "../indexedDB/driver";
 import { SendingListFetchRequest } from "../types";
@@ -106,6 +107,16 @@ if (appUseIndexedDB) {
     ) =>
         new Promise<SendingListFetchRequest>((resolve, reject) => {
             sendListPokemonIndexedDB(method, pokemonSelected)
+                .then(resolve)
+                .catch((error) => {
+                    console.error(error);
+                    reject(errorMessage);
+                });
+        });
+
+    fetchToSetFavorite = (id: number, favorite: 1 | 0, errorMessage: string) =>
+        new Promise((resolve, reject) => {
+            patchPokemonIndexedDB(id, { favorite })
                 .then(resolve)
                 .catch((error) => {
                     console.error(error);
