@@ -65,6 +65,13 @@ class PokemonIndexedDB extends IndexedDBConnection {
             nameNormalized: this.strNormalize(pokemon.name),
         });
     }
+
+    update(pokemon: Pokemon) {
+        return super.update({
+            ...pokemon,
+            nameNormalized: this.strNormalize(pokemon.name),
+        });
+    }
 }
 
 export default PokemonIndexedDB;
