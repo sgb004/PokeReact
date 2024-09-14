@@ -59,9 +59,18 @@ const addPokemonIndexedDB = (ids: number[]) =>
             .then((pokemon) =>
                 resolve({
                     pokemon,
-                    message: "Pokemon added successfully.",
+                    message: "Pokemon added successfully",
                 })
             )
+            .catch(reject);
+    });
+
+const deletePokemonIndexedDB = (ids: number[]) =>
+    new Promise((resolve, reject) => {
+        const list = ids.map((id) => pokemonIndexedDB.delete(id));
+
+        Promise.all(list)
+            .then(() => resolve({ message: "Pokemon deleted successfully" }))
             .catch(reject);
     });
 
@@ -89,17 +98,6 @@ export const getPokemonIndexedDB = (input: RequestInfo | URL) => {
             .catch(reject);
     });
 };
-
-const deletePokemonIndexedDB = (ids: number[]) =>
-    new Promise((resolve, reject) => {
-        const list = ids.map((id) => pokemonIndexedDB.delete(id));
-
-        Promise.all(list)
-            .then(() => {
-                resolve({ message: "Pokemon deleted successfully" });
-            })
-            .catch(reject);
-    });
 
 export const sendListPokemonIndexedDB = (
     method: "POST" | "DELETE",
