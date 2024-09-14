@@ -12,7 +12,7 @@
 </head>
 
 <body class="overflow-hidden">
-	<div id="app" class="font-work-sans h-[100dvh] flex font-normal"></div>
+	<div id="app" class="font-work-sans h-[100dvh] flex font-normal bg-background"></div>
 
 	<script>
 		window["appUseIndexedDB"] = {{ env('USE_MY_POKEMON_INDEXEDDB') === true ? 'true' : 'false' }};

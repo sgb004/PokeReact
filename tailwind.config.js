@@ -11,6 +11,7 @@ export default {
                 "work-sans": ["Work Sans", "sans-serif"],
             },
             colors: {
+                background: "#f8f6f6",
                 pokedex: "#b51d40",
                 camera: "#086a9b",
                 "camera-light": "#00acf8",
