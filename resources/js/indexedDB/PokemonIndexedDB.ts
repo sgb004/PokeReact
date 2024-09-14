@@ -1,7 +1,7 @@
-import { Pokemon as PokemonType } from "../types";
+import { Pokemon } from "../types";
 import IndexedDBConnection from "./IndexedDBConnection";
 
-type Pokemon = Omit<PokemonType, "id" | "enabled">;
+type PokemonAdd = Omit<Pokemon, "id" | "enabled">;
 
 class PokemonIndexedDB extends IndexedDBConnection {
     _DB_NAME = "pokedex";
@@ -55,7 +55,11 @@ class PokemonIndexedDB extends IndexedDBConnection {
         });
     }
 
-    add(pokemon: Pokemon) {
+    get(id: IDBValidKey | IDBKeyRange) {
+        return super.get(id) as Promise<Pokemon>;
+    }
+
+    add(pokemon: PokemonAdd) {
         return super.add({
             ...pokemon,
             nameNormalized: this.strNormalize(pokemon.name),
