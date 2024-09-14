@@ -2,7 +2,7 @@ const dataToPokemon = (data: any) => {
     return {
         id: data.id,
         name: data.name,
-        number: data.api_id,
+        number: data.api_id ?? data.number,
         cp: data.cp,
         attack: data.attack,
         defense: data.defense,
