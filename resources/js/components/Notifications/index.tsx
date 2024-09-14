@@ -34,7 +34,7 @@ export const addNotification = (
     notifications?.dispatchEvent(
         new CustomEvent("addNotification", {
             detail: {
-                message,
+                message: message.toString(),
                 type,
                 duration,
             },
