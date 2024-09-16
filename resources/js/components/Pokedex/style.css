@@ -4,6 +4,23 @@
         height: calc(100% - 8px);
     }
 
+    .simple-button {
+        @apply flex justify-center items-center cursor-pointer rounded-[5px] bg-button-yellow w-[37px] border border-button-yellow text-base min-h-[37px] shadow-[inset_1px_1px_1px_rgba(255,255,255,0.85)];
+
+        &:active,
+        &:has(.dispatcher:checked) {
+            @apply border-bg-border-gray text-[0.95rem] shadow-[inset_1px_1px_1px_#000];
+
+            .navigation-button-icon {
+                @apply w-[25px];
+            }
+
+            .icon {
+                @apply w-[25px];
+            }
+        }
+    }
+
     .navigation {
         &:has(.navigation-my-pokemon:checked) + .screens .screens-content {
             transform: translateX(0%);
@@ -11,15 +28,6 @@
 
         &:has(.navigation-pokemon:checked) + .screens .screens-content {
             transform: translateX(-100%);
-        }
-
-        .navigation-button:has(.navigation-dispatcher:checked) {
-            @apply border-bg-border-gray text-[0.95rem];
-        }
-
-        .navigation-button:has(.navigation-dispatcher:checked)
-            .navigation-button-icon {
-            @apply w-[25px];
         }
 
         .navigation-button-icon.pokeball-icon g {

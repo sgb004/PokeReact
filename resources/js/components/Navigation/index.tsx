@@ -13,12 +13,12 @@ const NavigationButton = ({
     activated = false,
 }: NavigationButtonProps) => {
     return (
-        <label className="navigation-button flex justify-center items-center cursor-pointer rounded-[5px] bg-button-yellow w-[37px] border border-button-yellow text-base min-h-[37px] box-sizing">
+        <label className="navigation-button simple-button">
             {children}
             <input
                 id={`navigation-button-${name}-dispatcher`}
                 type="radio"
-                className={`navigation-dispatcher navigation-${name} hidden`}
+                className={`dispatcher navigation-${name} hidden`}
                 name="navigation-button"
                 defaultChecked={activated}
             />
@@ -34,8 +34,8 @@ const Navigation = () => {
                     <NavigationButton name="my-pokemon" activated={true}>
                         <span>
                             <PokeballIcon
-                                className="navigation-button-icon pokeball-icon"
-                                size={31}
+                                className="navigation-button-icon icon pokeball-icon"
+                                size={27}
                             />
                         </span>
                     </NavigationButton>
@@ -44,8 +44,8 @@ const Navigation = () => {
                     <NavigationButton name="pokemon">
                         <span>
                             <PokedexIcon
-                                className="navigation-button-icon"
-                                size={31}
+                                className="navigation-button-icon icon"
+                                size={27}
                             />
                         </span>
                     </NavigationButton>
