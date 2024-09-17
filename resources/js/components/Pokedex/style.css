@@ -258,7 +258,7 @@
         .front-cover-reverse {
             height: calc(100% - 130px);
             width: calc(100% - 90px);
-            transform: translateX(180deg);
+            transform: rotateY(180deg);
         }
 
         &:has(.front-cover-dispatcher-open:checked) {
