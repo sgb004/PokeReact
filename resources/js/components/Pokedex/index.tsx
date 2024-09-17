@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import "./style.css";
 import Navigation from "../Navigation";
 import Screens from "../Screens";
