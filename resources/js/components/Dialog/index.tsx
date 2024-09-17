@@ -1,7 +1,8 @@
-import { forwardRef } from "react";
+import { forwardRef, ReactNode } from "react";
 
 export type DialogProps = {
-    message: string;
+    id?: string;
+    message: string | ReactNode;
     acceptButtonText?: string;
     cancelButtonText?: string;
     onAccept: () => void;
@@ -11,6 +12,7 @@ export type DialogProps = {
 const Dialog = forwardRef<HTMLDialogElement, DialogProps>(
     (
         {
+            id,
             message,
             acceptButtonText = "Yes",
             cancelButtonText = "No",
@@ -21,6 +23,7 @@ const Dialog = forwardRef<HTMLDialogElement, DialogProps>(
     ) => {
         return (
             <dialog
+                id={id}
                 ref={ref}
                 className="absolute top-0 left-0 w-full h-full animate-backdrop-grey-scale z-20"
             >
@@ -31,10 +34,16 @@ const Dialog = forwardRef<HTMLDialogElement, DialogProps>(
                     >
                         <p className="leading-[1.3] mb-[10px]">{message}</p>
                         <div className="flex justify-center gap-[10px]">
-                            <button className="dialog-btn" onClick={onCancel}>
+                            <button
+                                className="dialog-btn cancel-btn"
+                                onClick={onCancel}
+                            >
                                 {cancelButtonText}
                             </button>
-                            <button className="dialog-btn" onClick={onAccept}>
+                            <button
+                                className="dialog-btn accept-btn"
+                                onClick={onAccept}
+                            >
                                 {acceptButtonText}
                             </button>
                         </div>
