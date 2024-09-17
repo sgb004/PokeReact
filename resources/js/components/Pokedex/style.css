@@ -363,6 +363,10 @@
     }
 }
 
+#pokedex-about .accept-btn {
+    @apply hidden;
+}
+
 @keyframes front-cover-after-show {
     0%,
     49.99% {

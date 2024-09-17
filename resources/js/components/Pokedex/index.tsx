@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import "./style.css";
 import Navigation from "../Navigation";
 import Screens from "../Screens";
+import FrontCoverReverse from "../FrontCoverReverse";
 
 const Pokedex = () => {
     useEffect(() => {
@@ -86,7 +87,7 @@ const Pokedex = () => {
                         />
                     </label>
                 </div>
-                <div className="front-cover-reverse invisible absolute w-full bg-pokedex bottom-0 z-10 top-[110px] left-[70px] rounded-[5px] border border-black"></div>
+                <FrontCoverReverse />
             </div>
         </div>
     );
