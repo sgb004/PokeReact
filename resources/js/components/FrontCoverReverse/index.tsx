@@ -78,7 +78,7 @@ const FrontCoverReverse = () => {
                 </svg>
                 <InfoButton />
                 <span className="block border-[0.5px] h-[27px] my-auto border-[#00000047]"></span>
-                <button className="simple-button">
+                <a className="simple-button" href="/my-pokedex/download">
                     <svg
                         className="icon [transform:rotateY(180deg)_rotateX(180deg)]"
                         height="25"
@@ -88,7 +88,7 @@ const FrontCoverReverse = () => {
                     >
                         <use xlinkHref="#icon-arrow"></use>
                     </svg>
-                </button>
+                </a>
                 <button className="simple-button">
                     <svg
                         className="icon"
