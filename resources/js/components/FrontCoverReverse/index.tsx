@@ -1,5 +1,7 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Dialog from "../Dialog";
+import Notifications, { addNotification } from "../Notifications";
+import { fetchUploadDataPokemon } from "../../utils/fetchMethods";
 
 const InfoButton = () => {
     const dialogRef = useRef<HTMLDialogElement>(null);
@@ -62,10 +64,136 @@ const InfoButton = () => {
     );
 };
 
+const UploadButton = () => {
+    const buttonRef = useRef<HTMLLabelElement>(null);
+    const dialogRef = useRef<HTMLDialogElement>(null);
+    const fileContent = useRef<string>("");
+    const [isSending, setIsSending] = useState<boolean>(false);
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const inputElement = event.currentTarget;
+        const files = event.target.files;
+
+        if (files && files.length > 0) {
+            const reader = new FileReader();
+
+            reader.onload = (event) => {
+                fileContent.current = event.target?.result as string;
+                dialogRef.current instanceof HTMLDialogElement &&
+                    (dialogRef.current.open = true);
+                inputElement.value = "";
+            };
+
+            reader.onerror = (error) => {
+                console.error(error);
+                addNotification(
+                    inputElement,
+                    "There was en error to read the file",
+                    "error"
+                );
+                inputElement.value = "";
+            };
+
+            reader.readAsText(files[0]);
+        }
+    };
+
+    const sendingPokemon = (deleteCurrentPokemon = false) => {
+        const buttonElement = buttonRef.current;
+
+        if (buttonElement instanceof HTMLLabelElement && !isSending) {
+            buttonElement.classList.add("loading");
+            setIsSending(true);
+
+            fetchUploadDataPokemon(
+                fileContent.current as string,
+                deleteCurrentPokemon
+            )
+                .then((response) => {
+                    const myPokemonScreenElement =
+                        document.querySelector(".pokemon-screen");
+
+                    if (myPokemonScreenElement instanceof HTMLElement) {
+                        myPokemonScreenElement.dispatchEvent(
+                            new Event("resetGrid")
+                        );
+                    }
+
+                    addNotification(
+                        buttonElement,
+                        response as string,
+                        "success"
+                    );
+                    setIsSending(false);
+                })
+                .catch((error) => {
+                    addNotification(buttonElement, error, "error");
+                    setIsSending(false);
+                });
+        }
+
+        fileContent.current = "";
+    };
+
+    return (
+        <>
+            <label
+                ref={buttonRef}
+                className={`simple-button ${
+                    isSending ? "pointer-events-none" : ""
+                }`}
+            >
+                <input
+                    type="file"
+                    accept="application/json"
+                    hidden
+                    onChange={handleFileChange}
+                    disabled={isSending}
+                />
+                <svg
+                    className={`icon ${isSending ? "animate-up-down" : ""}`}
+                    height="25"
+                    width="25"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 48 48"
+                >
+                    <use xlinkHref="#icon-arrow"></use>
+                </svg>
+            </label>
+
+            <Dialog
+                id="pokedex-import"
+                ref={dialogRef}
+                message={
+                    <>
+                        You are about to add Pokémon to your Pokédex.
+                        <br />
+                        Please select an option to continue:
+                    </>
+                }
+                acceptButtonText="Add without deleting current Pokémon"
+                cancelButtonText="Cancel"
+                onAccept={() => sendingPokemon()}
+                onCancel={() => {
+                    fileContent.current = "";
+                }}
+                additionalButtons={
+                    <button
+                        className="dialog-btn"
+                        onClick={() => sendingPokemon(true)}
+                    >
+                        Add with deleting current Pokémon
+                    </button>
+                }
+            />
+        </>
+    );
+};
+
 const FrontCoverReverse = () => {
     return (
-        <div className="front-cover-reverse flex invisible absolute w-full bg-pokedex bottom-0 z-10 top-[110px] left-[70px] rounded-[5px] border border-black ">
-            <div className="front-cover-reverse-content flex justify-center mt-auto mx-auto mb-[15px] gap-[5px]">
+        <div className="front-cover-reverse invisible absolute w-full bg-pokedex bottom-0 z-10 top-[110px] left-[70px] rounded-[5px] border border-black  ">
+            <div className="front-cover-reverse-content notifications-container relative flex justify-center items-end w-full h-full mt-auto mx-auto pb-[15px] gap-[5px] overflow-hidden">
                 <svg className="front-cover-reverse-icons hidden">
                     <defs>
                         <symbol id="icon-arrow" viewBox="0 0 48 48">
@@ -77,7 +205,7 @@ const FrontCoverReverse = () => {
                     </defs>
                 </svg>
                 <InfoButton />
-                <span className="block border-[0.5px] h-[27px] my-auto border-[#00000047]"></span>
+                <span className="block border-[0.5px] h-[27px] mb-[5px] border-[#00000047]"></span>
                 <a className="simple-button" href="/my-pokedex/download">
                     <svg
                         className="icon [transform:rotateY(180deg)_rotateX(180deg)]"
@@ -89,17 +217,8 @@ const FrontCoverReverse = () => {
                         <use xlinkHref="#icon-arrow"></use>
                     </svg>
                 </a>
-                <button className="simple-button">
-                    <svg
-                        className="icon"
-                        height="25"
-                        width="25"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 48 48"
-                    >
-                        <use xlinkHref="#icon-arrow"></use>
-                    </svg>
-                </button>
+                <UploadButton />
+                <Notifications className="left-[0.5px] bottom-[0.5px]" />
             </div>
         </div>
     );

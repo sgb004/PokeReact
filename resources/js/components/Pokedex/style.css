@@ -259,6 +259,14 @@
             height: calc(100% - 130px);
             width: calc(100% - 90px);
             transform: rotateY(180deg);
+
+            .notifications {
+                @apply max-w-[100%];
+
+                .notification:last-child .notification-text {
+                    @apply rounded-bl-[5px];
+                }
+            }
         }
 
         &:has(.front-cover-dispatcher-open:checked) {
@@ -365,6 +373,18 @@
 
 #pokedex-about .accept-btn {
     @apply hidden;
+}
+
+#pokedex-import .dialog-actions {
+    @apply flex-wrap;
+
+    .dialog-btn {
+        @apply w-full;
+    }
+
+    .cancel-btn {
+        @apply order-1;
+    }
 }
 
 @keyframes front-cover-after-show {
