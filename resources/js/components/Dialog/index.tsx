@@ -7,6 +7,7 @@ export type DialogProps = {
     cancelButtonText?: string;
     onAccept: () => void;
     onCancel?: () => void;
+    additionalButtons?: ReactNode;
 };
 
 const Dialog = forwardRef<HTMLDialogElement, DialogProps>(
@@ -18,6 +19,7 @@ const Dialog = forwardRef<HTMLDialogElement, DialogProps>(
             cancelButtonText = "No",
             onAccept,
             onCancel,
+            additionalButtons,
         },
         ref
     ) => {
@@ -33,7 +35,7 @@ const Dialog = forwardRef<HTMLDialogElement, DialogProps>(
                         className="bg-white min-w-[200px] p-[15px] rounded-[5px] animate-in"
                     >
                         <p className="leading-[1.3] mb-[10px]">{message}</p>
-                        <div className="flex justify-center gap-[10px]">
+                        <div className="dialog-actions flex justify-center gap-[10px]">
                             <button
                                 className="dialog-btn cancel-btn"
                                 onClick={onCancel}
@@ -46,6 +48,7 @@ const Dialog = forwardRef<HTMLDialogElement, DialogProps>(
                             >
                                 {acceptButtonText}
                             </button>
+                            {additionalButtons}
                         </div>
                     </form>
                 </div>
