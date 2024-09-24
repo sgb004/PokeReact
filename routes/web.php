@@ -9,5 +9,9 @@ Route::get('/', function () {
 });
 
 Route::get('/pokedex/store-pokedex', [PokedexController::class, 'storePokedex']);
-Route::get('/my-pokedex/download', [MyPokedexController::class, 'download']);
 
+if(env('USE_MY_POKEMON_INDEXEDDB') === false){
+	Route::get('/my-pokedex/download', [MyPokedexController::class, 'download']);
+	Route::post('/my-pokedex/upload', [MyPokedexController::class, 'upload']);
+	Route::get('/my-pokedex/get-token', [MyPokedexController::class, 'getToken']);
+}
