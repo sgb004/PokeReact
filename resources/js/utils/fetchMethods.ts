@@ -98,6 +98,61 @@ let fetchToPatchPokemon = (id: number, pokemon: Pokemon) =>
             .catch(reject)
     );
 
+let fetchToUploadDataPokemon = (
+    data: string,
+    deleteCurrentPokemon: boolean
+) => {
+    const errorMessage = "Error to upload the Pokémon";
+
+    return new Promise((resolve, reject) =>
+        fetch("my-pokedex/get-token")
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    throw new Error(errorMessage);
+                }
+            })
+            .then((token) =>
+                fetch("/my-pokedex/upload", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-Token": token.token,
+                    },
+                    body: JSON.stringify({
+                        pokemon: data,
+                        deleteCurrentPokemon,
+                    }),
+                })
+            )
+            .then((response) => {
+                if (response.status === 200 || response.status === 400) {
+                    return response.json();
+                } else {
+                    throw new Error(errorMessage);
+                }
+            })
+            .then((response) => {
+                const hasError = response.status === 400;
+
+                if (!hasError) {
+                    resolve(response.message);
+                } else if (typeof response.errors === "object") {
+                    const errors = response.errors;
+                    const errorsKeys = Object.keys(errors)[0];
+
+                    if (errorsKeys) {
+                        throw new Error(errors[errorsKeys].toString());
+                    }
+                }
+
+                if (hasError) throw new Error(response.message ?? errorMessage);
+            })
+            .catch(reject)
+    );
+};
+
 if (appUseIndexedDB) {
     fetchToMyPokemonScreenGrid = (input: RequestInfo | URL) =>
         new Promise<ScreenGridFetchRequest>((resolve, reject) =>
@@ -132,8 +187,6 @@ if (appUseIndexedDB) {
         });
 
     fetchToPatchPokemon = (id: number, pokemon: Pokemon) => {
-        console.log(pokemon);
-
         return new Promise((resolve, reject) => {
             patchPokemonIndexedDB(id, {
                 name: pokemon.name,
@@ -160,3 +213,5 @@ export const fetchSendingListPokemon = fetchToSendingListPokemon;
 export const fetchSetFavorite = fetchToSetFavorite;
 
 export const fetchPatchPokemon = fetchToPatchPokemon;
+
+export const fetchUploadDataPokemon = fetchToUploadDataPokemon;
