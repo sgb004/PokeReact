@@ -1,4 +1,10 @@
-import { forwardRef, useImperativeHandle, useRef, useState } from "react";
+import {
+    forwardRef,
+    useEffect,
+    useImperativeHandle,
+    useRef,
+    useState,
+} from "react";
 import { sendListPokemon } from "../actions";
 import Screen, { ScreenElement } from "../Screen";
 import { Pokemon } from "../../../types";
@@ -86,6 +92,30 @@ const MyPokemonScreen = forwardRef<
         },
         []
     );
+
+    useEffect(() => {
+        let handleResetGrid = () => {};
+
+        if (screenRef.current && screenRef.current.element) {
+            handleResetGrid = () => {
+                screenRef.current?.grid?.reset();
+            };
+
+            screenRef.current.element.addEventListener(
+                "resetGrid",
+                handleResetGrid
+            );
+        }
+
+        return () => {
+            if (screenRef.current && screenRef.current.element) {
+                screenRef.current.element.removeEventListener(
+                    "resetGrid",
+                    handleResetGrid
+                );
+            }
+        };
+    }, []);
 
     return (
         <>
