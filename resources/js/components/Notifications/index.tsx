@@ -8,7 +8,9 @@ import {
     useState,
 } from "react";
 
-export type NotificationsProps = {};
+export type NotificationsProps = {
+    className?: string;
+};
 
 export type NotificationType = "info" | "success" | "warning" | "error";
 
@@ -43,7 +45,7 @@ export const addNotification = (
 };
 
 const Notifications = forwardRef<HTMLDivElement, NotificationsProps>(
-    (props, ref) => {
+    ({ className }, ref) => {
         const notificationsRef = useRef(ref);
         const notifications = useRef<Notification[]>([]);
         const setRender = useState(1)[1];
@@ -124,7 +126,7 @@ const Notifications = forwardRef<HTMLDivElement, NotificationsProps>(
         return (
             <div
                 ref={ref ?? (notificationsRef as LegacyRef<HTMLDivElement>)}
-                className="notifications absolute bottom-0 max-w-[66%]"
+                className={`notifications absolute bottom-0 max-w-[66%] ${className}`}
             >
                 {notifications.current.map((notification, index) => (
                     <div
@@ -147,7 +149,7 @@ const Notifications = forwardRef<HTMLDivElement, NotificationsProps>(
                         }
                     >
                         <div className="overflow-hidden">
-                            <div className="inline-block p-[5px] rounded-[0_5px_5px_0] bg-white text-sm">
+                            <div className="notification-text inline-block p-[5px] rounded-[0_5px_5px_0] bg-white text-sm">
                                 {notification.message}
                             </div>
                         </div>
