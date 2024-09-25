@@ -1,4 +1,5 @@
 import Notifications from "../Notifications";
+import DownloadButton from "./DownloadButton";
 import InfoButton from "./InfoButton";
 import UploadButton from "./UploadButton";
 
@@ -18,17 +19,7 @@ const FrontCoverReverse = () => {
                 </svg>
                 <InfoButton />
                 <span className="block border-[0.5px] h-[27px] mb-[5px] border-[#00000047]"></span>
-                <a className="simple-button" href="/my-pokedex/download">
-                    <svg
-                        className="icon [transform:rotateY(180deg)_rotateX(180deg)]"
-                        height="25"
-                        width="25"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 48 48"
-                    >
-                        <use xlinkHref="#icon-arrow"></use>
-                    </svg>
-                </a>
+                <DownloadButton />
                 <UploadButton />
                 <Notifications className="left-[0.5px] bottom-[0.5px]" />
             </div>
