@@ -1,5 +1,9 @@
 import { ScreenGridFetchRequest } from "../components/Screens/ScreenGrid";
-import { Pokemon, SendingListFetchRequest } from "../types";
+import {
+    Pokemon,
+    PokemonDataIndexedDB,
+    SendingListFetchRequest,
+} from "../types";
 import PokemonIndexedDB from "./PokemonIndexedDB";
 
 let pokemonIndexedDB: PokemonIndexedDB;
@@ -142,5 +146,15 @@ export const patchPokemonIndexedDB = (id: Number, data: Object) =>
                 } as Pokemon)
             )
             .then(resolve)
+            .catch(reject);
+    });
+
+export const getAllPokemonIndexedDB = () =>
+    new Promise<PokemonDataIndexedDB[]>((resolve, reject) => {
+        initPokemonIndexedDB()
+            .then(() =>
+                pokemonIndexedDB.getAll({ orderBy: "id", direction: "next" })
+            )
+            .then((data) => resolve(data as PokemonDataIndexedDB[]))
             .catch(reject);
     });

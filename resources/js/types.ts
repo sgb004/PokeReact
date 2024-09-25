@@ -54,3 +54,11 @@ export type SendingListFetchRequest = {
     pokemon: Pokemon[];
     message: string;
 };
+
+export type PokemonDataIndexedDB = {
+    api_id?: number;
+    number?: number;
+    nameNormalized?: string;
+    created_at: Date;
+    updated_at: Date;
+};
