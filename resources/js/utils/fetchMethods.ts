@@ -5,10 +5,7 @@ import {
     sendListPokemonIndexedDB,
 } from "../indexedDB/driver";
 import { Pokemon, SendingListFetchRequest } from "../types";
-
-const appUseIndexedDB = window[
-    "appUseIndexedDB" as keyof typeof window
-] as boolean;
+import appUseIndexedDB from "./appUseIndexedDB";
 
 const fetchScreenGrid = (input: RequestInfo | URL, init?: RequestInit) =>
     new Promise<ScreenGridFetchRequest>((resolve, reject) =>
