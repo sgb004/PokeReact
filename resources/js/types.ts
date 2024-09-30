@@ -55,10 +55,33 @@ export type SendingListFetchRequest = {
     message: string;
 };
 
-export type PokemonDataIndexedDB = {
-    api_id?: number;
-    number?: number;
-    nameNormalized?: string;
+export type PokemonDataIndexedDB = Pokemon & {
+    api_id: number;
     created_at: Date;
     updated_at: Date;
+};
+
+export type ResponseErrorsObject = { [key: string]: string };
+
+export type ResponseValidation = {
+    success: boolean;
+    pokemon: PokemonDataIndexedDB[];
+    errors: string[];
+};
+
+export type ResponseUploadPokemon = {
+    success: boolean;
+    message: string;
+};
+
+export type ResponseUploadAfterValidation = {
+    success: boolean;
+    message: string;
+    errors: string[];
+};
+
+export type ResponseUploadDataPokemon = {
+    status: number;
+    message: string;
+    errors: string[] | ResponseErrorsObject;
 };
