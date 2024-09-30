@@ -2,9 +2,11 @@ import { ScreenGridFetchRequest } from "../components/Screens/ScreenGrid";
 import {
     Pokemon,
     PokemonDataIndexedDB,
+    ResponseUploadPokemon,
     SendingListFetchRequest,
 } from "../types";
 import PokemonIndexedDB from "./PokemonIndexedDB";
+import sanitizePokemon from "./sanitizePokemon";
 
 let pokemonIndexedDB: PokemonIndexedDB;
 
@@ -156,5 +158,31 @@ export const getAllPokemonIndexedDB = () =>
                 pokemonIndexedDB.getAll({ orderBy: "id", direction: "next" })
             )
             .then((data) => resolve(data as PokemonDataIndexedDB[]))
+            .catch(reject);
+    });
+
+export const uploadPokemonIndexedDB = (pokemon: PokemonDataIndexedDB[]) =>
+    new Promise<ResponseUploadPokemon>((resolve, reject) =>
+        initPokemonIndexedDB()
+            .then(() => {
+                const list = pokemon.map((pokemon) => {
+                    pokemonIndexedDB.add(sanitizePokemon(pokemon));
+                });
+                return Promise.all(list);
+            })
+            .then(() =>
+                resolve({
+                    success: true,
+                    message: "Pokemon added successfully",
+                })
+            )
+            .catch(reject)
+    );
+
+export const deleteAllPokemonIndexedDB = () =>
+    new Promise((resolve, reject) => {
+        initPokemonIndexedDB()
+            .then(() => pokemonIndexedDB.clear())
+            .then(() => resolve(null))
             .catch(reject);
     });
