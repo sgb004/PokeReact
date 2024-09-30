@@ -7,13 +7,17 @@ const DownloadPokemon = (button: HTMLAnchorElement) => {
     getAllPokemonIndexedDB()
         .then((pokemon: PokemonDataIndexedDB[]) => {
             const pokemonData = pokemon.map((pokemon) => {
-                pokemon.api_id = pokemon.number;
-                pokemon.created_at = new Date(pokemon.created_at);
-                pokemon.updated_at = new Date(pokemon.updated_at);
-
-                delete pokemon.nameNormalized;
-                delete pokemon.number;
-                return pokemon;
+                return {
+                    name: pokemon.name,
+                    api_id: pokemon.number,
+                    cp: pokemon.cp,
+                    attack: pokemon.attack,
+                    defense: pokemon.defense,
+                    hp: pokemon.hp,
+                    favorite: pokemon.favorite,
+                    created_at: new Date(pokemon.created_at),
+                    updated_at: new Date(pokemon.updated_at),
+                };
             });
             const data = JSON.stringify(pokemonData);
             const blob = new Blob([data], { type: "application/json" });
