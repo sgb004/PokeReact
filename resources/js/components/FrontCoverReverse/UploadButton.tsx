@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import Dialog from "../Dialog";
 import { addNotification } from "../Notifications";
 import { fetchUploadDataPokemon } from "../../utils/fetchMethods";
+import { ResponseErrorsObject, ResponseUploadDataPokemon } from "../../types";
 
 const UploadButton = () => {
     const buttonRef = useRef<HTMLLabelElement>(null);
@@ -41,13 +42,37 @@ const UploadButton = () => {
         const buttonElement = buttonRef.current;
 
         if (buttonElement instanceof HTMLLabelElement && !isSending) {
+            const errorMessage = "Error to upload the Pokémon";
+
             buttonElement.classList.add("loading");
             setIsSending(true);
 
             fetchUploadDataPokemon(
                 fileContent.current as string,
-                deleteCurrentPokemon
+                deleteCurrentPokemon,
+                errorMessage
             )
+                .then((response: ResponseUploadDataPokemon) => {
+                    const hasError = response.status === 400;
+
+                    if (hasError) {
+                        let error = response.message ?? errorMessage;
+
+                        if (typeof response.errors === "object") {
+                            const errors =
+                                response.errors as ResponseErrorsObject;
+                            const errorsKeys = Object.keys(errors)[0];
+
+                            if (errorsKeys) {
+                                error = errors[errorsKeys].toString();
+                            }
+                        }
+
+                        throw new Error(error);
+                    }
+
+                    return response.message;
+                })
                 .then((response) => {
                     const myPokemonScreenElement =
                         document.querySelector(".pokemon-screen");
@@ -58,11 +83,7 @@ const UploadButton = () => {
                         );
                     }
 
-                    addNotification(
-                        buttonElement,
-                        response as string,
-                        "success"
-                    );
+                    addNotification(buttonElement, response, "success");
                     setIsSending(false);
                 })
                 .catch((error) => {
