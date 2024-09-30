@@ -1,11 +1,20 @@
 import { ScreenGridFetchRequest } from "../components/Screens/ScreenGrid";
 import {
+    deleteAllPokemonIndexedDB,
     getPokemonIndexedDB,
     patchPokemonIndexedDB,
     sendListPokemonIndexedDB,
+    uploadPokemonIndexedDB,
 } from "../indexedDB/driver";
-import { Pokemon, SendingListFetchRequest } from "../types";
+import {
+    Pokemon,
+    ResponseUploadAfterValidation,
+    ResponseUploadDataPokemon,
+    ResponseValidation,
+    SendingListFetchRequest,
+} from "../types";
 import appUseIndexedDB from "./appUseIndexedDB";
+import validateArrayPokemon from "../validations/validatePokemon";
 
 const fetchScreenGrid = (input: RequestInfo | URL, init?: RequestInit) =>
     new Promise<ScreenGridFetchRequest>((resolve, reject) =>
@@ -97,11 +106,10 @@ let fetchToPatchPokemon = (id: number, pokemon: Pokemon) =>
 
 let fetchToUploadDataPokemon = (
     data: string,
-    deleteCurrentPokemon: boolean
+    deleteCurrentPokemon: boolean,
+    errorMessage: string
 ) => {
-    const errorMessage = "Error to upload the Pokémon";
-
-    return new Promise((resolve, reject) =>
+    return new Promise<ResponseUploadDataPokemon>((resolve, reject) =>
         fetch("my-pokedex/get-token")
             .then((response) => {
                 if (response.status === 200) {
@@ -125,26 +133,10 @@ let fetchToUploadDataPokemon = (
             )
             .then((response) => {
                 if (response.status === 200 || response.status === 400) {
-                    return response.json();
+                    resolve(response.json());
                 } else {
                     throw new Error(errorMessage);
                 }
-            })
-            .then((response) => {
-                const hasError = response.status === 400;
-
-                if (!hasError) {
-                    resolve(response.message);
-                } else if (typeof response.errors === "object") {
-                    const errors = response.errors;
-                    const errorsKeys = Object.keys(errors)[0];
-
-                    if (errorsKeys) {
-                        throw new Error(errors[errorsKeys].toString());
-                    }
-                }
-
-                if (hasError) throw new Error(response.message ?? errorMessage);
             })
             .catch(reject)
     );
@@ -198,6 +190,54 @@ if (appUseIndexedDB) {
                     reject(`Error to update the Pokémon ${pokemon.name}`);
                 });
         });
+    };
+
+    fetchToUploadDataPokemon = (
+        data: string,
+        deleteCurrentPokemon: boolean
+    ) => {
+        const uploadAfterValidation = (response: ResponseValidation) =>
+            new Promise<ResponseUploadAfterValidation>((resolve) => {
+                if (response.success) {
+                    const handleUploadPokemon = () =>
+                        uploadPokemonIndexedDB(response.pokemon).then(
+                            (response) => {
+                                return {
+                                    success: response.success,
+                                    message: response.message,
+                                    errors: [],
+                                };
+                            }
+                        );
+
+                    if (deleteCurrentPokemon) {
+                        deleteAllPokemonIndexedDB()
+                            .then(handleUploadPokemon)
+                            .then(resolve);
+                    } else {
+                        handleUploadPokemon().then(resolve);
+                    }
+                } else {
+                    resolve({
+                        success: response.success,
+                        message: "",
+                        errors: response.errors,
+                    });
+                }
+            });
+
+        return new Promise<ResponseUploadDataPokemon>((resolve, reject) =>
+            validateArrayPokemon(data)
+                .then((response) => uploadAfterValidation(response))
+                .then((response) =>
+                    resolve({
+                        status: response.success ? 200 : 400,
+                        message: response.message,
+                        errors: response.errors,
+                    })
+                )
+                .catch(reject)
+        );
     };
 }
 
