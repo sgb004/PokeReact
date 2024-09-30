@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Pokedex;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PokedexController extends Controller
 {
@@ -31,5 +32,21 @@ class PokedexController extends Controller
 		]);
 
 		return response()->json($data, 200);
+	}
+
+	public function validateApiIds(Request $request){
+		$ids = $request->all();
+		$validator = Validator::make($request->all(), ['*' => 'numeric|exists:pokedex,api_id']);
+		$result = [];
+
+		if($validator->fails()){
+			$errors = $validator->errors()->messages();
+
+			foreach($errors as $key => $error){
+				$result[] = $ids[$key];
+			}
+		}
+
+		return response()->json($result, 200);
 	}
 }

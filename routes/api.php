@@ -19,3 +19,5 @@ Route::patch('/pokemon/{id}', [$classToUSe, 'updatePartial']);
 Route::delete('/pokemon/', [$classToUSe, 'destroy']);
 
 Route::get('/pokedex', [PokedexController::class, 'index']);
+
+Route::post('/pokedex/validate_api_ids', [PokedexController::class, 'validateApiIds']);
