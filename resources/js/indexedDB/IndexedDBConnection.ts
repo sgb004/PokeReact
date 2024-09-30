@@ -174,6 +174,16 @@ class IndexedDBConnection {
             request.onerror = () => reject(request.error);
         });
     }
+
+    clear() {
+        return new Promise((resolve, reject) => {
+            const store = this.getObjectStore(this._DB_STORE_NAME, "readwrite");
+            const request = store.clear();
+
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    }
 }
 
 export default IndexedDBConnection;
