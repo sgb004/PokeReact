@@ -6,6 +6,7 @@ import StatSlider from "../../StatSlider";
 import patchPokemon from "../../../utils/patchPokemon";
 import Dialog from "../../Dialog";
 import Favorite from "../MyPokemonScreen/Favorite";
+import Input from "../../Input";
 
 export type PokemonEditScreenElement = {
     setPokemon: (
@@ -83,7 +84,7 @@ const PokemonEditScreen = forwardRef<
                     <span className="cp-title text-[1rem] mt-auto mr-[5px] pb-[6px]">
                         CP
                     </span>
-                    <input
+                    <Input
                         type="number"
                         className="cp-value text-[2rem] text-center outline-[1px] max-w-[110px]"
                         min={0}
@@ -100,7 +101,7 @@ const PokemonEditScreen = forwardRef<
                     className="m-auto drop-shadow-pokemon-img"
                 />
                 <div className="name flex justify-center h-[min-content] overflow-hidden p-[1px]">
-                    <input
+                    <Input
                         className="text-center text-[2rem] mb-auto mr-auto ml-auto max-w-[100%]"
                         defaultValue={pokemon.name}
                         onChange={(event) => {
