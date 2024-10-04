@@ -11,8 +11,8 @@
 	@vite(['resources/css/app.css', 'resources/js/app.tsx'])
 </head>
 
-<body class="overflow-hidden">
-	<div id="app" class="font-work-sans h-[100dvh] flex font-normal bg-background"></div>
+<body class="overflow-hidden bg-background">
+	<div id="app" class="font-work-sans h-[100dvh] flex font-normal "></div>
 
 	<script>
 		window["appUseIndexedDB"] = {{ env('USE_MY_POKEMON_INDEXEDDB') === true ? 'true' : 'false' }};
