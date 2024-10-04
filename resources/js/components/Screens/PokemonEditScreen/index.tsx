@@ -6,7 +6,10 @@ import StatSlider from "../../StatSlider";
 import patchPokemon from "../../../utils/patchPokemon";
 import Dialog from "../../Dialog";
 import Favorite from "../MyPokemonScreen/Favorite";
-import Input from "../../Input";
+import Input, { InputElement } from "../../Input";
+import validateValue from "../../../validations/validateValue";
+import validateUnsignedInteger from "../../../validations/validateUnsignedInteger";
+import { addNotification } from "../../Notifications";
 
 export type PokemonEditScreenElement = {
     setPokemon: (
@@ -26,6 +29,8 @@ const PokemonEditScreen = forwardRef<
     const updateCallback = useRef<SetPokemon>(() => {});
     const patchCallback = useRef<PatchPokemon>(() => {});
     const dialogRef = useRef<HTMLDialogElement>(null);
+    const cpInputRef = useRef<InputElement>(null);
+    const nameInputRef = useRef<InputElement>(null);
     const [pokemon, setPokemon] = useState<Pokemon | null>(null);
     const [editing, setEditing] = useState(true);
     const [screenAnimation, setScreenAnimation] = useState("animate-open");
@@ -44,6 +49,48 @@ const PokemonEditScreen = forwardRef<
         );
 
         setScreenAnimation("animate-close");
+    };
+
+    const footerSaveAction = (
+        event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => {
+        if (
+            pokemon === null ||
+            !(screenRef.current instanceof HTMLDivElement) ||
+            !(cpInputRef.current?.element instanceof HTMLInputElement)
+        )
+            return;
+
+        const cpInputElement = cpInputRef.current.element;
+        const cpMax = parseInt(`${cpInputElement.getAttribute("max")}`);
+        let error = "";
+
+        if (
+            (error = validateValue("This field", cpInputElement.value)) ||
+            (error = validateUnsignedInteger("This field", pokemon.cp, cpMax))
+        ) {
+            cpInputRef.current?.setErrorMessage(error);
+        } else if ((error = validateValue("This field", pokemon.name))) {
+            nameInputRef.current?.setErrorMessage(error);
+        }
+
+        if (!error) {
+            setEditing(false);
+            patchPokemon(
+                pokemon,
+                event.currentTarget,
+                () => {
+                    updateCallback.current(pokemon);
+                    closeScreen();
+                    setEditing(true);
+                },
+                () => {
+                    setEditing(true);
+                }
+            );
+        } else {
+            addNotification(screenRef.current, "Correct the fields", "error");
+        }
     };
 
     useImperativeHandle(
@@ -85,6 +132,7 @@ const PokemonEditScreen = forwardRef<
                         CP
                     </span>
                     <Input
+                        ref={cpInputRef}
                         type="number"
                         className="cp-value text-[2rem] text-center outline-[1px] max-w-[110px]"
                         min={0}
@@ -102,6 +150,7 @@ const PokemonEditScreen = forwardRef<
                 />
                 <div className="name flex justify-center h-[min-content] overflow-hidden p-[1px]">
                     <Input
+                        ref={nameInputRef}
                         className="text-center text-[2rem] mb-auto mr-auto ml-auto max-w-[100%]"
                         defaultValue={pokemon.name}
                         onChange={(event) => {
@@ -224,21 +273,7 @@ const PokemonEditScreen = forwardRef<
                                 />
                             </svg>
                         ),
-                        action: (event) => {
-                            setEditing(false);
-                            patchPokemon(
-                                pokemon,
-                                event.currentTarget,
-                                () => {
-                                    updateCallback.current(pokemon);
-                                    closeScreen();
-                                    setEditing(true);
-                                },
-                                () => {
-                                    setEditing(true);
-                                }
-                            );
-                        },
+                        action: footerSaveAction,
                     },
                     {
                         name: "edit-cancel",
