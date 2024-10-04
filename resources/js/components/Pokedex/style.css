@@ -4,6 +4,10 @@
         height: calc(100% - 8px);
     }
 
+    .indicator {
+        @apply w-[15px] h-[15px] rounded-full border-[1px] border-bg-border-gray pt-[1px] pl-[0.5px] after:content-[''] after:block after:w-[6px] after:h-[6px] after:rounded-full;
+    }
+
     .simple-button {
         @apply flex justify-center items-center cursor-pointer rounded-[5px] bg-button-yellow w-[37px] border border-button-yellow text-base min-h-[37px] shadow-[inset_1px_1px_1px_rgba(255,255,255,0.85)];
 
@@ -45,6 +49,8 @@
     }
 
     .screen {
+        @apply min-w-full h-full;
+
         .screen-header-button {
             @apply size-screen-header-button bg-button-blue border-button-blue rounded-[3px] border min-w-[30px];
 

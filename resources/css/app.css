@@ -1,19 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 
 @tailwind base;
-@tailwind components;
 @tailwind utilities;
 
 html {
     overflow: hidden;
-}
-
-@layer components {
-    .indicator {
-        @apply w-[15px] h-[15px] rounded-full border-[1px] border-bg-border-gray pt-[1px] pl-[0.5px] after:content-[''] after:block after:w-[6px] after:h-[6px] after:rounded-full;
-    }
-
-    .screen {
-        @apply min-w-full h-full;
-    }
 }
