@@ -118,136 +118,138 @@ const PokemonEditScreen = forwardRef<
                 editing ? "editing" : "no-editing"
             }`}
         >
-            <section className="relative p-[5px] pt-[20px] mt-auto grid gap-[20px] ">
-                <Favorite
-                    pokemon={pokemon}
-                    className="m-auto top-[24px] right-[20px]"
-                    onChange={(favorite) => {
-                        pokemon.favorite = favorite;
-                        patchCallback.current("favorite", favorite);
-                    }}
-                />
-                <div className="cp flex justify-center h-[min-content] m-auto">
-                    <span className="cp-title text-[1rem] mt-auto mr-[5px] pb-[6px]">
-                        CP
-                    </span>
-                    <Input
-                        ref={cpInputRef}
-                        type="number"
-                        className="cp-value text-[2rem] text-center outline-[1px] max-w-[110px]"
-                        min={0}
-                        max={4724}
-                        defaultValue={pokemon.cp}
-                        onChange={(event) => {
-                            pokemon.cp = Number(event.target.value);
+            <div className="relative flex overflow-y-auto ">
+                <section className="relative p-[5px] pt-[20px] mt-auto grid gap-[20px]">
+                    <Favorite
+                        pokemon={pokemon}
+                        className="m-auto top-[24px] right-[20px]"
+                        onChange={(favorite) => {
+                            pokemon.favorite = favorite;
+                            patchCallback.current("favorite", favorite);
                         }}
-                        disabled={!editing}
                     />
-                </div>
-                <PokemonImg
-                    number={pokemon.number}
-                    className="m-auto drop-shadow-pokemon-img"
-                />
-                <div className="name flex justify-center h-[min-content] overflow-hidden p-[1px]">
-                    <Input
-                        ref={nameInputRef}
-                        className="text-center text-[2rem] mb-auto mr-auto ml-auto max-w-[100%]"
-                        defaultValue={pokemon.name}
-                        onChange={(event) => {
-                            pokemon.name = event.target.value;
-                        }}
-                        disabled={!editing}
+                    <div className="cp flex justify-center h-[min-content] m-auto">
+                        <span className="cp-title text-[1rem] mt-auto mr-[5px] pb-[6px]">
+                            CP
+                        </span>
+                        <Input
+                            ref={cpInputRef}
+                            type="number"
+                            className="cp-value text-[2rem] text-center outline-[1px] max-w-[110px]"
+                            min={0}
+                            max={4724}
+                            defaultValue={pokemon.cp}
+                            onChange={(event) => {
+                                pokemon.cp = Number(event.target.value);
+                            }}
+                            disabled={!editing}
+                        />
+                    </div>
+                    <PokemonImg
+                        number={pokemon.number}
+                        className="m-auto drop-shadow-pokemon-img"
                     />
-                </div>
-                <div className="stats mt-auto text-white">
-                    <StatSlider
-                        name="attack"
-                        value={pokemon.attack}
-                        className="mb-[5px]"
-                        thumb={
-                            <svg
-                                className="fill-stats "
-                                width="15"
-                                height="15"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 30 30"
-                            >
-                                <g
-                                    stroke="currentColor"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="16"
+                    <div className="name flex justify-center h-[min-content] overflow-hidden p-[1px]">
+                        <Input
+                            ref={nameInputRef}
+                            className="text-center text-[2rem] mb-auto mr-auto ml-auto max-w-[100%]"
+                            defaultValue={pokemon.name}
+                            onChange={(event) => {
+                                pokemon.name = event.target.value;
+                            }}
+                            disabled={!editing}
+                        />
+                    </div>
+                    <div className="stats mt-auto text-white">
+                        <StatSlider
+                            name="attack"
+                            value={pokemon.attack}
+                            className="mb-[5px]"
+                            thumb={
+                                <svg
+                                    className="fill-stats "
+                                    width="15"
+                                    height="15"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 30 30"
+                                >
+                                    <g
+                                        stroke="currentColor"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="16"
+                                    >
+                                        <path
+                                            d="M8.443 14.614L19.528 1.196l9.305-.03-.029 9.306-13.418 11.085M11.914 18.086l8.751-8.751"
+                                            strokeWidth="2.3336"
+                                        ></path>
+                                        <path
+                                            d="M9.303 24.139l-4.36 4.36a1.167 1.167 0 01-1.649 0L1.5 26.707a1.167 1.167 0 010-1.648l4.361-4.361a1.167 1.167 0 000-1.663L2.828 16a1.167 1.167 0 010-1.663L4.665 12.5a1.167 1.167 0 011.663 0L17.5 23.672a1.167 1.167 0 010 1.663l-1.837 1.837a1.167 1.167 0 01-1.663 0l-3.034-3.033a1.167 1.167 0 00-1.663 0z"
+                                            strokeWidth="2.3336"
+                                        ></path>
+                                    </g>
+                                </svg>
+                            }
+                            onChange={(value) => {
+                                pokemon.attack = value;
+                            }}
+                            disabled={!editing}
+                        />
+                        <StatSlider
+                            name="defense"
+                            value={pokemon.defense}
+                            className="mb-[5px]"
+                            thumb={
+                                <svg
+                                    className="fill-stats"
+                                    width="15"
+                                    height="15"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 30 30"
                                 >
                                     <path
-                                        d="M8.443 14.614L19.528 1.196l9.305-.03-.029 9.306-13.418 11.085M11.914 18.086l8.751-8.751"
-                                        strokeWidth="2.3336"
+                                        d="M1.167 11.215V2.372a1.258 1.205 0 011.258-1.205h25.15a1.258 1.205 0 011.258 1.205v8.843c0 12.654-11.208 16.842-13.44 17.55a1.132 1.085 0 01-.786 0c-2.232-.708-13.44-4.896-13.44-17.55z"
+                                        stroke="currentColor"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2.334"
                                     ></path>
+                                </svg>
+                            }
+                            onChange={(value) => {
+                                pokemon.defense = value;
+                            }}
+                            disabled={!editing}
+                        />
+                        <StatSlider
+                            name="hp"
+                            value={pokemon.hp}
+                            className="mb-[5px]"
+                            thumb={
+                                <svg
+                                    className="fill-stats"
+                                    width="15"
+                                    height="15"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 30 30"
+                                >
                                     <path
-                                        d="M9.303 24.139l-4.36 4.36a1.167 1.167 0 01-1.649 0L1.5 26.707a1.167 1.167 0 010-1.648l4.361-4.361a1.167 1.167 0 000-1.663L2.828 16a1.167 1.167 0 010-1.663L4.665 12.5a1.167 1.167 0 011.663 0L17.5 23.672a1.167 1.167 0 010 1.663l-1.837 1.837a1.167 1.167 0 01-1.663 0l-3.034-3.033a1.167 1.167 0 00-1.663 0z"
-                                        strokeWidth="2.3336"
+                                        d="M15 28.833S1.167 20.03 1.167 9.34A7.193 8.174 0 0115 6.198v0A7.193 8.174 0 0128.833 9.34C28.833 20.031 15 28.833 15 28.833z"
+                                        stroke="currentColor"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2.334"
                                     ></path>
-                                </g>
-                            </svg>
-                        }
-                        onChange={(value) => {
-                            pokemon.attack = value;
-                        }}
-                        disabled={!editing}
-                    />
-                    <StatSlider
-                        name="defense"
-                        value={pokemon.defense}
-                        className="mb-[5px]"
-                        thumb={
-                            <svg
-                                className="fill-stats"
-                                width="15"
-                                height="15"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 30 30"
-                            >
-                                <path
-                                    d="M1.167 11.215V2.372a1.258 1.205 0 011.258-1.205h25.15a1.258 1.205 0 011.258 1.205v8.843c0 12.654-11.208 16.842-13.44 17.55a1.132 1.085 0 01-.786 0c-2.232-.708-13.44-4.896-13.44-17.55z"
-                                    stroke="currentColor"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2.334"
-                                ></path>
-                            </svg>
-                        }
-                        onChange={(value) => {
-                            pokemon.defense = value;
-                        }}
-                        disabled={!editing}
-                    />
-                    <StatSlider
-                        name="hp"
-                        value={pokemon.hp}
-                        className="mb-[5px]"
-                        thumb={
-                            <svg
-                                className="fill-stats"
-                                width="15"
-                                height="15"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 30 30"
-                            >
-                                <path
-                                    d="M15 28.833S1.167 20.03 1.167 9.34A7.193 8.174 0 0115 6.198v0A7.193 8.174 0 0128.833 9.34C28.833 20.031 15 28.833 15 28.833z"
-                                    stroke="currentColor"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2.334"
-                                ></path>
-                            </svg>
-                        }
-                        onChange={(value) => {
-                            pokemon.hp = value;
-                        }}
-                        disabled={!editing}
-                    />
-                </div>
-            </section>
+                                </svg>
+                            }
+                            onChange={(value) => {
+                                pokemon.hp = value;
+                            }}
+                            disabled={!editing}
+                        />
+                    </div>
+                </section>
+            </div>
 
             <Dialog
                 ref={dialogRef}
