@@ -11,7 +11,7 @@
 	@vite(['resources/css/app.css', 'resources/js/app.tsx'])
 </head>
 
-<body class="overflow-hidden bg-background">
+<body class="overflow-hidden transition-colors duration-200">
 	<div id="app" class="font-work-sans font-normal"></div>
 
 	<script>
