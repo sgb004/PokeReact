@@ -78,7 +78,7 @@ const PokemonElement = ({ pokemon, onEdit }: PokemonProps) => {
                     {data.name}
                 </div>
             </label>
-            <div className="actions flex justify-center gap-[10px] p-[5px]">
+            <div className="actions flex justify-center gap-[10px] p-[5px] max-[425px]:flex-wrap">
                 <Favorite
                     pokemon={data}
                     onChange={(favorite) => {
@@ -86,7 +86,7 @@ const PokemonElement = ({ pokemon, onEdit }: PokemonProps) => {
                     }}
                 />
                 <div
-                    className={`pokemon-stats flex justify-center gap-[10px] text-center stats-${data.attack}-${data.defense}-${data.hp}`}
+                    className={`pokemon-stats flex justify-center gap-[10px] text-center stats-${data.attack}-${data.defense}-${data.hp} max-[425px]:order-1`}
                 >
                     <Stat name="attack" value={data.attack} icon="icon-sword" />
                     <Stat
