@@ -12,7 +12,7 @@ const Screens = () => {
 
     return (
         <div className="screens notifications-container relative overflow-hidden col-start-1 col-end-3 border border-black m-[10px] rounded-[5px]">
-            <div className="screens-content flex h-full transition-transform">
+            <div className="screens-content flex h-full transition-transform stop-touch">
                 <MyPokemonScreen
                     ref={myPokemonScreenRef}
                     pokemonEditScreenRef={pokemonEditScreenRef}
