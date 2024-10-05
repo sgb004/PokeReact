@@ -12,6 +12,11 @@ const Pokedex = () => {
 
         const pokedexElement = pokedexRef.current;
         let touchX = 0;
+        let move = true;
+
+        const stopTouchMove = (element: HTMLElement | null) =>
+            element instanceof HTMLElement &&
+            element.closest(".stop-touch") instanceof HTMLElement;
 
         const moveScroll = (direction: number) => {
             const [left, top] =
@@ -22,12 +27,15 @@ const Pokedex = () => {
 
         const handleWheel = (event: WheelEvent) => moveScroll(event.deltaY);
         const handleTouchStart = (event: TouchEvent) => {
+            move = !stopTouchMove(event.target as HTMLElement);
             touchX = event.touches[0].pageX;
         };
         const handleTouchMove = (event: TouchEvent) => {
-            touchX = touchX - event.touches[0].pageX;
-            moveScroll(touchX);
-            touchX = event.touches[0].pageX;
+            if (move) {
+                touchX = touchX - event.touches[0].pageX;
+                moveScroll(touchX);
+                touchX = event.touches[0].pageX;
+            }
         };
 
         pokedexElement.addEventListener("wheel", handleWheel);
