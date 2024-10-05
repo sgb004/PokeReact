@@ -6,9 +6,17 @@ import FrontCoverReverse from "../FrontCoverReverse";
 
 const Pokedex = () => {
     const pokedexRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        if (!(pokedexRef.current instanceof HTMLDivElement)) return () => {};
+    /**
+     * The next code can be in a simple useEffect hook, but it doesn't work correctly in Safari
+     * Safari needs to refresh the events after animations
+     */
+    const handleEvents = {
+        handleWheel: (_: WheelEvent) => {},
+        handleTouchStart: (_: TouchEvent) => {},
+        handleTouchMove: (_: TouchEvent) => {},
+    };
+    const pokedexElementAddEvents = () => {
+        if (!(pokedexRef.current instanceof HTMLDivElement)) return null;
 
         const pokedexElement = pokedexRef.current;
         let touchX = 0;
@@ -25,12 +33,13 @@ const Pokedex = () => {
             pokedexElement.scrollTo({ left, top, behavior: "smooth" });
         };
 
-        const handleWheel = (event: WheelEvent) => moveScroll(event.deltaY);
-        const handleTouchStart = (event: TouchEvent) => {
+        handleEvents.handleWheel = (event: WheelEvent) =>
+            moveScroll(event.deltaY);
+        handleEvents.handleTouchStart = (event: TouchEvent) => {
             move = !stopTouchMove(event.target as HTMLElement);
             touchX = event.touches[0].pageX;
         };
-        const handleTouchMove = (event: TouchEvent) => {
+        handleEvents.handleTouchMove = (event: TouchEvent) => {
             if (move) {
                 touchX = touchX - event.touches[0].pageX;
                 moveScroll(touchX);
@@ -38,14 +47,38 @@ const Pokedex = () => {
             }
         };
 
-        pokedexElement.addEventListener("wheel", handleWheel);
-        pokedexElement.addEventListener("touchstart", handleTouchStart);
-        pokedexElement.addEventListener("touchmove", handleTouchMove);
+        pokedexElement.addEventListener("wheel", handleEvents.handleWheel);
+        pokedexElement.addEventListener(
+            "touchstart",
+            handleEvents.handleTouchStart
+        );
+        pokedexElement.addEventListener(
+            "touchmove",
+            handleEvents.handleTouchMove
+        );
+    };
+
+    const pokedexElementRemoveEvents = () => {
+        if (!(pokedexRef.current instanceof HTMLDivElement)) return null;
+
+        const pokedexElement = pokedexRef.current;
+
+        pokedexElement.removeEventListener("wheel", handleEvents.handleWheel);
+        pokedexElement.removeEventListener(
+            "touchstart",
+            handleEvents.handleTouchStart
+        );
+        pokedexElement.removeEventListener(
+            "touchmove",
+            handleEvents.handleTouchMove
+        );
+    };
+
+    useEffect(() => {
+        pokedexElementAddEvents();
 
         return () => {
-            pokedexElement.removeEventListener("wheel", handleWheel);
-            pokedexElement.removeEventListener("touchstart", handleTouchStart);
-            pokedexElement.removeEventListener("touchmove", handleTouchMove);
+            pokedexElementRemoveEvents();
         };
     }, []);
 
@@ -53,6 +86,28 @@ const Pokedex = () => {
         <div
             ref={pokedexRef}
             className="pokedex h-[100dvh] flex overflow-hidden"
+            onAnimationEnd={(event) => {
+                if (event.animationName === "front-cover-after-show") {
+                    pokedexElementRemoveEvents();
+                    //Because Safari is ugly
+                    setTimeout(() => {
+                        pokedexElementAddEvents();
+                    }, 1);
+                }
+            }}
+            onAnimationStart={(event) => {
+                if (
+                    event.animationName === "front-cover-after-hide" &&
+                    pokedexRef.current instanceof HTMLDivElement
+                ) {
+                    pokedexElementRemoveEvents();
+                    pokedexRef.current.scrollTo({
+                        left: 0,
+                        top: 0,
+                        behavior: "smooth",
+                    });
+                }
+            }}
         >
             <div className="pokedex-content grid grid-cols-[175px_1fr_20px] grid-rows-[94px_1fr] w-full h-full max-h-[920px] max-w-[500px] m-auto bg-pokedex bg-img-header bg-no-repeat bg-position rounded-[10px] relative border border-black max-[500px]:max-h-[100%] max-[500px]:rounded-[0]  before:content-[''] before:block before:absolute before-t-0 before:w-full before:h-[95px] before:bg-img-header before:bg-left-bottom before:bg-no-repeat ">
                 <header className="flex p-[20px] gap-[20px] rounded-t-[10px] relative">
