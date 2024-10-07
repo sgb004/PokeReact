@@ -6,7 +6,7 @@ import StatSlider from "../../StatSlider";
 import patchPokemon from "../../../utils/patchPokemon";
 import Dialog from "../../Dialog";
 import Favorite from "../MyPokemonScreen/Favorite";
-import Input, { InputElement } from "../../Input";
+import Input, { InputElement } from "../../Inputs/Input";
 import validateValue from "../../../validations/validateValue";
 import validateUnsignedInteger from "../../../validations/validateUnsignedInteger";
 import { addNotification } from "../../Notifications";

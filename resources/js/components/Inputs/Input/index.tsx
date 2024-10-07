@@ -5,8 +5,8 @@ import {
     useRef,
     useState,
 } from "react";
-import validateValue from "../../validations/validateValue";
-import validateUnsignedInteger from "../../validations/validateUnsignedInteger";
+import validateValue from "../../../validations/validateValue";
+import validateUnsignedInteger from "../../../validations/validateUnsignedInteger";
 
 export type InputElement = {
     element: HTMLInputElement | null;
