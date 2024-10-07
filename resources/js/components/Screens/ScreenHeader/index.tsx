@@ -1,5 +1,6 @@
 import { useRef, useImperativeHandle, forwardRef } from "react";
 import { ScreenFilters, ScreenHeaderParams } from "../../../types";
+import InputSearch from "../../Inputs/InputSearch";
 
 export type ScreenHeader = {
     headerParams: ScreenHeaderParams;
@@ -117,7 +118,7 @@ const ScreenHeader = forwardRef<HTMLElement, ScreenHeader>(
                         </label>
                     </>
                 )}
-                <input
+                <InputSearch
                     type="text"
                     placeholder="Search"
                     className="rounded-[3px] p-[3px_5px] h-[30px] w-[100%]"

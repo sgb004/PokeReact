@@ -381,6 +381,16 @@
     }
 }
 
+.input-search {
+    button {
+        @apply transition-opacity opacity-100;
+    }
+
+    input[value=""] + button {
+        @apply opacity-0;
+    }
+}
+
 #pokedex-about .accept-btn {
     @apply hidden;
 }
