@@ -157,6 +157,7 @@ export default {
                 "screen-header-button": "30px",
                 "screen-header-button-icon": "22px",
                 "screen-header-button-icon-active": "20px",
+                "screen-header-button-icon-small": "20px",
             },
             screens: {
                 xs: "440px",

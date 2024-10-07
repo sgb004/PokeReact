@@ -61,6 +61,10 @@
                     @apply stroke-icon-line;
                 }
             }
+
+            &.sort .screen-header-button-icon {
+                @apply size-screen-header-button-icon-small;
+            }
         }
 
         .screen-header-button:active {

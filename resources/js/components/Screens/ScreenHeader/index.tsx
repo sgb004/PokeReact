@@ -52,7 +52,6 @@ const ScreenHeader = forwardRef<HTMLElement, ScreenHeader>(
                                 className="absolute screen-header-button-icon m-auto top-0 bottom-0 left-0 right-0"
                                 fill="none"
                                 height="30"
-                                strokeWidth="1.5"
                                 width="30"
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 30 30"
@@ -85,7 +84,7 @@ const ScreenHeader = forwardRef<HTMLElement, ScreenHeader>(
                                 ))}
                             </select>
                         </label>
-                        <label className="cursor-pointer screen-header-button filter-button flex justify-center items-center">
+                        <label className="cursor-pointer screen-header-button filter-button sort flex justify-center items-center">
                             <input
                                 type="checkbox"
                                 className="hidden filter-button-dispatcher"
@@ -103,21 +102,17 @@ const ScreenHeader = forwardRef<HTMLElement, ScreenHeader>(
                                 className="screen-header-button-icon"
                                 fill="none"
                                 height="30"
-                                strokeWidth="1.5"
                                 width="30"
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 30 30"
                             >
-                                <g
+                                <path
+                                    d="M1.3 25.175a1.1 1.1 0 00.947 1.662h25.505a1.1 1.1 0 00.948-1.662L15.947 3.668a1.102 1.102 0 00-1.895 0z"
                                     stroke="currentColor"
                                     strokeLinecap="round"
                                     strokeLinejoin="round"
-                                >
-                                    <path
-                                        d="M15 28.953a2.79 2.79 0 110-5.58 2.79 2.79 0 010 5.58zM15 19.186V1.046m0 0l4.186 4.187M15 1.047l-4.186 4.186"
-                                        strokeWidth="2.093025"
-                                    />
-                                </g>
+                                    strokeWidth="2.325"
+                                />
                             </svg>
                         </label>
                     </>
