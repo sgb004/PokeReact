@@ -127,7 +127,7 @@
             }
 
             .stat input[type="number"] {
-                @apply outline-stat-slider rounded-full text-right;
+                @apply outline-stat-slider rounded-full text-center min-w-[30px] w-[30px] pb-[1px];
             }
 
             .stat {
