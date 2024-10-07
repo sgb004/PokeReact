@@ -24,11 +24,11 @@ const StatSlider = ({
     onChange,
     disabled = false,
 }: StatSliderProps) => {
-    const [val, setVal] = useState<number>(value);
+    const [val, setVal] = useState<string>(`${value}`);
 
     useEffect(() => {
         if (onChange) {
-            onChange(val);
+            onChange(+val);
         }
     }, [val]);
 
@@ -37,7 +37,7 @@ const StatSlider = ({
             className={`stat ${name} flex ${className} gap-[0] stat-value-${val} ${
                 disabled ? "disabled" : ""
             }`}
-            style={{ "--value": val, "--max": max } as PokemonStatCSS}
+            style={{ "--value": +val, "--max": max } as PokemonStatCSS}
         >
             <div className={`stat-slider h-[30px] w-full relative`}>
                 <div className="progress absolute overflow-hidden rounded-full w-full h-full before:block before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-stat-slider before:none after:block after:w-[33.33%] after:h-full after:absolute after:inset-0 after:m-auto after:border-[0_3px] after:border-x-edit-back">
@@ -57,7 +57,7 @@ const StatSlider = ({
                     max={max}
                     value={val}
                     className="stat-slider-input block relative w-full h-full p-0 appearance-none z-20 opacity-0 cursor-pointer"
-                    onChange={(event) => setVal(+event.currentTarget.value)}
+                    onChange={(event) => setVal(event.currentTarget.value)}
                     disabled={disabled}
                 />
             </div>
@@ -67,7 +67,22 @@ const StatSlider = ({
                 max={max}
                 value={val}
                 className={`block h-[30px]  text-white bg-stats transition-colors`}
-                onChange={(event) => setVal(+event.currentTarget.value)}
+                onChange={(event) => {
+                    let value = +event.currentTarget.value;
+
+                    if (value > max) {
+                        setVal(`${max}`);
+                    } else if (value < min) {
+                        setVal(`${min}`);
+                    } else {
+                        setVal(event.currentTarget.value);
+                    }
+                }}
+                onBlur={(event) => {
+                    if (event.currentTarget.value === "") {
+                        setVal(`${min}`);
+                    }
+                }}
                 disabled={disabled}
             />
         </div>
