@@ -57,11 +57,7 @@ const PokemonElement = ({ pokemon, onEdit }: PokemonProps) => {
     };
 
     return (
-        <div
-            key={data.id}
-            id={`my-pokemon-${data.id}`}
-            className="pokemon p-[5px]"
-        >
+        <div key={data.id} id={`my-pokemon-${data.id}`} className="pokemon">
             <label className="flex flex-col items-center relative cursor-pointer transition-all duration-75 ease">
                 <div className="cp">
                     <span className="cp-title text-[11px]">CP</span>

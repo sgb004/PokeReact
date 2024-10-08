@@ -81,7 +81,7 @@ const PokemonScreen = ({ myPokemonScreenRef }: PokemonScreenProps) => {
             printGridItems={(pokemon: Pokemon) => (
                 <label
                     key={pokemon.number}
-                    className="pokemon flex flex-col items-center relative cursor-pointer transition-all duration-75 ease"
+                    className="pokemon py-[5px] flex flex-col items-center relative cursor-pointer transition-all duration-75 ease"
                 >
                     <input
                         type="checkbox"
