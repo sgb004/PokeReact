@@ -217,7 +217,7 @@ const ScreenGrid = forwardRef<ScreenGridElement, ScreenGridProps>(
                 )}
 
                 {isLoading.current && (
-                    <div className="spinner col-start-1 col-end-4 flex justify-center items-center">
+                    <div className="spinner col-start-1 col-end-4 flex justify-center items-center min-h-[65px]">
                         <Spinner />
                     </div>
                 )}
