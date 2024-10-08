@@ -90,9 +90,7 @@ const PokemonScreen = ({ myPokemonScreenRef }: PokemonScreenProps) => {
                         className="pokemon-from-pokedex absolute top-0 left-0 hidden"
                     />
                     <PokemonImg number={pokemon.number} />
-                    <div className="name text-black first-letter:uppercase text-center">
-                        {pokemon.name}
-                    </div>
+                    <div className="pokemon-name">{pokemon.name}</div>
                 </label>
             )}
         />

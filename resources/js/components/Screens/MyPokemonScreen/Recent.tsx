@@ -29,9 +29,7 @@ const Recent = ({
                             className="pokemon row-start-1 row-end-3 flex flex-col items-center relative cursor-pointer transition-all duration-75 ease"
                         >
                             <PokemonImg number={pokemon.number} />
-                            <div className="name text-black first-letter:uppercase text-center">
-                                {pokemon.name}
-                            </div>
+                            <div className="pokemon-name">{pokemon.name}</div>
                         </label>
                     ))}
                     <button

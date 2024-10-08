@@ -74,9 +74,7 @@ const PokemonElement = ({ pokemon, onEdit }: PokemonProps) => {
                     className="pokemon-from-pokedex absolute top-0 left-0 hidden"
                 />
                 <PokemonImg number={data.number} />
-                <div className="name text-black first-letter:uppercase text-center">
-                    {data.name}
-                </div>
+                <div className="pokemon-name">{data.name}</div>
             </label>
             <div className="actions flex justify-center gap-[10px] p-[5px] max-[425px]:flex-wrap">
                 <Favorite

@@ -297,6 +297,10 @@
         }
     }
 
+    .pokemon-name {
+        @apply text-black first-letter:uppercase text-center break-all px-[5px] leading-[normal] max-[425px]:text-sm;
+    }
+
     .dialog-btn {
         @apply min-w-20 bg-button-blue border border-button-blue  text-white rounded-[3px] p-[2px_5px];
 
