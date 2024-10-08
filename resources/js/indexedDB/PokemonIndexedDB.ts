@@ -60,10 +60,13 @@ class PokemonIndexedDB extends IndexedDBConnection {
     }
 
     normalize(pokemon: Pokemon | PokemonAdd) {
+        let normalized = this.strNormalize(pokemon.name);
+        normalized = `${normalized} `;
+
         return {
             ...pokemon,
             favorite: pokemon.favorite ? 1 : 0,
-            nameNormalized: this.strNormalize(pokemon.name),
+            nameNormalized: normalized,
         };
     }
 
