@@ -66,7 +66,7 @@ const StatSlider = ({
                 min={min}
                 max={max}
                 value={val}
-                className={`block h-[30px]  text-white bg-stats transition-colors`}
+                className={`stat-slider-input-number block h-[30px] text-white bg-stats transition-colors`}
                 onChange={(event) => {
                     let value = +event.currentTarget.value;
 

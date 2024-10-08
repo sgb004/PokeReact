@@ -130,6 +130,16 @@
                 field-sizing: content;
             }
 
+            input.stat-slider-input-number::-webkit-outer-spin-button,
+            input.stat-slider-input-number::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+
+            input.stat-slider-input-number {
+                -moz-appearance: textfield;
+            }
+
             .stat input[type="number"] {
                 @apply outline-stat-slider rounded-full text-center min-w-[30px] w-[30px] pb-[1px];
             }
