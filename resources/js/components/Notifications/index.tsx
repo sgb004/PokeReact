@@ -85,7 +85,7 @@ const Notifications = forwardRef<HTMLDivElement, NotificationsProps>(
                         timer = setTimeout(deleteAllNotifications, 2000);
                     }
                 };
-                let timer: number;
+                let timer: NodeJS.Timeout;
 
                 notificationsElement.addEventListener(
                     "addNotification",
