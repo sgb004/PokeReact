@@ -7,6 +7,8 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>PokéReact a Pokédex React</title>
 
+	<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
 	@viteReactRefresh
 	@vite(['resources/css/app.css', 'resources/js/app.tsx'])
 </head>
