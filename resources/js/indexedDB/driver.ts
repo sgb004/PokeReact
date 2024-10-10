@@ -36,7 +36,7 @@ const addPokemonIndexedDB = (ids: number[]) =>
     new Promise((resolve, reject) => {
         const pokemon = ids.map((id) => {
             const nameElement = document.querySelector(
-                `.pokedex-screen .pokemon:has(.pokemon-from-pokedex[value="${id}"]) .name`
+                `.pokedex-screen .pokemon:has(.pokemon-from-pokedex[value="${id}"]) .pokemon-name`
             );
             const createdAt = new Date().getTime();
 
