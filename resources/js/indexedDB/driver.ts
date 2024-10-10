@@ -53,13 +53,14 @@ const addPokemonIndexedDB = (ids: number[]) =>
             };
         });
         const list = pokemon.map((pokemon) => pokemonIndexedDB.add(pokemon));
+        const limitMax = Math.min(ids.length, 2);
 
         Promise.all(list)
             .then(() =>
                 pokemonIndexedDB.getAll({
                     orderBy: "created_at",
                     direction: "prev",
-                    limit: [0, 2],
+                    limit: [0, limitMax],
                 })
             )
             .then((pokemon) =>

@@ -97,7 +97,7 @@ class IndexedDBConnection {
             const limitStart =
                 limit && limit[0] && limit[0] >= 0 ? limit[0] : 0;
             const limitEnd =
-                limit && limit[1] && limit[1] > 0 ? limit[1] - 1 : 0;
+                limit && limit[1] && limit[1] > 0 ? limit[1] - 1 : -1;
 
             let index: IDBObjectStore | IDBIndex = store;
             let range: IDBValidKey | IDBKeyRange | null = null;
@@ -120,7 +120,7 @@ class IndexedDBConnection {
             request.onsuccess = (event: Event) => {
                 const cursor = (event.target as IDBRequest).result;
 
-                if (cursor && (limitEnd === 0 || countEnd <= limitEnd)) {
+                if (cursor && (limitEnd === -1 || countEnd <= limitEnd)) {
                     if (count >= limitStart) {
                         data.push(cursor.value);
                         countEnd++;
