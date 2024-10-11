@@ -130,7 +130,7 @@ This app was created for learning purposes, not for profit.
 
 Any misuse will be the responsibility of the person who improperly used this app.
 
-Yo are free to copy the code, modify it, and use it in any way you want, as long as you include the original copyright and license notice.
+You are free to copy the code, modify it, and use it in any way you want, as long as you include the original copyright and license notice.
 
 ## License
 
