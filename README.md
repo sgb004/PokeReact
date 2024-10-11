@@ -18,7 +18,7 @@ The images of the Pokémon are taken from [https://github.com/PokeAPI/sprites/bl
 
 ### Mobile
 
-[![Screenshot](https://pokereact.sgb004.com/images/pokereact-movile.png)](https://studio.youtube.com/video/1bmY-H_mSTI/edit)
+[![Screenshot](https://pokereact.sgb004.com/images/pokereact-mobile.png)](https://studio.youtube.com/video/1bmY-H_mSTI/edit)
 
 ## Features
 
