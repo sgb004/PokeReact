@@ -37,14 +37,32 @@ const InfoButton = () => {
                 ref={dialogRef}
                 message={
                     <>
-                        The names and trademarks mentioned in this app are the
-                        property of their respective owners.
+                        * This app is not affiliated with Nintendo, or any of
+                        the other companies or organizations involved in the
+                        development of the Pokémon games.
                         <br />
-                        This app was created for learning purposes, not for
+                        * The Pokémon logos and related marks are trademarks or
+                        registered trademarks of Nintendo in the United States
+                        and other countries.
+                        <br />
+                        * This app is not intended to be used for any illegal or
+                        unauthorized purpose.
+                        <br />
+                        * By using this app, you agree to the terms of service
+                        and privacy policy of the Pokémon API.
+                        <br />
+                        * The React name and logo are trademarks of Facebook,
+                        Inc.
+                        <br />
+                        * This app was created for learning purposes, not for
                         profit.
                         <br />
-                        Any misuse will be the responsibility of the person who
-                        improperly used this app.
+                        * Any misuse will be the responsibility of the person
+                        who improperly used this app.
+                        <br />
+                        * You are free to copy the code, modify it, and use it
+                        in any way you want, as long as you include the original
+                        copyright and license notice.
                         <br />
                         <br />
                         <b>Version: 1.0.0</b>
